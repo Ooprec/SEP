@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="layout.css">
+    <title>Layout</title>
+</head>
+<body class="light">
+    <div id="main-page" class="light">
+        <h1 id="header" class="laccent">Student Elections</h1>
+
+        <form action="" id="uploadForm">
+            <div id="inputs" class="light">
+                
+                <label for="csv">Upload CSV:</label>
+                <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
+                <input type="file" id="csv"> <br><br>
+
+                <label for="submit" class="custom-overlay-button">Submit</label>
+                <button type="submit" id="submit"></button>
+            </div>
+
+        </form>
+
+        <p id="output"></p>
+
+    </div>
+    <script src="/layout.js"></script>
+</body>
+</html>
