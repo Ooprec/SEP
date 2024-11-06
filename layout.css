@@ -1,9 +1,9 @@
 :root {
-    --light: #F0EEEB;
-    --laccent: #9B8384;
-    --main: #AD825D;
-    --daccent: #922626;
-    --dark:  #131416;
+    --light: #F2F4F5;
+    --laccent: #92896C;
+    --main: #7593A8;
+    --daccent: #765C59;
+    --dark:  #243A4D;
 
     --br: .2rem;
 }
@@ -29,6 +29,11 @@ body {
     color: var(--light);
 }
 
+.main {
+    background-color: var(--main);
+    color: var(--light);
+}
+
 #header {
     margin: auto;
     padding: 1rem;
@@ -49,19 +54,57 @@ input[type="file"] {
   }
   
 .custom-overlay-button {
-    border: 1px solid var(--dark);
+    border: .08rem solid var(--dark);
     border-radius: var(--br);
     display: inline-block;
-    padding: 6px 12px;
+    padding: .4rem .8rem;
     cursor: pointer;
+    align-content: center;
+    margin: auto;
+    text-align: center;
+    transition: transform .25s;
+
 }
 
 .custom-overlay-button:hover {
-    border: 1px solid var(--light);
+    border: .08rem solid var(--dark);
     background-color: var(--laccent);
     color: var(--light);
+    transform: scale(1.07);
+    /* padding: .6rem 1.2rem; */
 }
 
 #submit {
     display: none;
 }
+
+.tab-container {
+    display: grid;
+    grid-template-areas: 'honor prefect senate secretary';
+    height: 2rem;
+}
+
+.selectable-tab {
+    text-align: center;
+    font-weight: bold;
+    padding: .75rem;
+    cursor: pointer;
+    background-color: var(--main);
+    color: var(--light);
+    border: .05rem solid var(--main);
+    transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, transform 0s;
+}
+
+.selectable-tab:hover {
+    border: .05rem solid var(--dark);
+    transform: scale(1.07);
+}
+
+#honor-tab {grid-area: honor;}
+#prefect-tab {grid-area: prefect;}
+#senate-tab {grid-area: senate;}
+#secretary-tab {grid-area: secretary;}
+
+.selected {background-color: var(--dark); border-color: var(--main);}
+
+.results {display:none};

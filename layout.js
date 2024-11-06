@@ -38,3 +38,25 @@ function csvReader(upload) {
     let reader = new FileReader();
 
 }
+
+let selectableTabs = document.getElementsByClassName("selectable-tab");
+
+function selectTab(tab) {
+    if (!tab.classList.contains("selected")) {
+        let selected = document.getElementsByClassName("selected");
+        results = document.getElementById("shown-results");
+        if (selected.length != 0) {
+            let previous = document.getElementsByClassName("selected")[0];
+
+            previous.classList.toggle("selected");
+        }
+        
+        tab.classList.toggle("selected");
+        grabbedResults = document.getElementsByClassName(tab.classList[0])[1];
+        results.innerHTML = grabbedResults.innerHTML;
+
+    }
+    else {
+        return;
+    }
+}
