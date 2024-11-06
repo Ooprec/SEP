@@ -3,54 +3,73 @@ src="https://cdn.jsdelivr.net/npm/chart.js"
 
 
 
-
+// find the input section
 let inputForm = document.getElementById("uploadForm")
 
+// this handles displaying the filename on the button
 inputForm.addEventListener("change", (e) => {
+    // find the displayed button
     let fileButton = document.getElementById("replacement-button");
+    // find the hidden file upload element
     let upload = document.getElementById("csv");
 
+    // see if the upload is empty
     if (upload.value == "")
     {
+        // set a default text
         fileButton.innerHTML = "Choose File...";
     }
     else {
+        // take the filename. upload.value is an address, so I just substringed the bad part out.
         fileButton.innerHTML = upload.value.substring(upload.value.indexOf("h\\")+2);
     }
     
 });
 
+// this activates when the form is submitted
 inputForm.addEventListener("submit", (e) => {
     e.preventDefault(); // Don't clear the input when the submit button is clicked
-  
+    
+    // find the file upload
     let upload = document.getElementById("csv");
-    // console.log(upload);
+
+    // if there's no file uploaded
     if (upload.value == '')
     {
+        // yell at the user
         alert("Make sure you upload a CSV");
     }
     else
     {   
-        console.log(upload.files[0])
-        // csvReader(upload);
+        // integration with firebase and election algorithm here
     }});
 
-let selectableTabs = document.getElementsByClassName("selectable-tab");
 
+// this function handles changing tabs
 function selectTab(tab) {
+    // if the selected tab isn't already selected
     if (!tab.classList.contains("selected")) {
+        // get the new selected tab
         let selected = document.getElementsByClassName("selected");
-        results = document.getElementById("shown-results");
+        // get the output div
+        results = document.getElementById("shown-results");  
+        // if a tab is already selected
         if (selected.length != 0) {
+            // find the previously selected tab
             let previous = document.getElementsByClassName("selected")[0];
-
+            
+            // toggle the 'selected' status
             previous.classList.toggle("selected");
+
+            // clear the output section
             results.innerHTML = '';
         }
         
+        // toggle the 'selected' status for the newly selected tab
         tab.classList.toggle("selected");
         //creates a new chart element in layout.html
         const chartDiv = document.createElement("div");
+        // make a new canvas element
         const ctx = document.createElement("canvas");
         ctx.classList.toggle("chart")
         //creates a new bar chart
