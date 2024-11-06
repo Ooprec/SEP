@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="layout.css">
+    <title>Layout</title>
+</head>
+<body class="light">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div id="main-page" class="light">
+        <h1 id="header" class="laccent">Student Elections</h1>
+
+        <form action="" id="uploadForm">
+            <div id="inputs" class="light">
+                
+                <label for="csv">Upload CSV:</label>
+                <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
+                <input type="file" id="csv"> <br><br>
+
+                <label for="submit" class="custom-overlay-button">Submit</label>
+                <button type="submit" id="submit"></button>
+            </div>
+
+        </form>
+        
+        <div id="sections-parent">
+            <div id="sections">
+                
+                <div id="tabs" class="tab-container">
+                    <div id="honor-tab" class="honor selectable-tab unselected " onclick="selectTab(this)">Honor</div>
+                    <div id="prefect-tab" class="prefect selectable-tab unselected " onclick="selectTab(this)">Prefect</div>
+                    <div id="senate-tab" class="senate selectable-tab unselected " onclick="selectTab(this)">Senate</div>
+                    <div id="secretary-tab" class="secretary selectable-tab unselected " onclick="selectTab(this)">Secretary</div>
+                </div>
+                    <div id="shown-results" class="light">
+                        
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <script src="/layout.js"></script>
+</body>
+</html>
