@@ -1,0 +1,1 @@
+This project processes a csv file with election data consisting of top three choice of candidate. It then returns graphs with the results of each round of voting and a winner at the end. This is made for our school elections.
