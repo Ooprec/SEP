@@ -52,8 +52,8 @@ function selectTab(tab) {
         }
         
         tab.classList.toggle("selected");
-        grabbedResults = document.getElementsByClassName(tab.classList[0])[1];
-        results.innerHTML = grabbedResults.innerHTML;
+        
+        
 
     }
     else {
