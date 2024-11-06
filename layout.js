@@ -1,4 +1,4 @@
-
+//imports the chart.js library
 src="https://cdn.jsdelivr.net/npm/chart.js"
 
 
@@ -49,28 +49,38 @@ function selectTab(tab) {
         }
         
         tab.classList.toggle("selected");
+        //creates a new chart element in layout.html
         const chartDiv = document.createElement("div");
         const ctx = document.createElement("canvas");
         ctx.classList.toggle("chart")
+        //creates a new bar chart
         new Chart(ctx, {
+            //the type of chart
             type: 'bar',
+            //the data within the chart
             data: {
+              //the names of each bar underneath the bar
               labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
               datasets: [{
+                //the title of the chart
                 label: '# of Votes',
+                //the integer value of each bar
                 data: [12, 19, 3, 5, 2, 3],
+                //the width of each bar
                 borderWidth: 1
               }]
             },
             options: {
+              //scaling options for the chart
               scales: {
                 y: {
+                  //starts counting from zero
                   beginAtZero: true
                 }
               }
             }
           });
-        
+          //append the chart to the hmtl element
           results.appendChild(ctx);
           
 
