@@ -108,3 +108,15 @@ input[type="file"] {
 .selected {background-color: var(--dark); border-color: var(--main);}
 
 .results {display:none};
+
+.chart {
+    width: 300px;
+}
+
+#shown-results {
+    width: 75vw;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+    padding: 4rem;
+}

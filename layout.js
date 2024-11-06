@@ -1,4 +1,5 @@
 
+src="https://cdn.jsdelivr.net/npm/chart.js"
 
 
 
@@ -34,11 +35,6 @@ inputForm.addEventListener("submit", (e) => {
         // csvReader(upload);
     }});
 
-function csvReader(upload) {
-    let reader = new FileReader();
-
-}
-
 let selectableTabs = document.getElementsByClassName("selectable-tab");
 
 function selectTab(tab) {
@@ -49,11 +45,34 @@ function selectTab(tab) {
             let previous = document.getElementsByClassName("selected")[0];
 
             previous.classList.toggle("selected");
+            results.innerHTML = '';
         }
         
         tab.classList.toggle("selected");
+        const chartDiv = document.createElement("div");
+        const ctx = document.createElement("canvas");
+        ctx.classList.toggle("chart")
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+              datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
         
-        
+          results.appendChild(ctx);
+          
 
     }
     else {
