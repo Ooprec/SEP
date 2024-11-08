@@ -31,6 +31,7 @@ inputForm.addEventListener("submit", (e) => {
     else
     {   
         console.log(upload.files[0])
+       
         // csvReader(upload);
     }});
 

@@ -18,7 +18,8 @@
                 <input type="file" id="csv"> <br><br>
 
                 <label for="submit" class="custom-overlay-button">Submit</label>
-                <button type="submit" id="submit"></button>
+                <button onclick= "importCSVToDatabase()" type="submit" id="submit"></button>
+
             </div>
 
         </form>
@@ -60,6 +61,12 @@
 
     </div>
 
-    <script src="/layout.js"></script>
+    <script src="layout.js"></script>
+    <script type="module" src="upload.js"></script>
+    <script type="module">
+        import {importCSVToDatabase} from './upload.js';
+        window.importCSVToDatabase = importCSVToDatabase;
+        
+      </script>
 </body>
 </html>
