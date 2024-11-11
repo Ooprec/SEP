@@ -1,8 +1,3 @@
-//imports the chart.js library
-src="https://cdn.jsdelivr.net/npm/chart.js"
-
-
-
 // find the input section
 let inputForm = document.getElementById("uploadForm")
 
@@ -73,38 +68,63 @@ function selectTab(tab) {
         const ctx = document.createElement("canvas");
         ctx.classList.toggle("chart")
         //creates a new bar chart
-        new Chart(ctx, {
-            //the type of chart
-            type: 'bar',
-            //the data within the chart
-            data: {
-              //the names of each bar underneath the bar
-              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-              datasets: [{
-                //the title of the chart
-                label: '# of Votes',
-                //the integer value of each bar
-                data: [12, 19, 3, 5, 2, 3],
-                //the width of each bar
-                borderWidth: 1
-              }]
-            },
-            options: {
-              //scaling options for the chart
-              scales: {
-                y: {
-                  //starts counting from zero
-                  beginAtZero: true
-                }
-              }
-            }
-          });
-          //append the chart to the hmtl element
-          results.appendChild(ctx);
-          
+        var graphFunctionArray = [honorGraph, prefectGraph, senateGraph, secretaryGraph];
+
+        index = tab.classList[1]+0;
+        chartSettings = graphFunctionArray[index]();
+        new Chart(ctx, chartSettings);
+        
+        //append the chart to the html element
+        results.appendChild(ctx);
 
     }
     else {
         return;
     }
+}
+
+
+
+function honorGraph() {  
+    return {
+        //the type of chart
+        type: 'bar',
+        //the data within the chart
+        data: {
+          //the names of each bar underneath the bar
+          labels: ['Person 1', 'Person 2 ', 'Person 3', 'Person 4', 'Person 5', 'Person 6'],
+
+          //somewhere here we should grab the datae
+          datasets: [{
+            //the title of the chart
+            label: '# of Votes',
+            //the integer value of each bar
+            data: [12, 19, 3, 5, 2, 3],
+            //the width of each bar
+            borderWidth: 1
+          }]
+        },
+        options: {
+          //scaling options for the chart
+          scales: {
+            y: {
+              //starts counting from zero
+              beginAtZero: true
+            }
+          }
+        }
+      };
+    // this will make a graph using the data from an honor election
+}
+
+function prefectGraph(ctx) {
+    // this will make a graph using the data from a prefect election
+}
+
+function senateGraph(ctx) {
+    // this will make a graph using the data from a senate election
+}
+
+function secretaryGraph(ctx) {
+    // this will make a graph using the data from a secretary election
 }

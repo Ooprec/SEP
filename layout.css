@@ -12,6 +12,7 @@ body {
     font-family: sans-serif;
     padding: 0;
     margin: 0;
+    overflow-x: hidden;
 }
 
 .dark {
@@ -92,12 +93,13 @@ input[type="file"] {
     background-color: var(--main);
     color: var(--light);
     border: .05rem solid var(--main);
-    transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, transform 0s;
+    transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, transform .15s linear, border-radius .15s;
 }
 
 .selectable-tab:hover {
     border: .05rem solid var(--dark);
-    transform: scale(1.07);
+    border-radius: .15rem;
+    transform: scale(1.1);
 }
 
 #honor-tab {grid-area: honor;}
