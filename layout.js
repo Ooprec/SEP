@@ -86,22 +86,26 @@ function selectTab(tab) {
 
 
 function honorGraph() {  
+    Chart.defaults.backgroundColor = '#793140D9';    
+    let candiadates = ['boab', 'bober', 'bob3']
+    let dat = [3, 5, 7] 
     return {
         //the type of chart
         type: 'bar',
         //the data within the chart
         data: {
           //the names of each bar underneath the bar
-          labels: ['Person 1', 'Person 2 ', 'Person 3', 'Person 4', 'Person 5', 'Person 6'],
+          labels: candiadates,
 
           //somewhere here we should grab the datae
           datasets: [{
             //the title of the chart
             label: '# of Votes',
             //the integer value of each bar
-            data: [12, 19, 3, 5, 2, 3],
+            data: dat,
             //the width of each bar
-            borderWidth: 1
+            borderWidth: 3,
+            borderColor: '#582235'
           }]
         },
         options: {
