@@ -70,7 +70,7 @@ function selectTab(tab) {
         //creates a new bar chart
         var graphFunctionArray = [honorGraph, prefectGraph, senateGraph, secretaryGraph];
 
-        index = tab.classList[1]+0;
+        index = tab.classList[1];
         chartSettings = graphFunctionArray[index]();
         new Chart(ctx, chartSettings);
         
