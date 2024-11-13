@@ -27,7 +27,7 @@ new Chart(ctx, {
 });
 document.getElementById('myChart').remove();
 
-new Chart(ctx2, {
+const myChart3 = new Chart(ctx2, {
   type: 'bar',
   data: {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -45,3 +45,21 @@ new Chart(ctx2, {
     }
   }
 });
+
+function addData(label, newData) {
+  let chart = myChart3
+  chart.data.labels.push(label);
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(newData);
+  });
+  chart.update();
+}
+
+// function removeData(chart) {
+//   let chart = myChart3
+//   chart.data.labels.pop();
+//   chart.data.datasets.forEach((dataset) => {
+//       dataset.data.pop();
+//   });
+//   chart.update();
+// }

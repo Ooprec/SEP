@@ -1,3 +1,76 @@
+// Import Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+// TODO: import libraries for Cloud Firestore Database
+// https://firebase.google.com/docs/firestore
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyD7vWOt5aS-mmTeGzKwgvcbMrx9K9KxATQ",
+    authDomain: "rank-choice-voting-393ff.firebaseapp.com",
+    projectId: "rank-choice-voting-393ff",
+    storageBucket: "rank-choice-voting-393ff.appspot.com",
+    messagingSenderId: "1070768963220",
+    appId: "1:1070768963220:web:0c5e5968fa52688458fe81"
+  };
+
+  // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+export async function loadFromDatabase () {
+    const databaseItems = await getDocs(collection(db, "rank-choice-voting"));
+
+    //Creates a list of objects, linking each voters decision to an object (voter)
+    var allVotes = [];
+    databaseItems.forEach((item) =>{
+        allVotes.push({ first: item.data().first, second: item.data().second, third: item.data().third });
+        
+    });
+
+    sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
+
+}
+
+export async function vote() {
+    
+    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    
+
+    // for (var voter in allVotes){
+    //     console.log(allVotes[voter].first);
+    // }
+    // console.log(allVotes.length)
+   
+    var candidates = [];
+    var votes = [];
+
+    //makes list of all candidates and their votes
+    for (var i=0; i<allVotes.length; i++){
+        // console.log(allVotes[i].first);
+        if(!candidates.includes(allVotes[i].first)){
+            // console.log(allVotes[i])
+            candidates.push(allVotes[i].first);
+            votes.push(0);
+            // console.log(candidates);
+        }
+    }
+
+     // tallies first round votes
+     for(var i in allVotes){
+        for(var j in candidates){
+            if(allVotes[i].first == candidates[j]){
+            votes[j] = votes[j] + 1;
+         }
+     }
+}
+        return(votes);
+}
+//     console.log("candidates");
+// console.log(candidates);
+
+
 // find the input section
 let inputForm = document.getElementById("uploadForm")
 
@@ -86,9 +159,12 @@ function selectTab(tab) {
 
 
 function honorGraph() {  
-    // Chart.defaults.backgroundColor = '#793140D9';    
-    let candiadates = ['boab', 'bober', 'bob3']
-    let dat = [3, 5, 7] 
+    //bar color
+    Chart.defaults.backgroundColor = '#793140D9';  
+    //sample candidate data  
+    let candiadates = ["a", "b", "c"]
+    //sample number of votes
+    let dat = [1, 2, 3];
     return {
         //the type of chart
         type: 'bar',
@@ -103,8 +179,9 @@ function honorGraph() {
             label: '# of Votes',
             //the integer value of each bar
             data: dat,
-            //the width of each bar
+            //the width of each bar's edge
             borderWidth: 3,
+            //the color of the border
             borderColor: '#582235'
           }]
         },
@@ -122,75 +199,27 @@ function honorGraph() {
 }
 
 function prefectGraph(ctx) {
-    let candidates = ["bob", "boab", "booooaaaab"," timothy","bob3","Dr. Robert Troy, PhD."]
-    let datfirst = [1,2,3,4,5,6];
-    let datsecond = [3,5,4,1,2,6];
-    let datthird = [5,2,3,4,1,6];
-    // this will make a graph using the data from a prefect election
-    return {
-        type: "radar",
-        data: {
-            labels: candidates,
-            datasets: [{
-                label: "First Votes",
-                data: datfirst},
-                {label: "Second Votes",
-                    data: datsecond,
-                },{label: "Third Votes",
-                    data: datthird,
-                }]
-
-        }
-    }
-}
-
-function senateGraph(ctx) {
-    // this will make a graph using the data from a senate election
-    let candidates = ["bob", "boab", "booooaaaab"," timothy","bob3","Dr. Robert Troy, PhD."]
-    let datfirst = [1,3,2,5,4,6];
-
+    let candiadates = ['boab', 'bober', 'bob3']
+    //sample number of votes
+    let dat = [3, 5, 7] 
     return {
         type: "polarArea",
         data: {
-            labels: candidates,
-            datasets: [{label: "Votes", data: datfirst}],
-        },
-        options: {
-            circular: true,
-            borderJoinStyle: 'bevel'
+            labels: candiadates,
+
+            datasets: [{
+                //the title of the chart
+                label: '# of Votes',
+                //the integer value of each bar
+                data: dat,
+            }]
         }
     }
+}
+function senateGraph(ctx) {
+    // this will make a graph using the data from a senate election
 }
 
 function secretaryGraph(ctx) {
     // this will make a graph using the data from a secretary election
 }
-
-const sel = document.querySelector('.sel');
-const label = document.querySelector('.label');
-const options = document.querySelector('.options');
-
-options.setAttribute('hidden', true);
-
-sel.addEventListener('click', (e) => {
-    e.stopPropagation();
-    options.removeAttribute('hidden');
-});
-
-document.body.addEventListener('click', (e) => {
-    options.setAttribute('hidden', true);
-});
-
-options.addEventListener('click', (e) => {
-    if (e.target.tagName === 'DIV') {
-        e.stopPropagation();
-        label.textContent = e.target.textContent;
-        e.target.classList.add('selected');
-        Array.from(e.target.parentNode.children).forEach((child) => {
-            if (child !== e.target) {
-                child.classList.remove('selected');
-            }
-        });
-        options.setAttribute('hidden', true);
-    }
-});
