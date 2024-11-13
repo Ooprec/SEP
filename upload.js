@@ -41,7 +41,7 @@ export async function importCSVToDatabase () {
     //   studentPieces.forEach((piece) =>{
     //     deleteDoc(doc(db, "rank-choice-voting", piece.id));
     //   } );
-    console.log("g2reg")
+
       try{
         
             var file = document.getElementById("csv").files[0];
@@ -55,6 +55,8 @@ export async function importCSVToDatabase () {
                 //cells is an array of cells
                 var cells = rows[i].split(",");
                
+                //sets each vote casted by each person equal to a value
+                //represented in fire base as (e.g. First: "Name of Candidate")
                 try {
                     const docRef = addDoc(collection(db, "rank-choice-voting"), {
                     first: cells[2],
@@ -62,6 +64,7 @@ export async function importCSVToDatabase () {
                     third: cells[4],
                     
                   });
+                  //tests to make sure the code fires
                   console.log("Document written with ID: ", docRef.id);
                 
                   // console.log("Document written with ID: ", docRef.id);
@@ -77,6 +80,7 @@ export async function importCSVToDatabase () {
             reader.readAsText(file);
             file.innerHTML = null;     
     }
+    //catch commander to prevent system stoppage in the event of wrongly submitted info
     catch (e) {
         console.error("Error adding votes to database: ", e);
         

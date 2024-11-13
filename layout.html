@@ -17,6 +17,7 @@
                 <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
                 <input type="file" id="csv"> <br><br>
 
+                <!--Button now fires import command on click when file is submitted-->
                 <label for="submit" class="custom-overlay-button">Submit</label>
                 <button onclick= "importCSVToDatabase()" type="submit" id="submit"></button>
 
@@ -61,12 +62,16 @@
 
     </div>
 
+    <!--Links layout to upload and imports the csv database function-->
     <script src="layout.js"></script>
     <script type="module" src="upload.js"></script>
+    <script type="module" src="vote.js"></script>
     <script type="module">
         import {importCSVToDatabase} from './upload.js';
+        import {vote} from './vote.js';
         window.importCSVToDatabase = importCSVToDatabase;
-        
+        window.vote = vote;
+        vote();
       </script>
 </body>
 </html>
