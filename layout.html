@@ -31,7 +31,7 @@
                 <br>
                 
                 <label for="submit" class="custom-overlay-button">Submit</label>
-                <button type="submit" id="submit"></button>
+                <button type="submit" id="submit" onclick="vote()"></button>
             </div>
 
         </form>
@@ -55,7 +55,19 @@
         </div>
 
     </div>
-    <script src="/custom-selects.js"></script>
-    <script src="/layout.js"></script>
+    <!--Links layout to upload and imports the csv database function-->
+    <script src="layout.js"></script>
+    <script type="module" src="upload.js"></script>
+    <script type="module" src="vote.js"></script>
+    <script type="module">
+        import {importCSVToDatabase} from './upload.js';
+        import {vote} from './vote.js';
+        import {loadFromDatabase} from './vote.js';
+        window.importCSVToDatabase = importCSVToDatabase;
+        window.loadFromDatabase = loadFromDatabase;
+        window.vote = vote;
+        loadFromDatabase();
+        vote();
+      </script>
 </body>
 </html>
