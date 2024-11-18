@@ -1,3 +1,5 @@
+//import "vote.js"
+
 // find the input section
 let inputForm = document.getElementById("uploadForm")
 
@@ -85,10 +87,13 @@ function selectTab(tab) {
 
 
 
-function honorGraph() {  
-    // Chart.defaults.backgroundColor = '#793140D9';    
-    let candiadates = ['boab', 'bober', 'bob3']
-    let dat = [3, 5, 7] 
+async function honorGraph() {  
+    // Chart.defaults.backgroundColor = '#793140D9';   
+    //temporary list of candiadates because firebas broke :( 
+    let candiadates = ['boab', 'bober', 'bob3', "four", "five", "six", "seven", "eight", "nine"];
+    //the variable is set the list of counted first votes form the function vote
+    let dat = await vote();
+    console.log(dat);
     return {
         //the type of chart
         type: 'bar',
@@ -102,6 +107,7 @@ function honorGraph() {
             //the title of the chart
             label: '# of Votes',
             //the integer value of each bar
+            //where the variable containing the voting data is used
             data: dat,
             //the width of each bar
             borderWidth: 3,
@@ -122,6 +128,7 @@ function honorGraph() {
 }
 
 function prefectGraph(ctx) {
+    //cool graph that we made
     let candidates = ["bob", "boab", "booooaaaab"," timothy","bob3","Dr. Robert Troy, PhD."]
     let datfirst = [1,2,3,4,5,6];
     let datsecond = [3,5,4,1,2,6];

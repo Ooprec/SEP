@@ -34,10 +34,9 @@ export async function loadFromDatabase () {
 }
 
 export async function vote() {
-    
+    console.log("function ran");
     var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
     
-
 
     // for (var voter in allVotes){
     //     console.log(allVotes[voter].first);
@@ -67,7 +66,38 @@ export async function vote() {
      }
 }
         console.log(votes);
-        
+        return(votes);
 }
 //     console.log("candidates");
 // console.log(candidates);
+
+
+
+  
+// src="https://cdn.jsdelivr.net/npm/chart.js"
+
+// const ctx = document.getElementById('myChart');
+
+// var l = 12
+// function but(){
+//     l++
+// }
+
+// new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [l, 19, 3, 5, 2, 3],
+//       borderWidth: 1
+//     }]
+//   },
+//   options: {
+//     scales: {
+//       y: {
+//         beginAtZero: true
+//       }
+//     }
+//   }
+// });
