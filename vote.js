@@ -30,11 +30,12 @@ export async function loadFromDatabase () {
     });
 
     sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
+  
 
 }
 
 export async function vote() {
-    console.log("function ran");
+    // console.log("function ran");
     var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
     
 
@@ -65,8 +66,11 @@ export async function vote() {
          }
      }
 }
-        console.log(votes);
+        // console.log(allVotes.length)
+        // console.log(votes);
+        sessionStorage.setItem('shelby', JSON.stringify(votes));
         return(votes);
+        
 }
 //     console.log("candidates");
 // console.log(candidates);
