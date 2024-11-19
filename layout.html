@@ -10,11 +10,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <div id="main-page" class="light">
-        <h1 id="header" class="maroon">Student Elections</h1>
+        <h1 id="header" class="maroon" >
+            <div id="menubar"><svg id="menubar-svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 283.426 283.426" xml:space="preserve"><g><rect x="0" y="40.84" style="fill:#F2F4F5;" width="283.426" height="47.735"/><rect x="0" y="117.282" style="fill:#F2F4F5;" width="283.426" height="47.735"/><rect x="0" y="194.851" style="fill:#F2F4F5;;" width="283.426" height="47.735"/></g></svg></div>
+            <p id="header-text">Student Elections</p> 
+        </h1>
 
         <form action="" id="uploadForm">
             <div id="inputs" class="light">
-                
                 <label for="csv">Upload CSV:</label>
                 <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
                 <input type="file" id="csv"> <br><br>
@@ -39,10 +41,10 @@
         <div id="sections-parent">
             <div id="sections">
                 <div id="tabs" class="tab-container">
-                    <div id="honor-tab" class="honor 0 selectable-tab unselected" onclick="selectTab(this)">Honor</div>
-                    <div id="prefect-tab" class="prefect 1 selectable-tab unselected" onclick="selectTab(this)">Prefect</div>
-                    <div id="senate-tab" class="senate 2 selectable-tab unselected" onclick="selectTab(this)">Senate</div>
-                    <div id="secretary-tab" class="secretary 3 selectable-tab unselected" onclick="selectTab(this)">Secretary</div>
+                    <div id="honor-tab" class="honor 0 selectable-tab unselected" onclick=" selectTab(this)">Honor</div>
+                    <div id="prefect-tab" class="prefect 1 selectable-tab unselected" onclick=" selectTab(this)">Prefect</div>
+                    <div id="senate-tab" class="senate 2 selectable-tab unselected" onclick=" selectTab(this)">Senate</div>
+                    <div id="secretary-tab" class="secretary 3 selectable-tab unselected" onclick=" selectTab(this)">Secretary</div>
                 </div>
                     <div id="shown-results" class="light">
                         
