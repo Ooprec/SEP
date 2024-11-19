@@ -64,9 +64,7 @@ function selectTab(tab) {
         
         // toggle the 'selected' status for the newly selected tab
         tab.classList.toggle("selected");
-        //creates a new chart element in layout.html
-        const chartDiv = document.createElement("div");
-        // make a new canvas element
+        //creates a new chart element in layout.html        // make a new canvas element
         const ctx = document.createElement("canvas");
         ctx.classList.toggle("chart")
         //creates a new bar chart
@@ -87,12 +85,14 @@ function selectTab(tab) {
 
 
 
-async function honorGraph() {  
+function honorGraph() {  
     // Chart.defaults.backgroundColor = '#793140D9';   
     //temporary list of candiadates because firebas broke :( 
     let candiadates = ['boab', 'bober', 'bob3', "four", "five", "six", "seven", "eight", "nine"];
     //the variable is set the list of counted first votes form the function vote
-    let dat = await vote();
+    let dat = JSON.parse(sessionStorage.getItem('shelby')); 
+    console.log("data");
+
     console.log(dat);
     return {
         //the type of chart
