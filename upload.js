@@ -18,22 +18,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export const addItem = function(item){
-    try{
-        console.log("greg")
-      //docref is document reference
-      const docRef = addDoc(collection(db,"henry-todos"),{
-        name: item,
-        isCompleted: false,
-    
-      });
-    }
-    catch(e){
-    console.error("Error adding item to data base: ", e)
-    }
-    document.getElementById("newItem").value = "";
-    }
-
    //makes it so you can add csv data to a database
    //shoutout carson noble for this code
 export async function importCSVToDatabase () {
