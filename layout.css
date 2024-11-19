@@ -98,7 +98,7 @@ input[type="file"] {
 }
 
 
-#submit {
+.hidden-button {
     display: none;
 }
 

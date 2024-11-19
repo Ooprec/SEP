@@ -33,10 +33,14 @@
                 <br>
                 
                 <label for="submit" class="custom-overlay-button">Submit</label>
-                <button type="submit" id="submit" onclick="importCSVToDatabase()"></button>
+                <button type="submit" class="hidden-button" id="submit" onclick="importCSVToDatabase()"></button>
+
+                <label for="download" class="custom-overlay-button">Pull CSV</label>
             </div>
 
         </form>
+        <button id="download" class="hidden-button" onclick="loadFromDatabase();vote()"></button>
+
         
         <div id="sections-parent">
             <div id="sections">
