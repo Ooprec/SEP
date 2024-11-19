@@ -69,6 +69,15 @@ export async function vote() {
         // console.log(allVotes.length)
         // console.log(votes);
         sessionStorage.setItem('shelby', JSON.stringify(votes));
+        
+
+        if ("shelby" in sessionStorage) {
+            document.getElementById("shelby-check").innerHTML = "shelby is present";
+        } 
+        else {
+            document.getElementById("shelby-check").innerHTML = "shelby is not present";
+        }
+
         return(votes);
         
 }
