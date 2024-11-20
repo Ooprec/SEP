@@ -1,3 +1,5 @@
+//henry
+
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
@@ -29,13 +31,15 @@ export async function loadFromDatabase () {
         allVotes.push({ first: item.data().first, second: item.data().second, third: item.data().third });
         
     });
+
     sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
   
+
 }
 
-export async function vote() {
+export async function vote(allVotes) {
     // console.log("function ran");
-    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    // var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
     
 
     // for (var voter in allVotes){
@@ -63,15 +67,74 @@ export async function vote() {
             if(allVotes[i].first == candidates[j]){
             votes[j] = votes[j] + 1;
          }
-     }
-}
+        }
+        }
+
         // console.log(allVotes.length)
-        console.log(votes);
+        // console.log(votes);
+        //moves code back to session to be used for graphs
         sessionStorage.setItem('shelby', JSON.stringify(votes));
+        sessionStorage.setItem('holder', JSON.stringify(candidates));
         
         return(votes);
+       
         
 }
+
+
+export async function count() {
+    //a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
+    var votes = JSON.parse(sessionStorage.getItem('shelby')); 
+    //a list of all of the unique candidates (index corresponds to their votes in votes list)
+    var candidates = JSON.parse(sessionStorage.getItem('holder')); 
+    //a list of "voter objects" with their three choices as attributes
+    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+
+    
+    //the number needed to "win" the election
+    var threshold = allVotes.length /2;
+    console.log(threshold)
+
+    //go through all the candidates
+    for(var i in candidates){
+        if(votes[i] > threshold ){
+            console.log(candidates[i] + "has won the election");
+            return;
+        }
+    }
+    var firstMin = Math.min(votes)
+    for(j in candidates){
+        if(votes[j]== firstMin){
+            //candidates[j] is the person with the lowest number of votes
+            for(k in allVotes){
+                if(candidates[j] == allVotes[k].first){
+                    //set their first choice equal to their second
+                    allVotes[k].first = allVotes[k].second
+                }
+            }
+            break;
+        }
+
+        
+    }
+
+    vote(allVotes);
+
+
+}
+    
+
+
+
+
+
+        // var results = [];
+        // for(var i in votes){
+        //     results.push(candidates[i] + ": " + votes[i]);
+        // }
+        //         console.log(results)
+
+
 //     console.log("candidates");
 // console.log(candidates);
 
