@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, arrayUnion, updateDoc, getDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,6 +18,27 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+export async function getCollectionList()
+{
+  const listRef = doc(db, "rank-choice-voting", "docList");
+  const docSnap = await getDoc(listRef);
+  const docsArray = docSnap.data().docsArray;
+  const select = document.getElementById("csv-options");
+
+  select.innerHTML = '';
+
+  for (let i = 0; i<docsArray.length; i++) {
+    let tempElement = document.createElement('option');
+    tempElement.innerHTML = docsArray[i];
+    select.appendChild(tempElement);
+  }
+
+  return docsArray;
+  
+  // console.log(docSnap.data().docsArray);
+}
+
+
    //makes it so you can add csv data to a database
    //shoutout carson noble for this code
 export async function importCSVToDatabase () {
@@ -27,7 +48,19 @@ export async function importCSVToDatabase () {
     //   } );
 
       try{
-        
+            var uname = document.getElementById("csv-name").value;
+            if (uname.length < 8) {
+              alert("Make sure the election name is at least eight characters long");
+              return;
+            }
+            
+            if (uname in getCollectionList()) {alert("Election name already taken"); return}
+
+            const listRef = doc(db, "rank-choice-voting", "docList");
+            await updateDoc(listRef, {
+              docsArray: arrayUnion(uname)
+            })
+
             var file = document.getElementById("csv").files[0];
             var reader = new FileReader();
             reader.onload = function(event) {
@@ -42,7 +75,7 @@ export async function importCSVToDatabase () {
                 //sets each vote casted by each person equal to a value
                 //represented in fire base as (e.g. First: "Name of Candidate")
                 try {
-                    const docRef = addDoc(collection(db, "rank-choice-voting"), {
+                    const docRef = addDoc(collection(db, uname), {
                     first: cells[2],
                     second: cells[3],
                     third: cells[4],

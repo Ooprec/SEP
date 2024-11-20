@@ -172,32 +172,3 @@ function senateGraph(ctx) {
 function secretaryGraph(ctx) {
     // this will make a graph using the data from a secretary election
 }
-
-const sel = document.querySelector('.sel');
-const label = document.querySelector('.label');
-const options = document.querySelector('.options');
-
-options.setAttribute('hidden', true);
-
-sel.addEventListener('click', (e) => {
-    e.stopPropagation();
-    options.removeAttribute('hidden');
-});
-
-document.body.addEventListener('click', (e) => {
-    options.setAttribute('hidden', true);
-});
-
-options.addEventListener('click', (e) => {
-    if (e.target.tagName === 'DIV') {
-        e.stopPropagation();
-        label.textContent = e.target.textContent;
-        e.target.classList.add('selected');
-        Array.from(e.target.parentNode.children).forEach((child) => {
-            if (child !== e.target) {
-                child.classList.remove('selected');
-            }
-        });
-        options.setAttribute('hidden', true);
-    }
-});

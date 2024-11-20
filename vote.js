@@ -20,7 +20,8 @@ const db = getFirestore(app);
 
 
 export async function loadFromDatabase () {
-    const databaseItems = await getDocs(collection(db, "rank-choice-voting"));
+    const cname = document.getElementById("csv-options").value;
+    const databaseItems = await getDocs(collection(db, cname));
 
     //Creates a list of objects, linking each voters decision to an object (voter)
     var allVotes = [];
@@ -28,10 +29,8 @@ export async function loadFromDatabase () {
         allVotes.push({ first: item.data().first, second: item.data().second, third: item.data().third });
         
     });
-
     sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
   
-
 }
 
 export async function vote() {
@@ -67,17 +66,9 @@ export async function vote() {
      }
 }
         // console.log(allVotes.length)
-        // console.log(votes);
+        console.log(votes);
         sessionStorage.setItem('shelby', JSON.stringify(votes));
         
-
-        if ("shelby" in sessionStorage) {
-            document.getElementById("shelby-check").innerHTML = "shelby is present";
-        } 
-        else {
-            document.getElementById("shelby-check").innerHTML = "shelby is not present";
-        }
-
         return(votes);
         
 }

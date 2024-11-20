@@ -20,26 +20,25 @@
                 <label for="csv">Upload CSV:</label>
                 <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
                 <input type="file" id="csv"> <br><br>
-
-                <div class="sel">
-                    <div class="label">Select option...</div>
-                    <div class="options">
-                        <div>Honor</div>
-                        <div>Prefect</div>
-                        <div>Secretary</div>
-                        <div>Senate</div>
-                    </div>
-                </div>
-                <br>
                 
+                <input type="text" id="csv-name">
+
+                <br><br>
                 <label for="submit" class="custom-overlay-button">Submit</label>
                 <button type="submit" class="hidden-button" id="submit" onclick="importCSVToDatabase()"></button>
 
-                <label for="download" class="custom-overlay-button">Pull CSV</label>
+                
             </div>
 
         </form>
+
+
+        <select id="csv-options"></select>
+        </select>
+        <label for="download" class="custom-overlay-button">Pull CSV</label>
         <button id="download" class="hidden-button" onclick="loadFromDatabase();vote()"></button>
+
+        <button onclick="getCollectionList()"></button>
 
         <div id="session-check" class="maroon">
             <p id="shelby-check"></p>
@@ -69,12 +68,13 @@
     <script type="module" src="upload.js"></script>
     <script type="module" src="vote.js"></script>
     <script type="module">
-        import {importCSVToDatabase} from './upload.js';
-        import {vote} from './vote.js';
-        import {loadFromDatabase} from './vote.js';
+        import {importCSVToDatabase, getCollectionList} from './upload.js';
+        import {loadFromDatabase, vote} from './vote.js';
         window.importCSVToDatabase = importCSVToDatabase;
         window.loadFromDatabase = loadFromDatabase;
+        window.getCollectionList = getCollectionList;
         window.vote = vote;
+        getCollectionList();
         loadFromDatabase();
         vote();
       </script>
