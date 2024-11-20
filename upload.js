@@ -68,7 +68,7 @@ export async function importCSVToDatabase () {
               //seperates the csv data into rows to seperate candidates
               var rows = csvData.split("\n");
               //looping through all rows, fills rows
-              for (var i = 0; i < rows.length; i++) {
+              for (var i = 1; i < rows.length; i++) {
                 //cells is an array of cells
                 var cells = rows[i].split(",");
                

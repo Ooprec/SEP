@@ -103,10 +103,10 @@ export async function count() {
         }
     }
     var firstMin = Math.min(votes)
-    for(j in candidates){
+    for(var j in candidates){
         if(votes[j]== firstMin){
             //candidates[j] is the person with the lowest number of votes
-            for(k in allVotes){
+            for(var k in allVotes){
                 if(candidates[j] == allVotes[k].first){
                     //set their first choice equal to their second
                     allVotes[k].first = allVotes[k].second
@@ -119,20 +119,17 @@ export async function count() {
     }
 
     vote(allVotes);
+    var results = [];
+    for(var i in votes){
+        results.push(candidates[i] + ": " + votes[i]);
+    }
+            console.log(results)
 
 
 }
     
 
 
-
-
-
-        // var results = [];
-        // for(var i in votes){
-        //     results.push(candidates[i] + ": " + votes[i]);
-        // }
-        //         console.log(results)
 
 
 //     console.log("candidates");

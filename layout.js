@@ -88,7 +88,7 @@ function selectTab(tab) {
 function honorGraph() {  
     // Chart.defaults.backgroundColor = '#793140D9';   
     //temporary list of candiadates because firebas broke :( 
-    let candiadates = ['boab', 'bober', 'bob3', "four", "five", "six", "seven", "eight", "nine"];
+    let candiadates = JSON.parse(sessionStorage.getItem('holder'));
     //the variable is set the list of counted first votes form the function vote
     let dat = JSON.parse(sessionStorage.getItem('shelby')); 
     console.log("data");

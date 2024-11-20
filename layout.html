@@ -69,14 +69,16 @@
     <script type="module" src="vote.js"></script>
     <script type="module">
         import {importCSVToDatabase, getCollectionList} from './upload.js';
-        import {loadFromDatabase, vote} from './vote.js';
+        import {loadFromDatabase, vote, count} from './vote.js';
         window.importCSVToDatabase = importCSVToDatabase;
         window.loadFromDatabase = loadFromDatabase;
         window.getCollectionList = getCollectionList;
         window.vote = vote;
+        window.count = count;
         getCollectionList();
         loadFromDatabase();
-        vote();
+        vote(JSON.parse(sessionStorage.getItem('allVotes')));
+        count();
       </script>
 </body>
 </html>
