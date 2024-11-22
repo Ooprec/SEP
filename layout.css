@@ -10,6 +10,7 @@
     --maroon-but-darker: #582235;
 
     --br: .2rem;
+    --border: .08rem solid var(--maroon-but-darker);
 }
 
 body {
@@ -18,6 +19,7 @@ body {
     margin: 0;
     overflow-x: hidden;
 }
+
 .dark {
     background-color: var(--dark);
     color: var(--light);
@@ -45,23 +47,13 @@ body {
 
 #header {
     margin: auto;
-    padding: 1rem;
-    justify-self: right;
-    display: grid;
-    grid-template-areas: '1 2 3'
-    
+    justify-content: center;
+    align-content: center;
+    text-align: center;
 }
 
-#menubar {
-    width: 2rem;
-    cursor: pointer;
-    grid-area: '1';
-    transition: transform 1s
-}
-
-#menubar:hover {
-    transform: rotate3d(1,1,1,361deg);
-    
+.input-label {
+    color: var(--maroon-but-darker)
 }
 
 #uploadForm {
@@ -78,7 +70,7 @@ input[type="file"] {
     color: var(--maroon-but-darker);
     font-size: 12pt;
     font-family: sans-serif;
-    border: .08rem solid var(--maroon);
+    border: var(--border);
     border-radius: var(--br);
     display: inline-block;
     padding: .4rem .8rem;
@@ -90,7 +82,7 @@ input[type="file"] {
 }
 
 .custom-overlay-button:hover {
-    border: .08rem solid var(--maroon);
+    border: var(--border);
     background-color: var(--maroon);
     color: var(--light);
     transform: scale(1.07);
@@ -102,11 +94,43 @@ input[type="file"] {
     display: none;
 }
 
+.thin-bar {
+    height: .15rem;
+    margin: auto;
+}
+
+select {
+    font-size: 12pt;
+    color: var(--maroon-but-darker);
+    background-color: var(--light);
+    border: var(--border);
+    border-radius: var(--br);
+    padding: .4rem .8rem;
+    margin: 0rem .5rem;
+    font-family: sans-serif;
+    transition: transform .25s;
+}
+
+select:hover {
+    border: var(--border);
+    background-color: var(--maroon);
+    color: var(--light);
+    transform: scale(1.07);
+}
+
+#post-form {
+    margin: auto;
+    padding: 1rem;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
 
 .tab-container {
     display: grid;
     grid-template-areas: 'honor prefect senate secretary';
     height: 2rem;
+    z-index: 1;
 }
 
 .selectable-tab {
@@ -114,16 +138,38 @@ input[type="file"] {
     font-weight: bold;
     padding: .75rem;
     cursor: pointer;
-    background-color: var(--maroon);
     color: var(--light);
-    border: .05rem solid var(--maroon);
-    transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, transform .15s linear, border-radius .15s;
+    border: var(--border);
+    background-color: var(--maroon);
+    /* transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, transform .15s linear, border-radius .15s; */
 }
 
-.selectable-tab:hover {
-    border: .05rem solid var(--dark);
-    border-radius: .15rem;
-    transform: scale(1.1);
+
+@keyframes seltab-selected {
+    0% {
+       background-color: var(--maroon);
+
+    }
+    
+    100% {
+        background-color: var(--maroon-but-darker);
+        transform: scale(1.1);
+        z-index: 1;
+    }
+}
+
+
+@keyframes seltab-deselected {
+    0% {
+        background-color: var(--maroon-but-darker);
+        transform: scale(1.1);
+    }
+    99% {z-index: 1};
+    100% {
+        background-color: var(--maroon);
+        transform: scale(1.0);
+        z-index: 0;
+    }
 }
 
 #honor-tab {grid-area: honor;}
@@ -131,12 +177,22 @@ input[type="file"] {
 #senate-tab {grid-area: senate;}
 #secretary-tab {grid-area: secretary;}
 
-.selected {background-color: var(--maroon-but-darker); border-color: var(--maroon-but-darker);}
+.selected {animation: seltab-selected .2s ease-in-out; animation-fill-mode: both;}
+.unselected {animation: seltab-deselected .2s ease-in-out; animation-fill-mode: both;}
 
 .results {display:none};
 
 .chart {
     width: 300px;
+}
+
+@keyframes fly-in {
+    0% {
+        transform: translateX(150%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
 }
 
 #shown-results {
@@ -147,38 +203,33 @@ input[type="file"] {
     padding: 4rem;
 }
 
-
-.sel {
-    color: var(--maroon);
-    width: 15rem;
-    box-sizing: border-box;
-    background-color: var(--light);
-    border: .08rem solid var(--maroon);
-    overflow: hidden;
-    cursor: pointer;
-    align-content: center;
-    margin: auto;
-    
-    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat calc(100% - 10px) 14px;
-    border-radius: var(--br);
-}
-
-.label,
-.sel .options div {
+#csv-name {
+    font-size: 12pt;
     padding: .4rem .8rem;
-}
-
-.selected {
-    background-color: var(--maroon);
-    color: var(--light)
-}
-.sel .options {
-    width: 15rem;
-    background-color: var(--light);
+    border-radius: var(--br);
+    border: var(--border);
     color: var(--maroon);
-}
-.sel .options div:hover {
-    background-color: var(--maroon-but-darker);
-    color: var(--light)
+    background-color: var(--light);
 }
 
+.anim-flyin {
+    animation-name: fly-in;
+    animation-duration: .2s;
+    animation-timing-function: ease-in-out;
+    overflow-y: hidden;
+    animation-fill-mode: both;
+}
+
+.title-anim {
+    animation-name: title-anim;
+    animation-duration: 3s;
+    animation-direction: alternate;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite; 
+
+}
+
+@keyframes title-anim {
+    from {transform: scale(1);}
+    to {transform: scale(1.05);}
+}

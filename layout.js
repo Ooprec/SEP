@@ -50,22 +50,26 @@ function selectTab(tab) {
         let selected = document.getElementsByClassName("selected");
         // get the output div
         results = document.getElementById("shown-results");  
+
         // if a tab is already selected
         if (selected.length != 0) {
+            
             // find the previously selected tab
             let previous = document.getElementsByClassName("selected")[0];
             
             // toggle the 'selected' status
-            previous.classList.toggle("selected");
+            previous.classList.remove("selected");
+            previous.classList.add("unselected");
 
             // clear the output section
             results.innerHTML = '';
         }
         
         // toggle the 'selected' status for the newly selected tab
-        tab.classList.toggle("selected");
+        tab.classList.add("selected");
+        tab.classList.remove("unselected");
         //creates a new chart element in layout.html        // make a new canvas element
-        const ctx = document.createElement("canvas");
+        let ctx = document.createElement("canvas");
         ctx.classList.toggle("chart")
         //creates a new bar chart
         var graphFunctionArray = [honorGraph, prefectGraph, senateGraph, secretaryGraph];
@@ -74,8 +78,14 @@ function selectTab(tab) {
         chartSettings = graphFunctionArray[index]();
         new Chart(ctx, chartSettings);
         
+        let animDiv = document.createElement("div");
+        animDiv.classList.add("anim-flyin");
+
         //append the chart to the html element
-        results.appendChild(ctx);
+
+        animDiv.appendChild(ctx);
+
+        results.appendChild(animDiv);
 
     }
     else {
@@ -91,9 +101,7 @@ function honorGraph() {
     let candiadates = JSON.parse(sessionStorage.getItem('holder'));
     //the variable is set the list of counted first votes form the function vote
     let dat = JSON.parse(sessionStorage.getItem('shelby')); 
-    console.log("data");
 
-    console.log(dat);
     return {
         //the type of chart
         type: 'bar',

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="animations.css">
     <title>Layout</title>
 </head>
 <body class="light">
@@ -11,16 +12,16 @@
 
     <div id="main-page" class="light">
         <h1 id="header" class="maroon" >
-            <div id="menubar"><svg id="menubar-svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 283.426 283.426" xml:space="preserve"><g><rect x="0" y="40.84" style="fill:#F2F4F5;" width="283.426" height="47.735"/><rect x="0" y="117.282" style="fill:#F2F4F5;" width="283.426" height="47.735"/><rect x="0" y="194.851" style="fill:#F2F4F5;;" width="283.426" height="47.735"/></g></svg></div>
-            <p id="header-text">Student Elections</p> 
+            <p id="header-text" class="title-anim">Student Elections</p> 
         </h1>
 
         <form action="" id="uploadForm">
             <div id="inputs" class="light">
-                <label for="csv">Upload CSV:</label>
+                <label for="csv" id="upload-csv-label" class="input-label">Upload CSV:</label>
                 <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
                 <input type="file" id="csv"> <br><br>
                 
+                <label for="csv-name" class="input-label">Election Name: </label>
                 <input type="text" id="csv-name">
 
                 <br><br>
@@ -31,17 +32,22 @@
             </div>
 
         </form>
+        <div class="thin-bar maroon"></div>
+        <br>
 
 
-        <select id="csv-options"></select>
-        </select>
-        <label for="download" class="custom-overlay-button">Pull CSV</label>
-        <button id="download" class="hidden-button" onclick="loadFromDatabase();vote()"></button>
-
-        <button onclick="getCollectionList()"></button>
-
-        <div id="session-check" class="maroon">
-            <p id="shelby-check"></p>
+        <div id="Lbar-container">
+            <label for="Lbar-bar" id="Lbar-text">Test</label>
+            
+            <div id="Lbar-border">
+                <div id="Lbar-bar" class="unstarted"></div>
+            </div>
+            
+        </div>
+        <div id="post-form">
+            <select id="csv-options"></select></select>
+            <label for="download" class="custom-overlay-button">Pull CSV</label>
+            <button id="download" class="hidden-button" onclick="loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')))"></button>
         </div>
         
         <div id="sections-parent">
@@ -64,20 +70,22 @@
 
     </div>
     <!--Links layout to upload and imports the csv database function-->
+    <script src="animations.js"></script>
     <script src="layout.js"></script>
     <script type="module" src="upload.js"></script>
     <script type="module" src="vote.js"></script>
     <script type="module">
-        import {importCSVToDatabase, getCollectionList} from './upload.js';
-        import {loadFromDatabase, vote, count} from './vote.js';
-        window.importCSVToDatabase = importCSVToDatabase;
-        window.loadFromDatabase = loadFromDatabase;
-        window.getCollectionList = getCollectionList;
-        window.vote = vote;
-        window.count = count;
+        import * as uploadjs from "./upload.js";
+        import * as votejs from "./vote.js";
+        import * as optjs from "./optimizations.js";
+        window.importCSVToDatabase = uploadjs.importCSVToDatabase;
+        window.loadFromDatabase = votejs.loadFromDatabase;
+        window.getCollectionList = uploadjs.getCollectionList;
+        window.vote = votejs.vote;
+        window.count = votejs.count;
+        window.checkLocal = optjs.checkLocal;
         getCollectionList();
-        loadFromDatabase();
-        vote(JSON.parse(sessionStorage.getItem('allVotes')));
+        checkLocal();
         count();
       </script>
 </body>
