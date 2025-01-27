@@ -1,7 +1,10 @@
+
+// get the HTML elements of the loading bar
 var LCont = document.getElementById("Lbar-container");
 var LBar = document.getElementById("Lbar-bar");
 var LText = document.getElementById("Lbar-text");
 
+// wait
 LCont.addEventListener("click", (e) => {
     if (LBar.classList.contains("unstarted"))
     {

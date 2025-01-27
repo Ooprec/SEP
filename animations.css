@@ -70,7 +70,7 @@
 }
 
 .q5 {
-    animation: Lbar-progress-q5 var(--bst) linear;
+    animation: Lbar-progress-q5 2s ease-out;
 }
 
 @keyframes Lbar-progress-q1 {
