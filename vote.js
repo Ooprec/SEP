@@ -1,10 +1,10 @@
 //henry
 
 // Import Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -37,6 +37,32 @@ export async function loadFromDatabase () {
 
 }
 
+// //returns a list of only top choice votes
+// export function isolate(allVotes){
+//     for (var i in allVotes){
+//       if(runner.includes(allVotes.first[i])){
+//           runner.push(allVotes.first[i])
+//       }
+
+// }
+// }
+// console.log("le")
+// console.log(runner)
+
+// //returns a list of only top choice votes
+// export function cleanVotesForCounting(allVotes){
+
+// }
+
+// //returns a list of votes to count with eliminated candidate removed
+//  export function removeLoser(allVotes, candidateToRemove){
+
+
+// }
+
+//returns a dictionary with candidate names as keys and vote tallies as values
+//@param allVotes {list} - list of all of the votes to count
+
 export async function vote(allVotes) {
     // console.log("function ran");
     // var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
@@ -50,7 +76,6 @@ export async function vote(allVotes) {
     var candidates = [];
     var votes = [];
 
-    //makes list of all candidates and their votes
     for (var i=0; i<allVotes.length; i++){
         // console.log(allVotes[i].first);
         if(!candidates.includes(allVotes[i].first)){
@@ -71,12 +96,13 @@ export async function vote(allVotes) {
         }
 
         // console.log(allVotes.length)
-        // console.log(votes);
+        console.log("ohjitticus")
+        console.log(votes);
         //moves code back to session to be used for graphs
         sessionStorage.setItem('shelby', JSON.stringify(votes));
         sessionStorage.setItem('holder', JSON.stringify(candidates));
         
-        return(votes);
+        return (votes);
        
         
 }
@@ -102,14 +128,22 @@ export async function count() {
             return;
         }
     }
-    var firstMin = Math.min(votes)
+    var firstMin = Math.min(...votes)
+    console.log(votes)
+    console.log(firstMin);
     for(var j in candidates){
         if(votes[j]== firstMin){
             //candidates[j] is the person with the lowest number of votes
             for(var k in allVotes){
+                // console.log("gro")
                 if(candidates[j] == allVotes[k].first){
+                    console.log(allVotes[k].first)
                     //set their first choice equal to their second
                     allVotes[k].first = allVotes[k].second
+                    console.log(allVotes[k].first)
+                    // console.log(allVotes[k].first)
+                    // console.log(allVotes[k].second)
+
                 }
             }
             break;
@@ -117,14 +151,56 @@ export async function count() {
 
         
     }
-
-    vote(allVotes);
+    // console.log(allVotes)
+    vote(allVotes)
+    console.log(allVotes);
     var results = [];
     for(var i in votes){
+        console.log("merhaba")
         results.push(candidates[i] + ": " + votes[i]);
     }
+            console.log("newicus")
             console.log(results)
 
+            //FOR HENRY FUTURE: CODE DOESNT WORK BECAUSE THE LIST REVERTS UPON GOING THROUGH VOTE FUNCTION AGAIN
+            //nah fr
 
 }
     
+
+
+
+
+//     console.log("candidates");
+// console.log(candidates);
+
+
+
+  
+// src="https://cdn.jsdelivr.net/npm/chart.js"
+
+// const ctx = document.getElementById('myChart');
+
+// var l = 12
+// function but(){
+//     l++
+// }
+
+// new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [l, 19, 3, 5, 2, 3],
+//       borderWidth: 1
+//     }]
+//   },
+//   options: {
+//     scales: {
+//       y: {
+//         beginAtZero: true
+//       }
+//     }
+//   }
+// });
