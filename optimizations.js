@@ -1,12 +1,11 @@
 // Cooper's testing
 
 // import firebase functions
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
 // import functions from other scripts
 import * as votejs from "/vote.js";
-import * as uploadjs from "/upload.js"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
