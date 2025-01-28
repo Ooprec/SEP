@@ -75,6 +75,7 @@
         </div>
 
     </div>
+    <button type="button" id="thingy">Count</button>
     <!--Links layout to upload and imports the csv database function-->
     <script src="./animations.js"></script>
     <script src="./layout.js"></script>
@@ -88,11 +89,11 @@
         window.loadFromDatabase = votejs.loadFromDatabase;
         window.getCollectionList = uploadjs.getCollectionList;
         window.vote = votejs.vote;
-        window.count = votejs.count;
+        // window.count = votejs.count;
         window.checkLocal = optjs.checkLocal;
         getCollectionList();
         checkLocal();
-        count();
+        // count();
       </script>
 </body>
 </html>

@@ -37,8 +37,6 @@ export async function getCollectionList()
   
   // console.log(docSnap.data().docsArray);
 }
-
-
    //makes it so you can add csv data to a database
    //shoutout carson noble for this code
 export async function importCSVToDatabase () {

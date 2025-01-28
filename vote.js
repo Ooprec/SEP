@@ -46,8 +46,6 @@ export async function loadFromDatabase () {
 
 // }
 // }
-// console.log("le")
-// console.log(runner)
 
 // //returns a list of only top choice votes
 // export function cleanVotesForCounting(allVotes){
@@ -64,25 +62,19 @@ export async function loadFromDatabase () {
 //@param allVotes {list} - list of all of the votes to count
 
 export async function vote(allVotes) {
-    // console.log("function ran");
     // var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
     
 
     // for (var voter in allVotes){
-    //     console.log(allVotes[voter].first);
     // }
-    // console.log(allVotes.length)
    
     var candidates = [];
     var votes = [];
 
     for (var i=0; i<allVotes.length; i++){
-        // console.log(allVotes[i].first);
         if(!candidates.includes(allVotes[i].first)){
-            // console.log(allVotes[i])
             candidates.push(allVotes[i].first);
             votes.push(0);
-            // console.log(candidates);
         }
     }
 
@@ -95,9 +87,6 @@ export async function vote(allVotes) {
         }
         }
 
-        // console.log(allVotes.length)
-        console.log("ohjitticus")
-        console.log(votes);
         //moves code back to session to be used for graphs
         sessionStorage.setItem('shelby', JSON.stringify(votes));
         sessionStorage.setItem('holder', JSON.stringify(candidates));
@@ -107,100 +96,84 @@ export async function vote(allVotes) {
         
 }
 
+document.getElementById("thingy").addEventListener("click", count);
 
 export async function count() {
     //a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
-    var votes = JSON.parse(sessionStorage.getItem('shelby')); 
+    var votes = JSON.parse(sessionStorage.getItem('shelby')); //list of #
     //a list of all of the unique candidates (index corresponds to their votes in votes list)
-    var candidates = JSON.parse(sessionStorage.getItem('holder')); 
+    var candidates = JSON.parse(sessionStorage.getItem('holder')); // list of names
     //a list of "voter objects" with their three choices as attributes
-    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); // all voters
 
     
     //the number needed to "win" the election
     var threshold = allVotes.length /2;
-    console.log(threshold)
 
     //go through all the candidates
     for(var i in candidates){
         if(votes[i] > threshold ){
-            console.log(candidates[i] + "has won the election");
+            console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
             return;
         }
     }
+
     var firstMin = Math.min(...votes)
-    console.log(votes)
-    console.log(firstMin);
+    
     for(var j in candidates){
-        if(votes[j]== firstMin){
+        if(votes[j] == firstMin){
             //candidates[j] is the person with the lowest number of votes
             for(var k in allVotes){
-                // console.log("gro")
-                if(candidates[j] == allVotes[k].first){
-                    console.log(allVotes[k].first)
-                    //set their first choice equal to their second
-                    allVotes[k].first = allVotes[k].second
-                    console.log(allVotes[k].first)
-                    // console.log(allVotes[k].first)
-                    // console.log(allVotes[k].second)
+                if( candidates[j] == allVotes[k].first){
+                    //set their first choice equal to their second)
+                    if (candidates.includes(allVotes[k].second))
+                    {
+                        allVotes[k].first = allVotes[k].second;
+                        allVotes[k].second = allVotes[k].third;
+                        allVotes[k].third = null;
+                    }
+                    else if (candidates.includes(allVotes[k].third)) {
+                        allVotes[k].first = allVotes[k].third;
+                        allVotes[k].second = null
+                        allVotes[k].third = null;
+                    }
+                    else {
+                        console.log(allVotes.length)
+                        allVotes.splice(k,1);
+                        console.log(allVotes.length)
+                    }
+                    
 
                 }
+                if (candidates[j] == allVotes[k].second)
+                {
+                    if (candidates.includes(allVotes[k].third))
+                    {
+                        allVotes[k].second=allVotes[k].third;
+                        allVotes[k].third = null;
+                    }
+                    else
+                    {
+                        allVotes[k].second = null;
+                        allVotes[k].third = null;
+                    }
+                }
+                if (candidates[j] == allVotes[k].third)
+                {
+                    allVotes[k].third = null;
+                }
             }
+            candidates.splice(j,1);
+            console.log(candidates);
+            sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
+            sessionStorage.setItem('holder',JSON.stringify(candidates));
             break;
         }
 
-        
+            
     }
-    // console.log(allVotes)
-    vote(allVotes)
-    console.log(allVotes);
-    var results = [];
-    for(var i in votes){
-        console.log("merhaba")
-        results.push(candidates[i] + ": " + votes[i]);
-    }
-            console.log("newicus")
-            console.log(results)
 
-            //FOR HENRY FUTURE: CODE DOESNT WORK BECAUSE THE LIST REVERTS UPON GOING THROUGH VOTE FUNCTION AGAIN
-            //nah fr
+    vote(allVotes);
+    console.log("squirt")
 
 }
-    
-
-
-
-
-//     console.log("candidates");
-// console.log(candidates);
-
-
-
-  
-// src="https://cdn.jsdelivr.net/npm/chart.js"
-
-// const ctx = document.getElementById('myChart');
-
-// var l = 12
-// function but(){
-//     l++
-// }
-
-// new Chart(ctx, {
-//   type: 'bar',
-//   data: {
-//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-//     datasets: [{
-//       label: '# of Votes',
-//       data: [l, 19, 3, 5, 2, 3],
-//       borderWidth: 1
-//     }]
-//   },
-//   options: {
-//     scales: {
-//       y: {
-//         beginAtZero: true
-//       }
-//     }
-//   }
-// });
