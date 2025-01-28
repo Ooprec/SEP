@@ -102,3 +102,59 @@
     0% {transform: scaleX(0)}
     100% {transform: scalex(1)}
 }
+
+.collapsible
+{
+    display: none;
+    border-color: var(--maroon-but-darker);
+    width: 100%;
+    height: 2rem;
+    animation-fill-mode: both;
+}
+
+.collapsible:hover 
+{
+    background-color: var(--maroon-but-darker);
+    animation: collapsible-selected .2s; 
+}
+
+@keyframes collapsible-selected
+{
+    0% {transform: scale(1);}
+    100% {transform: scale(1.1)}
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.collapsible-content {
+    padding: 0 18px;
+    overflow: hidden;
+    background-color: var(--light);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+#collapsible-label {
+    color: var(--light);
+    background-color: var(--maroon);
+    font-size: 16pt;
+    font-family: sans-serif;
+    border: var(--border);
+    display: inline-block;
+    padding: .4rem .8rem;
+    margin-top: .8rem;
+    cursor: pointer;
+    align-content: center;
+    text-align: center;
+    transition: transform .25s;
+    width: 100%;
+}
+
+#collapsible-label:hover {
+    border: var(--border);
+    background-color: var(--maroon-but-darker);
+    color: var(--light);
+    transform: scale(1,1.07);
+    /* padding: .6rem 1.2rem; */
+}
