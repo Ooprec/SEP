@@ -113,20 +113,26 @@ export async function count() {
     //a list of "voter objects" with their three choices as attributes
     var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); // all voters
 
+    let tempCovington = countCovington();
+    let tempAll = allVotes;
+
+
     
     //the number needed to "win" the election
     var threshold = allVotes.length /2;
 
     //go through all the candidates
-    for(var i in candidates){
-        if(votes[i] > threshold ){
-            console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
-            return;
-        }
-    }
+    // for(var i in candidates){
+    //     if(votes[i] > threshold ){
+    //         console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+    //         return;
+    //     }
+    // }
 
     var firstMin = Math.min(...votes)
-    
+    console.log('');
+    console.log(candidates.length)
+    console.log(allVotes)
     for(var j in candidates){
         if(votes[j] == firstMin){
             //candidates[j] is the person with the lowest number of votes
@@ -147,8 +153,6 @@ export async function count() {
                     else {
                         allVotes.splice(k,1);
                     }
-                    
-
                 }
                 if (candidates[j] == allVotes[k].second)
                 {
@@ -167,18 +171,58 @@ export async function count() {
                 {
                     allVotes[k].third = null;
                 }
+                if (!candidates.includes(allVotes[k].first) && !candidates.includes(allVotes[k].second) && !candidates.includes(allVotes[k].third))
+                    {
+                        allVotes.splice(k,1)
+                    }
+                
             }
             candidates.splice(j,1);
-            console.log(candidates);
             sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
             sessionStorage.setItem('holder',JSON.stringify(candidates));
-            break;
         }
-
-            
+        
     }
 
     vote(allVotes);
-    console.log("squirt")
 
+    // let tempCovington2 = countCovington()
+    // if (tempCovington2 == [3,0,0])
+    // {
+    //     console.log(tempAll);
+    // }
+    
+    }
+
+
+document.getElementById("thingo").addEventListener("click", countCovington);
+
+
+function countCovington()
+{
+    let first = 0;
+    let second = 0;
+    let third = 0;
+    let allVotes = JSON.parse(sessionStorage.getItem("allVotes"));
+    for (i in allVotes)
+    {
+        if (allVotes[i].first == "Covington Adams III")
+        {
+            first++;
+        }
+        if (allVotes[i].second == "Covington Adams III")
+        {
+            second++;
+        }
+        if (allVotes[i].third == "Covington Adams III")
+        {
+            third++;
+        }
+    }
+    if (first == 3)
+    {
+        console.log(allVotes);
+    }
+    // console.log(first + " | " + second + " | " + third);
+    return [first,second,third];
 }

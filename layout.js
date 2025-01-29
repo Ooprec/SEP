@@ -101,7 +101,6 @@ function honorGraph() {
     let candiadates = JSON.parse(sessionStorage.getItem('holder'));
     //the variable is set the list of counted first votes form the function vote
     let dat = JSON.parse(sessionStorage.getItem('shelby')); 
-
     return {
         //the type of chart
         type: 'bar',

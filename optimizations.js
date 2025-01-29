@@ -40,31 +40,4 @@ export async function checkLocal() {
 
 }   
 
-document.getElementById("thingo").addEventListener("click", countCovington);
-
-
-function countCovington()
-{
-    let first = 0;
-    let second = 0;
-    let third = 0;
-    let allVotes = JSON.parse(sessionStorage.getItem("allVotes"));
-    for (i in allVotes)
-    {
-        if (allVotes[i].first == "Covington Adams III")
-        {
-            first++;
-        }
-        if (allVotes[i].second == "Covington Adams III")
-        {
-            second++;
-        }
-        if (allVotes[i].third == "Covington Adams III")
-        {
-            third++;
-        }
-    }
-    console.log(first + " | " + second + " | " + third);
-}
-
 
