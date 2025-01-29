@@ -44,10 +44,12 @@ export async function importCSVToDatabase () {
     //   studentPieces.forEach((piece) =>{
     //     deleteDoc(doc(db, "rank-choice-voting", piece.id));
     //   } );
+  console.log("importing")
 
       try{
+            
             var uname = document.getElementById("csv-name").value;
-            if (uname.length < 8) {
+            if (uname.length < 5) {
               alert("Make sure the election name is at least eight characters long");
               return;
             }

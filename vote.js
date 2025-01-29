@@ -25,6 +25,13 @@ export async function loadFromDatabase () {
     const cname = document.getElementById("csv-options").value;
     const databaseItems = await getDocs(collection(db, cname));
 
+    try{  sessionStorage.removeItem("shelby");
+        sessionStorage.removeItem("holder");
+        sessionStorage.removeItem("allVotes");
+      }
+      catch {console.log("failed")}
+
+
     //Creates a list of objects, linking each voters decision to an object (voter)
     var allVotes = [];
     databaseItems.forEach((item) =>{
@@ -33,7 +40,7 @@ export async function loadFromDatabase () {
     });
 
     sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
-  
+    vote(allVotes);
 
 }
 
@@ -138,9 +145,7 @@ export async function count() {
                         allVotes[k].third = null;
                     }
                     else {
-                        console.log(allVotes.length)
                         allVotes.splice(k,1);
-                        console.log(allVotes.length)
                     }
                     
 
