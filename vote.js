@@ -90,8 +90,8 @@ export async function vote(allVotes) {
         for(var j in candidates){
             if(allVotes[i].first == candidates[j]){
             votes[j] = votes[j] + 1;
+          } 
          }
-        }
         }
 
         //moves code back to session to be used for graphs
@@ -133,6 +133,8 @@ export async function count() {
     console.log('');
     console.log(candidates.length)
     console.log(allVotes)
+
+    // REWRITE THIS LATER
     for(var j in candidates){
         if(votes[j] == firstMin){
             //candidates[j] is the person with the lowest number of votes
@@ -145,9 +147,10 @@ export async function count() {
                         allVotes[k].second = allVotes[k].third;
                         allVotes[k].third = null;
                     }
+                    
                     else if (candidates.includes(allVotes[k].third)) {
                         allVotes[k].first = allVotes[k].third;
-                        allVotes[k].second = null
+                        allVotes[k].second = null;
                         allVotes[k].third = null;
                     }
                     else {
@@ -158,7 +161,7 @@ export async function count() {
                 {
                     if (candidates.includes(allVotes[k].third))
                     {
-                        allVotes[k].second=allVotes[k].third;
+                        allVotes[k].second = allVotes[k].third;
                         allVotes[k].third = null;
                     }
                     else
