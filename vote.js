@@ -135,57 +135,101 @@ export async function count() {
     console.log(allVotes)
 
     // REWRITE THIS LATER
-    for(var j in candidates){
-        if(votes[j] == firstMin){
-            //candidates[j] is the person with the lowest number of votes
-            for(var k in allVotes){
-                if( candidates[j] == allVotes[k].first){
-                    //set their first choice equal to their second)
-                    if (candidates.includes(allVotes[k].second))
-                    {
-                        allVotes[k].first = allVotes[k].second;
-                        allVotes[k].second = allVotes[k].third;
-                        allVotes[k].third = null;
-                    }
-                    
-                    else if (candidates.includes(allVotes[k].third)) {
-                        allVotes[k].first = allVotes[k].third;
-                        allVotes[k].second = null;
-                        allVotes[k].third = null;
-                    }
-                    else {
-                        allVotes.splice(k,1);
-                    }
-                }
-                if (candidates[j] == allVotes[k].second)
-                {
-                    if (candidates.includes(allVotes[k].third))
-                    {
-                        allVotes[k].second = allVotes[k].third;
-                        allVotes[k].third = null;
-                    }
-                    else
-                    {
-                        allVotes[k].second = null;
-                        allVotes[k].third = null;
-                    }
-                }
-                if (candidates[j] == allVotes[k].third)
-                {
-                    allVotes[k].third = null;
-                }
-                if (!candidates.includes(allVotes[k].first) && !candidates.includes(allVotes[k].second) && !candidates.includes(allVotes[k].third))
-                    {
-                        allVotes.splice(k,1)
-                    }
-                
-            }
+
+    // gets candidate and removes it from the list of candidates
+    for (var j in candidates)
+    {
+        if (votes[j] == firstMin)
+        {
+            var removedCandiadate = candidates[j];
             candidates.splice(j,1);
-            sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
-            sessionStorage.setItem('holder',JSON.stringify(candidates));
+            break;
+        }
+    }
+
+
+    // go through each voter and, if any of their choices are not in the candidates list, change that
+
+    for (var i in allVotes)
+    {
+        let voter = allVotes[i];
+        if (!testVote(candidates, voter.third))
+        {
+            voter.third = null;
+        }
+        if (!testVote(candidates, voter.second))
+        {
+            voter.second = voter.third;
+            voter.third = null;
+        }
+        if (!testVote(candidates, voter.first))
+        {
+            voter.first = voter.second;
+            voter.second = voter.third;
+            voter.third = null;
+        }
+        if (!testVote(candidates, voter.first) && !testVote(candidates, voter.second) && !testVote(candidates, voter.third) )
+        {
+            allVotes.splice(i,1);
         }
         
     }
+
+    sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
+    //         sessionStorage.setItem('holder',JSON.stringify(candidates));
+
+
+    // for(var j in candidates){
+    //     if(votes[j] == firstMin){
+    //         //candidates[j] is the person with the lowest number of votes
+    //         for(var k in allVotes){
+    //             if( candidates[j] == allVotes[k].first){
+    //                 //set their first choice equal to their second)
+    //                 if (candidates.includes(allVotes[k].second))
+    //                 {
+    //                     allVotes[k].first = allVotes[k].second;
+    //                     allVotes[k].second = allVotes[k].third;
+    //                     allVotes[k].third = null;
+    //                 }
+                    
+    //                 else if (candidates.includes(allVotes[k].third)) {
+    //                     allVotes[k].first = allVotes[k].third;
+    //                     allVotes[k].second = null;
+    //                     allVotes[k].third = null;
+    //                 }
+    //                 else {
+    //                     allVotes.splice(k,1);
+    //                 }
+    //             }
+    //             if (candidates[j] == allVotes[k].second)
+    //             {
+    //                 if (candidates.includes(allVotes[k].third))
+    //                 {
+    //                     allVotes[k].second = allVotes[k].third;
+    //                     allVotes[k].third = null;
+    //                 }
+    //                 else
+    //                 {
+    //                     allVotes[k].second = null;
+    //                     allVotes[k].third = null;
+    //                 }
+    //             }
+    //             if (candidates[j] == allVotes[k].third)
+    //             {
+    //                 allVotes[k].third = null;
+    //             }
+    //             if (!candidates.includes(allVotes[k].first) && !candidates.includes(allVotes[k].second) && !candidates.includes(allVotes[k].third))
+    //                 {
+    //                     allVotes.splice(k,1)
+    //                 }
+                
+    //         }
+    //         candidates.splice(j,1);
+    //         sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
+    //         sessionStorage.setItem('holder',JSON.stringify(candidates));
+    //     }
+        
+    // }
 
     vote(allVotes);
 
@@ -228,4 +272,9 @@ function countCovington()
     }
     // console.log(first + " | " + second + " | " + third);
     return [first,second,third];
+}
+
+function testVote(candidates, vote)
+{
+    return candidates.includes(vote);
 }
