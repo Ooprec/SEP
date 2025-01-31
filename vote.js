@@ -39,44 +39,10 @@ export async function loadFromDatabase () {
         
     });
 
-    sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
-    vote(allVotes);
-
-}
-
-// //returns a list of only top choice votes
-// export function isolate(allVotes){
-//     for (var i in allVotes){
-//       if(runner.includes(allVotes.first[i])){
-//           runner.push(allVotes.first[i])
-//       }
-
-// }
-// }
-
-// //returns a list of only top choice votes
-// export function cleanVotesForCounting(allVotes){
-
-// }
-
-// //returns a list of votes to count with eliminated candidate removed
-//  export function removeLoser(allVotes, candidateToRemove){
-
-
-// }
-
-//returns a dictionary with candidate names as keys and vote tallies as values
-//@param allVotes {list} - list of all of the votes to count
-
-export async function vote(allVotes) {
-    // var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
     
 
-    // for (var voter in allVotes){
-    // }
-   
-    var candidates = [];
-    var votes = [];
+    let candidates = []
+    let votes = [];
 
     for (var i=0; i<allVotes.length; i++){
         if(!candidates.includes(allVotes[i].first)){
@@ -85,20 +51,59 @@ export async function vote(allVotes) {
         }
     }
 
-     // tallies first round votes
-     for(var i in allVotes){
-        for(var j in candidates){
-            if(allVotes[i].first == candidates[j]){
-            votes[j] = votes[j] + 1;
-          } 
-         }
-        }
+    sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
+    sessionStorage.setItem('shelby', JSON.stringify(votes));
+    sessionStorage.setItem('holder', JSON.stringify(candidates));
 
-        //moves code back to session to be used for graphs
-        sessionStorage.setItem('shelby', JSON.stringify(votes));
-        sessionStorage.setItem('holder', JSON.stringify(candidates));
+    vote(allVotes);
+
+}
+
+export async function vote(allVotes) {
+    // var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    
+   
+    // var candidates = [];
+    // var votes = [];
+    let candidates = JSON.parse(sessionStorage.getItem('holder'));
+    let votes = []//JSON.parse(sessionStorage.getItem('shelby'))
+
+    // for (var i=0; i<allVotes.length; i++){
+    //     if(!candidates.includes(allVotes[i].first)){
+    //         candidates.push(allVotes[i].first);
+    //         votes.push(0);
+    //     }
+    // }
+
+    
+     
+
+    for (i in candidates)
+    {
+        votes.push(0);
+    }
+
+    // tallies first round votes
+    for(var i in allVotes){
+        votes[candidates.indexOf(allVotes[i].first)]++;
+    }   
+
+    // for (var i in allVotes)
+    // {
+    //     for (var j in candidates)
+    //     {
+    //         if (allVotes[i].first == candidates[j])
+    //         {
+    //             votes[j] = votes[j] + 1;
+    //         }
+    //     }
+    // }
+
+    //moves code back to session to be used for graphs
+    sessionStorage.setItem('shelby', JSON.stringify(votes));
+    sessionStorage.setItem('holder', JSON.stringify(candidates));
         
-        return (votes);
+    return (votes);
        
         
 }
@@ -113,8 +118,6 @@ export async function count() {
     //a list of "voter objects" with their three choices as attributes
     var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); // all voters
 
-    let tempCovington = countCovington();
-    let tempAll = allVotes;
 
 
     
@@ -130,9 +133,7 @@ export async function count() {
     // }
 
     var firstMin = Math.min(...votes)
-    console.log('');
-    console.log(candidates.length)
-    console.log(allVotes)
+   
 
     // REWRITE THIS LATER
 
@@ -143,25 +144,34 @@ export async function count() {
         {
             var removedCandiadate = candidates[j];
             candidates.splice(j,1);
+            votes.splice(j,1);
             break;
         }
     }
 
+    console.log(removedCandiadate + "_" + firstMin);
+
+    
 
     // go through each voter and, if any of their choices are not in the candidates list, change that
 
     for (var i in allVotes)
     {
+        
         let voter = allVotes[i];
+        // check and see if the voters third vote is still an option
+
         if (!testVote(candidates, voter.third))
         {
             voter.third = null;
         }
+        // check and see if the voters second vote is still an option, if not, bump
         if (!testVote(candidates, voter.second))
         {
             voter.second = voter.third;
             voter.third = null;
         }
+        // check and see if the voters first vote is still an option, if not, bumnp
         if (!testVote(candidates, voter.first))
         {
             voter.first = voter.second;
@@ -176,7 +186,11 @@ export async function count() {
     }
 
     sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
-    //         sessionStorage.setItem('holder',JSON.stringify(candidates));
+    sessionStorage.setItem('holder',JSON.stringify(candidates));
+    sessionStorage.setItem('shelby', JSON.stringify(votes));
+
+    vote(allVotes);
+
 
 
     // for(var j in candidates){
@@ -231,9 +245,8 @@ export async function count() {
         
     // }
 
-    vote(allVotes);
+    
 
-    // let tempCovington2 = countCovington()
     // if (tempCovington2 == [3,0,0])
     // {
     //     console.log(tempAll);
@@ -242,37 +255,6 @@ export async function count() {
     }
 
 
-document.getElementById("thingo").addEventListener("click", countCovington);
-
-
-function countCovington()
-{
-    let first = 0;
-    let second = 0;
-    let third = 0;
-    let allVotes = JSON.parse(sessionStorage.getItem("allVotes"));
-    for (i in allVotes)
-    {
-        if (allVotes[i].first == "Covington Adams III")
-        {
-            first++;
-        }
-        if (allVotes[i].second == "Covington Adams III")
-        {
-            second++;
-        }
-        if (allVotes[i].third == "Covington Adams III")
-        {
-            third++;
-        }
-    }
-    if (first == 3)
-    {
-        console.log(allVotes);
-    }
-    // console.log(first + " | " + second + " | " + third);
-    return [first,second,third];
-}
 
 function testVote(candidates, vote)
 {
