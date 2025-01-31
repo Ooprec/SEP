@@ -135,7 +135,7 @@
 }
 
 
-#collapsible-label {
+.collapsible-label {
     color: var(--light);
     background-color: var(--maroon);
     font-size: 16pt;
@@ -151,7 +151,7 @@
     width: 100%;
 }
 
-#collapsible-label:hover {
+.collapsible-label:hover {
     border: var(--border);
     background-color: var(--maroon-but-darker);
     color: var(--light);

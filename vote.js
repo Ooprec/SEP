@@ -68,12 +68,7 @@ export async function vote(allVotes) {
     let candidates = JSON.parse(sessionStorage.getItem('holder'));
     let votes = []//JSON.parse(sessionStorage.getItem('shelby'))
 
-    // for (var i=0; i<allVotes.length; i++){
-    //     if(!candidates.includes(allVotes[i].first)){
-    //         candidates.push(allVotes[i].first);
-    //         votes.push(0);
-    //     }
-    // }
+
 
     
      
@@ -125,12 +120,12 @@ export async function count() {
     var threshold = allVotes.length /2;
 
     //go through all the candidates
-    // for(var i in candidates){
-    //     if(votes[i] > threshold ){
-    //         console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
-    //         return;
-    //     }
-    // }
+    for(var i in candidates){
+        if(votes[i] > threshold ){
+            console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+            return;
+        }
+    }
 
     var firstMin = Math.min(...votes)
    
