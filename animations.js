@@ -71,10 +71,55 @@ for (i = 0; i < coll.length; i++) {
     if (this.id == "electionresultscollapsible")
     {
       makeGraphs();
+      results = document.getElementById("Meow");  
+      let ctx = document.createElement("canvas");
+      ctx.classList.toggle("chart")
+      let chartSettings2 = makeGraphs();
+      new Chart(ctx, chartSettings2);
+      let animDiv = document.createElement("div");
+      animDiv.classList.add("anim-flyin");
+      animDiv.appendChild(ctx);
+      results.appendChild(animDiv);
     }
     }
         // this will make a graph using the data from an honor election
         
 function makeGraphs() {
-  
+   // toggle the 'selected' status for the newly selected tab
+   //creates a new chart element in layout.html        // make a new canvas element
+   //creates a new bar chart
+   let candiadates = JSON.parse(sessionStorage.getItem('holder'));
+   //the variable is set the list of counted first votes form the function vote
+   let dat = JSON.parse(sessionStorage.getItem('shelby')); 
+   return {
+       //the type of chart
+       type: 'bar',
+       //the data within the chart
+       data: {
+         //the names of each bar underneath the bar
+         labels: candiadates,
+
+         //somewhere here we should grab the datae
+         datasets: [{
+           //the title of the chart
+           label: '# of Votes',
+           //the integer value of each bar
+           //where the variable containing the voting data is used
+           data: dat,
+           //the width of each bar
+           borderWidth: 3,
+           borderColor: '#582235'
+         }]
+       },
+       options: {
+         //scaling options for the chart
+         scales: {
+           y: {
+             //starts counting from zero
+             beginAtZero: true
+           }
+         }
+       }
+     };
+
 }
