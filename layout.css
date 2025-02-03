@@ -188,10 +188,10 @@ select:hover {
 
 @keyframes fly-in {
     0% {
-        transform: translateX(150%);
+        transform: translateY(-150%);
     }
     100% {
-        transform: translateX(0%);
+        transform: translateY(0%);
     }
 }
 
@@ -233,5 +233,4 @@ select:hover {
     from {transform: scale(1);}
     to {transform: scale(1.05);}
 }
-
 

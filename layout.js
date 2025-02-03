@@ -123,6 +123,7 @@ function honorGraph() {
           }]
         },
         options: {
+            animation: false,
           //scaling options for the chart
           scales: {
             y: {

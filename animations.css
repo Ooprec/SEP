@@ -158,3 +158,19 @@
     transform: scale(1,1.07);
     /* padding: .6rem 1.2rem; */
 }
+
+.electionDropdown
+{
+    overflow: scroll;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.collapsible-content-election {
+    padding: 0 18px;
+    overflow: hidden;
+    background-color: var(--light);
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height 0.2s ease-out;
+}

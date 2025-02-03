@@ -1,4 +1,5 @@
 
+
 // get the HTML elements of the loading bar
 var LCont = document.getElementById("Lbar-container");
 var LBar = document.getElementById("Lbar-bar");
@@ -60,34 +61,41 @@ var i;
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
 
-    if (this.id == "electionresultscollapsible")
+    if (this.id == "electionresultscollapsible" && !this.classList.contains("active"))
       {
-        
-        results = document.getElementById("Meow");  
-        let ctx = document.createElement("canvas");
-        ctx.classList.toggle("chart")
-        let chartSettings2 = makeGraphs();
-        new Chart(ctx, chartSettings2);
-        let animDiv = document.createElement("div");
-        animDiv.classList.add("anim-flyin");
-        animDiv.appendChild(ctx);
-        results.appendChild(animDiv);
+          chartDiv = document.getElementById("chartDiv");  
+          chartDiv.innerHTML = "";
+          let ctx = document.createElement("canvas");
+          ctx.classList.toggle("chart")
+          let chartSettings2 = makeGraphs();
+          new Chart(ctx, chartSettings2);
+          ctx.classList.add("anim-flyin")
+          chartDiv.appendChild(ctx);
+
+          this.classList.add("electionDropdown");
       }
 
     // rest of dropdown code
     this.classList.toggle("active");
     var content = this.nextElementSibling;
+   
     if (content.style.maxHeight){
       content.style.maxHeight = null;
     } else {
-      content.style.maxHeight = content.scrollHeight + "px";
+      if (content.id == "chartDiv")
+      {
+        content.style.maxHeight = "max-content";
+      }
+      else{
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
     }
         }
       )
       
+      
     
     }
-        // this will make a graph using the data from an honor election
         
 function makeGraphs() {
    // toggle the 'selected' status for the newly selected tab
@@ -117,6 +125,7 @@ function makeGraphs() {
          }]
        },
        options: {
+        animation: false,
          //scaling options for the chart
          scales: {
            y: {

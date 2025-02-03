@@ -60,18 +60,9 @@ export async function loadFromDatabase () {
 }
 
 export async function vote(allVotes) {
-    // var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
-    
-   
-    // var candidates = [];
-    // var votes = [];
+
     let candidates = JSON.parse(sessionStorage.getItem('holder'));
-    let votes = []//JSON.parse(sessionStorage.getItem('shelby'))
-
-
-
-    
-     
+    let votes = []//JSON.parse(sessionStorage.getItem('shelby'));
 
     for (i in candidates)
     {
