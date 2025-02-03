@@ -68,7 +68,10 @@ function selectTab(tab) {
         // toggle the 'selected' status for the newly selected tab
         tab.classList.add("selected");
         tab.classList.remove("unselected");
-        //creates a new chart element in layout.html        // make a new canvas element
+        //creates a new chart element in layout.html
+        let ctx = document.createElement("canvas");
+        ctx.classList.toggle("chart")
+        // make a new canvas element
         //creates a new bar chart
         var graphFunctionArray = [honorGraph];
 

@@ -59,6 +59,22 @@ var i;
 
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
+
+    if (this.id == "electionresultscollapsible")
+      {
+        
+        results = document.getElementById("Meow");  
+        let ctx = document.createElement("canvas");
+        ctx.classList.toggle("chart")
+        let chartSettings2 = makeGraphs();
+        new Chart(ctx, chartSettings2);
+        let animDiv = document.createElement("div");
+        animDiv.classList.add("anim-flyin");
+        animDiv.appendChild(ctx);
+        results.appendChild(animDiv);
+      }
+
+    // rest of dropdown code
     this.classList.toggle("active");
     var content = this.nextElementSibling;
     if (content.style.maxHeight){
@@ -68,19 +84,8 @@ for (i = 0; i < coll.length; i++) {
     }
         }
       )
-    if (this.id == "electionresultscollapsible")
-    {
-      makeGraphs();
-      results = document.getElementById("Meow");  
-      let ctx = document.createElement("canvas");
-      ctx.classList.toggle("chart")
-      let chartSettings2 = makeGraphs();
-      new Chart(ctx, chartSettings2);
-      let animDiv = document.createElement("div");
-      animDiv.classList.add("anim-flyin");
-      animDiv.appendChild(ctx);
-      results.appendChild(animDiv);
-    }
+      
+    
     }
         // this will make a graph using the data from an honor election
         
