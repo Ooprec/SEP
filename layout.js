@@ -72,7 +72,7 @@ function selectTab(tab) {
         let ctx = document.createElement("canvas");
         ctx.classList.toggle("chart")
         //creates a new bar chart
-        var graphFunctionArray = [honorGraph, prefectGraph, senateGraph, secretaryGraph];
+        var graphFunctionArray = [honorGraph];
 
         index = tab.classList[1];
         chartSettings = graphFunctionArray[index]();
@@ -132,50 +132,4 @@ function honorGraph() {
         }
       };
     // this will make a graph using the data from an honor election
-}
-
-function prefectGraph(ctx) {
-    //cool graph that we made
-    let candidates = ["bob", "boab", "booooaaaab"," timothy","bob3","Dr. Robert Troy, PhD."]
-    let datfirst = [1,2,3,4,5,6];
-    let datsecond = [3,5,4,1,2,6];
-    let datthird = [5,2,3,4,1,6];
-    // this will make a graph using the data from a prefect election
-    return {
-        type: "radar",
-        data: {
-            labels: candidates,
-            datasets: [{
-                label: "First Votes",
-                data: datfirst},
-                {label: "Second Votes",
-                    data: datsecond,
-                },{label: "Third Votes",
-                    data: datthird,
-                }]
-
-        }
-    }
-}
-
-function senateGraph(ctx) {
-    // this will make a graph using the data from a senate election
-    let candidates = ["bob", "boab", "booooaaaab"," timothy","bob3","Dr. Robert Troy, PhD."]
-    let datfirst = [1,3,2,5,4,6];
-
-    return {
-        type: "polarArea",
-        data: {
-            labels: candidates,
-            datasets: [{label: "Votes", data: datfirst}],
-        },
-        options: {
-            circular: true,
-            borderJoinStyle: 'bevel'
-        }
-    }
-}
-
-function secretaryGraph(ctx) {
-    // this will make a graph using the data from a secretary election
 }
