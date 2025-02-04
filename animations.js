@@ -84,7 +84,7 @@ for (i = 0; i < coll.length; i++) {
     } else {
       if (content.id == "chartDiv")
       {
-        content.style.maxHeight = "max-content";
+        content.style.maxHeight = "fit-content";
       }
       else{
         content.style.maxHeight = content.scrollHeight + "px";
