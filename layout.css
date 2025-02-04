@@ -96,7 +96,10 @@ input[type="file"] {
 
 .thin-bar {
     height: .15rem;
-    margin: auto;
+    position: relative;
+    margin-top: .5rem;
+    width: 100%;
+
 }
 
 select {
@@ -234,3 +237,7 @@ select:hover {
     to {transform: scale(1.05);}
 }
 
+#thingy
+{
+    display: none;
+}

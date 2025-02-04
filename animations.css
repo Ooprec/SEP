@@ -126,12 +126,15 @@
 
 /* Style the collapsible content. Note: hidden by default */
 .collapsible-content {
-    padding: 0 18px;
+    width: 100%;
+    /* padding: 0 18px; */
     overflow: hidden;
     background-color: var(--light);
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+    position: sticky;
+    top: 2.5rem;
 }
 
 
@@ -162,15 +165,18 @@
 .electionDropdown
 {
     overflow: scroll;
+    position: sticky;
+    top: 0;
 }
 
 /* Style the collapsible content. Note: hidden by default */
 .collapsible-content-election {
     padding: 0 18px;
-    overflow: hidden;
+    overflow: scroll;
     background-color: var(--light);
     max-height: 0;
-    overflow: hidden;
-
+    width: 66%;
+    margin: auto;
+    background-color: #F3F3F3;
     transition: max-height 0.2s ease-out;
 }

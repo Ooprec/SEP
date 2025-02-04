@@ -35,10 +35,11 @@
                 
                 </div>
             </form>
+        <div class="thin-bar maroon"></div>
+
          </div> <!--end collapsible-->
 
 
-        <div class="thin-bar maroon"></div>
         <br>
 
 
@@ -59,17 +60,21 @@
 
     </div>
 
+    
+
+    <label for="thingy" id="count-label" class="custom-overlay-button">Count</label>
+        <button type="button" id="thingy">Count</button>
+
      <!--start collapsible-->
     <label id="collapsible-label" class="collapsible-label" for="electionresultscollapsible">Election Results</label>
     <button type="button" id="electionresultscollapsible" class="collapsible maroon">Election Results</button>
     
-    <div class="collapsible-content-election" id="chartDiv">
+    <div class="collapsible-content-election" id="election-results">
+        <div id="chartDiv"></div>
     </div> <!--end collapsible-->
 
     
-
-
-    <button type="button" id="thingy">Count</button>
+    
     <!--Links layout to upload and imports the csv database function-->
     <script src="./animations.js"></script>
     <script src="./layout.js"></script>
