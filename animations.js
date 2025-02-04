@@ -63,14 +63,14 @@ for (i = 0; i < coll.length; i++) {
 
     if (this.id == "electionresultscollapsible" && !this.classList.contains("active"))
       {
-          chartDiv = document.getElementById("chartDiv");  
-          chartDiv.innerHTML = "";
-          let ctx = document.createElement("canvas");
-          ctx.classList.toggle("chart")
-          let chartSettings2 = makeGraphs();
-          new Chart(ctx, chartSettings2);
-          ctx.classList.add("anim-flyin")
-          chartDiv.appendChild(ctx);
+        //   chartDiv = document.getElementById("chartDiv");  
+        //   chartDiv.innerHTML = "";
+        //   let ctx = document.createElement("canvas");
+        //   ctx.classList.toggle("chart")
+        //   let chartSettings2 = makeGraphs();
+        //   new Chart(ctx, chartSettings2);
+        //   ctx.classList.add("anim-flyin")
+        //   chartDiv.appendChild(ctx);
 
           this.classList.add("electionDropdown");
       }
@@ -135,5 +135,49 @@ function makeGraphs() {
          }
        }
      };
+
+}
+document.getElementById("thingy").addEventListener("click", work);
+var finish = false
+function work() {
+
+    let candidates = JSON.parse(sessionStorage.getItem('holder'));
+    let votes = JSON.parse(sessionStorage.getItem('shelby')); 
+    let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+
+
+        //the number needed to "win" the election
+
+    
+    chartDiv = document.getElementById("chartDiv");
+    if (finish) {
+        return;
+    }
+    var threshold = allVotes.length /2;
+    for(var i in candidates){
+        if(votes[i] > threshold ){
+            console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+            let ctx = document.createElement("canvas");
+            ctx.classList.toggle("chart")
+            let chartSettings2 = makeGraphs();
+            new Chart(ctx, chartSettings2);
+            ctx.classList.add("anim-flyin")
+            chartDiv.appendChild(ctx);
+  
+            this.classList.add("electionDropdown");
+            finish = true
+            return;
+        }
+    }  
+          let ctx = document.createElement("canvas");
+          ctx.classList.toggle("chart")
+          let chartSettings2 = makeGraphs();
+          new Chart(ctx, chartSettings2);
+          ctx.classList.add("anim-flyin")
+          chartDiv.appendChild(ctx);
+
+          this.classList.add("electionDropdown");
+
+          //go through all the candidates
 
 }
