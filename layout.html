@@ -53,7 +53,7 @@
         <div id="post-form">
             <select id="csv-options" onchange="loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')))"></select></select>
             <label for="download" class="custom-overlay-button">Reload</label>
-            <button id="download" class="hidden-button" ></button>
+            <button id="download" onclick="loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')))" class="hidden-button" ></button>
         </div>
     
 
