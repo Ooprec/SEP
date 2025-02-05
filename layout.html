@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="layout.css">
-    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="stylesheet" href="/styles/animations.css">
     <title>Layout</title>
 </head>
 <body class="light">
@@ -76,14 +76,14 @@
     
     
     <!--Links layout to upload and imports the csv database function-->
-    <script src="./animations.js"></script>
-    <script src="./layout.js"></script>
-    <script type="module" src="./upload.js"></script>
-    <script type="module" src="./vote.js"></script>
+    <script src="/scripts/animations.js"></script>
+    <script src="/scripts/layout.js"></script>
+    <script type="module" src="/scripts/upload.js"></script>
+    <script type="module" src="/scripts/vote.js"></script>
     <script type="module">
-        import * as uploadjs from "./upload.js";
-        import * as votejs from "./vote.js";
-        import * as optjs from "./optimizations.js";
+        import * as uploadjs from "/scripts/upload.js";
+        import * as votejs from "/scripts/vote.js";
+        import * as optjs from "/scripts/optimizations.js";
         window.importCSVToDatabase = uploadjs.importCSVToDatabase;
         window.loadFromDatabase = votejs.loadFromDatabase;
         window.getCollectionList = uploadjs.getCollectionList;
