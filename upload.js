@@ -50,7 +50,7 @@ export async function importCSVToDatabase () {
             
             var uname = document.getElementById("csv-name").value;
             if (uname.length < 5) {
-              alert("Make sure the election name is at least eight characters long");
+              // alert("Make sure the election name is at least eight characters long");
               return;
             }
             

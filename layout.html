@@ -12,21 +12,21 @@
 
     <div id="main-page" class="light">
         <h1 id="header" class="maroon" >
-            <p id="header-text" class="title-anim">Student Elections</p> 
+            <p id="header-text" class="title-anim maroon">Student Elections</p> 
         </h1>
 
         <!--start collapsible-->
-        <label id="collapsible-label" class="collapsible-label" for="collapsible">Upload Election</label>
+        <label id="collapsible-label" class="collapsible-label maroon" for="collapsible">Upload Election</label>
         <button type="button" id="collapsible" class="collapsible maroon">Upload Election</button>
         <div class="collapsible-content">
         <form action="" id="uploadForm">
             <div id="inputs" class="light">
                 <label for="csv" id="upload-csv-label" class="input-label">Upload CSV:</label>
                 <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
-                <input type="file" id="csv"> <br><br>
+                <input type="file" id="csv" required> <br><br>
                 
                 <label for="csv-name" class="input-label">Election Name: </label>
-                <input type="text" id="csv-name">
+                <input type="text" id="csv-name" placeholder="" minlength="5" required>
 
                 <br><br>
                 <label for="submit" class="custom-overlay-button">Submit</label>
@@ -66,7 +66,7 @@
         <button type="button" id="thingy">Count</button>
 
      <!--start collapsible-->
-    <label id="collapsible-label" class="collapsible-label" for="electionresultscollapsible">Election Results</label>
+    <label id="collapsible-label" class="collapsible-label maroon" for="electionresultscollapsible">Election Results</label>
     <button type="button" id="electionresultscollapsible" class="collapsible maroon">Election Results</button>
     
     <div class="collapsible-content-election" id="election-results">

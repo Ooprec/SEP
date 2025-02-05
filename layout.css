@@ -13,6 +13,11 @@
     --border: .08rem solid var(--maroon-but-darker);
 }
 
+.light::selection {
+    color: var(--white);
+    background: var(--maroon);
+}
+
 body {
     font-family: sans-serif;
     padding: 0;
@@ -50,6 +55,11 @@ body {
     justify-content: center;
     align-content: center;
     text-align: center;
+}
+
+.maroon::selection {
+    color: var(--maroon-but-darker);
+    background: var(--white);
 }
 
 .input-label {
@@ -213,6 +223,10 @@ select:hover {
     border: var(--border);
     color: var(--maroon);
     background-color: var(--light);
+}
+
+#csv-name::placeholder {
+
 }
 
 .anim-flyin {
