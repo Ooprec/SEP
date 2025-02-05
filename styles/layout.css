@@ -1,0 +1,254 @@
+:root {
+    /* --light: #F2F4F5;
+    --laccent: #92896C;
+    --main: #7593A8;
+    --daccent: #765C59;
+    --dark:  #243A4D; */
+
+    --maroon: #793140;
+    --white: #fcfcfc;
+    --maroon-but-darker: #582235;
+
+    --br: .2rem;
+    --border: .08rem solid var(--maroon-but-darker);
+}
+
+.light::selection {
+    color: var(--white);
+    background: var(--maroon);
+}
+
+body {
+    font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.dark {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+.light {
+    background-color: var(--light);
+    color: var(--dark)
+}
+
+.laccent {
+    background-color: var(--laccent);
+    color: var(--light);
+}
+
+.main {
+    background-color: var(--main);
+    color: var(--light);
+}
+
+.maroon {
+    background-color: var(--maroon);
+    color: var(--white);
+}
+
+#header {
+    margin: auto;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+.maroon::selection {
+    color: var(--maroon-but-darker);
+    background: var(--white);
+}
+
+.input-label {
+    color: var(--maroon-but-darker)
+}
+
+#uploadForm {
+    text-align: center;
+    margin: auto;
+    padding: 1rem;
+}
+
+input[type="file"] {
+    display: none;
+  }
+  
+.custom-overlay-button {
+    color: var(--maroon-but-darker);
+    font-size: 12pt;
+    font-family: sans-serif;
+    border: var(--border);
+    border-radius: var(--br);
+    display: inline-block;
+    padding: .4rem .8rem;
+    cursor: pointer;
+    align-content: center;
+    margin: 0rem .5rem ;
+    text-align: center;
+    transition: transform .25s;
+}
+
+.custom-overlay-button:hover {
+    border: var(--border);
+    background-color: var(--maroon);
+    color: var(--light);
+    transform: scale(1.07);
+    /* padding: .6rem 1.2rem; */
+}
+
+
+.hidden-button {
+    display: none;
+}
+
+.thin-bar {
+    height: .15rem;
+    position: relative;
+    margin-top: .5rem;
+    width: 100%;
+
+}
+
+select {
+    font-size: 12pt;
+    color: var(--maroon-but-darker);
+    background-color: var(--light);
+    border: var(--border);
+    border-radius: var(--br);
+    padding: .4rem .8rem;
+    margin: 0rem .5rem;
+    font-family: sans-serif;
+    transition: transform .25s;
+}
+
+select:hover {
+    border: var(--border);
+    background-color: var(--maroon);
+    color: var(--light);
+    transform: scale(1.07);
+}
+
+#post-form {
+    margin: auto;
+    padding: 1rem;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.tab-container {
+    display: grid;
+    grid-template-areas: 'honor prefect senate secretary';
+    height: 2rem;
+    z-index: 1;
+}
+
+.selectable-tab {
+    text-align: center;
+    font-weight: bold;
+    padding: .75rem;
+    cursor: pointer;
+    color: var(--light);
+    border: var(--border);
+    background-color: var(--maroon);
+    /* transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, transform .15s linear, border-radius .15s; */
+}
+
+
+@keyframes seltab-selected {
+    0% {
+       background-color: var(--maroon);
+
+    }
+    
+    100% {
+        background-color: var(--maroon-but-darker);
+        transform: scale(1.1);
+        z-index: 1;
+    }
+}
+
+
+@keyframes seltab-deselected {
+    0% {
+        background-color: var(--maroon-but-darker);
+        transform: scale(1.1);
+    }
+    99% {z-index: 1};
+    100% {
+        background-color: var(--maroon);
+        transform: scale(1.0);
+        z-index: 0;
+    }
+}
+
+#honor-tab {grid-area: honor;}
+#prefect-tab {grid-area: prefect;}
+#senate-tab {grid-area: senate;}
+#secretary-tab {grid-area: secretary;}
+
+.selected {animation: seltab-selected .2s ease-in-out; animation-fill-mode: both;}
+.unselected {animation: seltab-deselected .2s ease-in-out; animation-fill-mode: both;}
+
+.results {display:none};
+
+.chart {
+    width: 300px;
+}
+
+@keyframes fly-in {
+    0% {
+        transform: translateY(-150%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+#shown-results {
+    width: 75vw;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+    padding: 4rem;
+}
+
+#csv-name {
+    font-size: 12pt;
+    padding: .4rem .8rem;
+    border-radius: var(--br);
+    border: var(--border);
+    color: var(--maroon);
+    background-color: var(--light);
+}
+
+
+.anim-flyin {
+    animation-name: fly-in;
+    animation-duration: .2s;
+    animation-timing-function: ease-in-out;
+    overflow-y: hidden;
+    animation-fill-mode: both;
+}
+
+.title-anim {
+    animation-name: title-anim;
+    animation-duration: 3s;
+    animation-direction: alternate;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite; 
+
+}
+
+@keyframes title-anim {
+    from {transform: scale(1);}
+    to {transform: scale(1.05);}
+}
+
+#thingy
+{
+    display: none;
+}
