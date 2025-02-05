@@ -60,7 +60,6 @@ var i;
 
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
-
     if (this.id == "electionresultscollapsible" && !this.classList.contains("active"))
       {
         //   chartDiv = document.getElementById("chartDiv");  
@@ -141,6 +140,7 @@ document.getElementById("thingy").addEventListener("click", work);
 var finish = false
 function work() {
 
+
     let candidates = JSON.parse(sessionStorage.getItem('holder'));
     let votes = JSON.parse(sessionStorage.getItem('shelby')); 
     let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
@@ -181,3 +181,4 @@ function work() {
           //go through all the candidates
 
 }
+
