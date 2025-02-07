@@ -55,11 +55,13 @@ LBar.addEventListener("animationend", (e) => {
     }
 })
 
+var finish
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
+    finish = false
     if (this.id == "electionresultscollapsible" && !this.classList.contains("active"))
       {
         //   chartDiv = document.getElementById("chartDiv");  
@@ -95,7 +97,9 @@ for (i = 0; i < coll.length; i++) {
       
     
     }
-        
+      
+//this is the makeGraphs function which alows me to streamline the cration of graphs
+//I call this function in work().
 function makeGraphs() {
    // toggle the 'selected' status for the newly selected tab
    //creates a new chart element in layout.html        // make a new canvas element
@@ -136,23 +140,25 @@ function makeGraphs() {
      };
 
 }
+//cal a function on the click of the count button
 document.getElementById("thingy").addEventListener("click", work);
-var finish = false
+//the function called by the button. It generates
 function work() {
 
-
+    //gets variables from firebase
     let candidates = JSON.parse(sessionStorage.getItem('holder'));
     let votes = JSON.parse(sessionStorage.getItem('shelby')); 
     let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
 
 
-        //the number needed to "win" the election
 
-    
+    //the div of the field
     chartDiv = document.getElementById("chartDiv");
+    //code that stops the function from running if a winner has already been decided
     if (finish) {
         return;
     }
+    //code that stops the function from running if a winner has already been decided
     var threshold = allVotes.length /2;
     for(var i in candidates){
         if(votes[i] > threshold ){
@@ -169,16 +175,16 @@ function work() {
             return;
         }
     }  
+          //creates the html componants
           let ctx = document.createElement("canvas");
           ctx.classList.toggle("chart")
+          //calls the function makeGraphs which returns the data of the bar chart
           let chartSettings2 = makeGraphs();
           new Chart(ctx, chartSettings2);
           ctx.classList.add("anim-flyin")
           chartDiv.appendChild(ctx);
 
           this.classList.add("electionDropdown");
-
-          //go through all the candidates
 
 }
 

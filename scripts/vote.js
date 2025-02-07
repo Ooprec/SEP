@@ -113,7 +113,7 @@ export async function count() {
     //go through all the candidates
     for(var i in candidates){
         if(votes[i] > threshold ){
-            console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+            // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
             return;
         }
     }
