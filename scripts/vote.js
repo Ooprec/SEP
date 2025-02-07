@@ -4,7 +4,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, deleteField } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -171,6 +171,7 @@ export async function count() {
         
     }
 
+    //return to storage
     sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
     sessionStorage.setItem('holder',JSON.stringify(candidates));
     sessionStorage.setItem('shelby', JSON.stringify(votes));
@@ -241,7 +242,7 @@ export async function count() {
     }
 
 
-
+//test
 function testVote(candidates, vote)
 {
     return candidates.includes(vote);
