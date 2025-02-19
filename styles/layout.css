@@ -11,6 +11,8 @@
 
     --br: .2rem;
     --border: .08rem solid var(--maroon-but-darker);
+
+    --normal-font-size: 14pt;
 }
 
 .light::selection {
@@ -66,6 +68,8 @@ body {
     color: var(--maroon-but-darker)
 }
 
+
+
 #uploadForm {
     text-align: center;
     margin: auto;
@@ -78,7 +82,7 @@ input[type="file"] {
   
 .custom-overlay-button {
     color: var(--maroon-but-darker);
-    font-size: 12pt;
+    font-size: var(--normal-font-size);
     font-family: sans-serif;
     border: var(--border);
     border-radius: var(--br);
@@ -88,7 +92,7 @@ input[type="file"] {
     align-content: center;
     margin: 0rem .5rem ;
     text-align: center;
-    transition: transform .25s;
+    transition: transform .25s ease-in-out, background-color .1s ease-in-out, color .1s ease-in-out;
 }
 
 .custom-overlay-button:hover {
@@ -96,6 +100,14 @@ input[type="file"] {
     background-color: var(--maroon);
     color: var(--light);
     transform: scale(1.07);
+    /* padding: .6rem 1.2rem; */
+}
+
+.custom-overlay-button:active {
+    border: var(--border);
+    background-color: var(--maroon-but-darker);
+    color: var(--light);
+    transform: scale(1.03);
     /* padding: .6rem 1.2rem; */
 }
 
@@ -113,7 +125,7 @@ input[type="file"] {
 }
 
 select {
-    font-size: 12pt;
+    font-size: var(--normal-font-size);
     color: var(--maroon-but-darker);
     background-color: var(--light);
     border: var(--border);
@@ -217,12 +229,18 @@ select:hover {
 }
 
 #csv-name {
-    font-size: 12pt;
+    font-size: var(--normal-font-size);
     padding: .4rem .8rem;
     border-radius: var(--br);
     border: var(--border);
     color: var(--maroon);
     background-color: var(--light);
+}
+
+#csv-name:focus {
+    background-color: var(--white);
+    outline-color: var(--maroon);
+    
 }
 
 
@@ -252,3 +270,37 @@ select:hover {
 {
     display: none;
 }
+
+.hed {
+    margin: auto;
+    padding: 1rem;
+}
+
+.list-text {
+    margin: auto;
+    padding-left: 1rem;
+    color: var(--maroon-but-darker);
+}
+
+.list-header {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+#instruc-table, tr, th, td {
+    border: .1rem solid var(--maroon-but-darker);
+    border-collapse: collapse;
+    padding: .3rem;
+}
+
+
+#instruct-div {
+    padding-top: .35rem;
+    padding-bottom: .15rem;
+    margin: auto;
+    width: 75vw;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+

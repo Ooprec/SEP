@@ -9,16 +9,27 @@
 </head>
 <body class="light">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <div id="main-page" class="light">
+        
         <h1 id="header" class="maroon" >
+            
             <p id="header-text" class="title-anim maroon">Student Elections</p> 
+            
+              
         </h1>
 
+       
+           
+        
+        
         <!--start collapsible-->
         <label id="collapsible-label" class="collapsible-label maroon" for="collapsible">Upload Election</label>
         <button type="button" id="collapsible" class="collapsible maroon">Upload Election</button>
         <div class="collapsible-content">
+            <div id="instruct-div" class="light">
+                <label for="instructions" class="custom-overlay-button">Instructions</label>
+                <button id="instructions" onclick="window.location.href='instructions.html'" class="hidden-button"></button>
+            </div>
         <form action="" id="uploadForm">
             <div id="inputs" class="light">
                 <label for="csv" id="upload-csv-label" class="input-label">Upload CSV:</label>
@@ -26,7 +37,7 @@
                 <input type="file" id="csv" required> <br><br>
                 
                 <label for="csv-name" class="input-label">Election Name: </label>
-                <input type="text" id="csv-name" placeholder="" minlength="5" required>
+                <input type="text" id="csv-name" placeholder="" minlength="5">
 
                 <br><br>
                 <label for="submit" class="custom-overlay-button">Submit</label>
@@ -63,7 +74,7 @@
     
 
     <label for="thingy" id="count-label" class="custom-overlay-button">Count</label>
-        <button type="button" id="thingy">Count</button>
+    <button type="button" id="thingy">Count</button>
 
      <!--start collapsible-->
     <label id="collapsible-label" class="collapsible-label maroon" for="electionresultscollapsible">Election Results</label>
@@ -98,3 +109,5 @@
       </script>
 </body>
 </html>
+
+</script>
