@@ -23,15 +23,28 @@ const db = getFirestore(app);
 
 export async function loadFromDatabase () {
     const cname = document.getElementById("csv-options").value;
-    const databaseItems = await getDocs(collection(db, cname));
 
+    if (sessionStorage.getItem(cname + "-archived")) {
+        let archive = JSON.parse(sessionStorage.getItem(cname + "-archived"));
+        sessionStorage.setItem('allVotes', JSON.stringify(archive.allVotes));
+        sessionStorage.setItem('shelby', JSON.stringify(archive.shelby));
+        sessionStorage.setItem('holder', JSON.stringify(archive.candidates));
+        let allVotes = sessionStorage.getItem('allVotes');
+        console.log("used archived data");
+        vote(allVotes);
+        return;
+    }
+    else {
+        const databaseItems = await getDocs(collection(db, cname));
+    
+    
     try{  sessionStorage.removeItem("shelby");
         sessionStorage.removeItem("holder");
         sessionStorage.removeItem("allVotes");
       }
       catch {console.log("failed")}
 
-
+    
     //Creates a list of objects, linking each voters decision to an object (voter)
     var allVotes = [];
     databaseItems.forEach((item) =>{
@@ -55,7 +68,17 @@ export async function loadFromDatabase () {
     sessionStorage.setItem('shelby', JSON.stringify(votes));
     sessionStorage.setItem('holder', JSON.stringify(candidates));
 
+    let archive = {
+        allVotes: allVotes,
+        shelby: votes,
+        candidates: candidates
+    }
+
+    sessionStorage.setItem(cname + "-archived", JSON.stringify(archive));
+
     vote(allVotes);
+    }
+    
 
 }
 
@@ -88,13 +111,11 @@ export async function vote(allVotes) {
     //moves code back to session to be used for graphs
     sessionStorage.setItem('shelby', JSON.stringify(votes));
     sessionStorage.setItem('holder', JSON.stringify(candidates));
-        
+    
     return (votes);
        
         
 }
-
-document.getElementById("thingy").addEventListener("click", count);
 
 export async function count() {
     //a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]

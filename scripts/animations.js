@@ -77,7 +77,6 @@ LElection.addEventListener("click", (e) => {
   var threshold = allVotes.length/2;
   done = false;
   while(done == false){
-    console.log("sigma");
     let candidates = JSON.parse(sessionStorage.getItem('holder'));
     let votes = JSON.parse(sessionStorage.getItem('shelby')); 
     let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
@@ -180,7 +179,7 @@ function makeGraphs() {
 
 }
 //cal a function on the click of the count button
-document.getElementById("thingy").addEventListener("click", work);
+// document.getElementById("thingy").addEventListener("click", work);
 //the function called by the button. It generates
 function work() {
 

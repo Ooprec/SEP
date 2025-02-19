@@ -15,13 +15,8 @@
             
             <p id="header-text" class="title-anim maroon">Student Elections</p> 
             
-              
         </h1>
 
-       
-           
-        
-        
         <!--start collapsible-->
         <label id="collapsible-label" class="collapsible-label maroon" for="collapsible">Upload Election</label>
         <button type="button" id="collapsible" class="collapsible maroon">Upload Election</button>
@@ -50,9 +45,7 @@
 
          </div> <!--end collapsible-->
 
-
         <br>
-
 
         <div id="Lbar-container">
             <label for="Lbar-bar" id="Lbar-text">Test</label>
@@ -63,28 +56,21 @@
             
         </div>
         <div id="post-form">
-            <select id="csv-options" onchange="document.getElementById('chartDiv').innerHTML = '';loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')))"></select></select>
-            <label for="download" class="custom-overlay-button">Reload</label>
-            <button id="download" onclick="document.getElementById('chartDiv').innerHTML = '';loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')))" class="hidden-button" ></button>
+            <select id="csv-options" onchange=""></select></select>
+            <label for="download" class="custom-overlay-button">Run</label>
+            <button id="download" onclick="document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')))" class="hidden-button" ></button>
         </div>
     
 
     </div>
 
-    
-
-    <!-- <label for="thingy" id="count-label" class="custom-overlay-button">Count</label>  -->
-    <button type="button" id="thingy">Count</button> 
-
      <!--start collapsible-->
     <label id="collapsible-label" class="collapsible-label maroon" for="electionresultscollapsible">Election Results</label>
-    <button type="button" id="electionresultscollapsible" class="collapsible maroon">Election Results</button>
+    <button type="button" id="electionresultscollapsible" onclick="" class="collapsible maroon">Election Results</button>
     
     <div class="collapsible-content-election" id="election-results">
         <div id="chartDiv"></div>
     </div> <!--end collapsible-->
-
-    
     
     <!--Links layout to upload and imports the csv database function-->
     <script src="./scripts/animations.js"></script>

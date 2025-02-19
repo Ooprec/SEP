@@ -10,7 +10,7 @@
     --maroon-but-darker: #582235;
 
     --br: .2rem;
-    --border: .08rem solid var(--maroon-but-darker);
+    --border: .24rem solid var(--maroon-but-darker);
 
     --normal-font-size: 14pt;
 }
@@ -25,6 +25,7 @@ body {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
+    font-size: var(--normal-font-size);
 }
 
 .dark {
@@ -201,6 +202,8 @@ select:hover {
 
 .chart {
     width: 300px;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
 }
 
 @keyframes fly-in {
