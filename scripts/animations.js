@@ -5,6 +5,7 @@ var LCont = document.getElementById("Lbar-container");
 var LBar = document.getElementById("Lbar-bar");
 var LText = document.getElementById("Lbar-text");
 
+
 // wait
 LCont.addEventListener("click", (e) => {
     if (LBar.classList.contains("unstarted"))
@@ -55,13 +56,50 @@ LBar.addEventListener("animationend", (e) => {
     }
 })
 
-var finish
+var LReload = document.getElementById("download");
+var finish = false;
+LReload.addEventListener("click", (e) => {
+  finish = false;
+  done = false;
+})
+
+var LElection = document.getElementById("electionresultscollapsible");
+var done = false;
+let candidates = JSON.parse(sessionStorage.getItem('holder'));
+let votes = JSON.parse(sessionStorage.getItem('shelby')); 
+let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+
+LElection.addEventListener("click", (e) => {
+
+  let candidates = JSON.parse(sessionStorage.getItem('holder'));
+  let votes = JSON.parse(sessionStorage.getItem('shelby')); 
+  let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+  var threshold = allVotes.length/2;
+  done = false;
+  while(done == false){
+    console.log("sigma");
+    let candidates = JSON.parse(sessionStorage.getItem('holder'));
+    let votes = JSON.parse(sessionStorage.getItem('shelby')); 
+    let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    work();
+    count();
+    var threshold = allVotes.length/2;
+  for(var i in candidates){
+    
+      if(votes[i] > threshold ){
+          // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+          done = true
+      }
+  }
+}
+})  
+
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
+
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
-    finish = false
     if (this.id == "electionresultscollapsible" && !this.classList.contains("active"))
       {
         //   chartDiv = document.getElementById("chartDiv");  
@@ -97,7 +135,8 @@ for (i = 0; i < coll.length; i++) {
       
     
     }
-      
+    
+
 //this is the makeGraphs function which alows me to streamline the cration of graphs
 //I call this function in work().
 function makeGraphs() {
@@ -170,7 +209,7 @@ function work() {
             ctx.classList.add("anim-flyin")
             chartDiv.appendChild(ctx);
   
-            this.classList.add("electionDropdown");
+            // this.classList.add("electionDropdown");
             finish = true
             return;
         }
@@ -184,7 +223,7 @@ function work() {
           ctx.classList.add("anim-flyin")
           chartDiv.appendChild(ctx);
 
-          this.classList.add("electionDropdown");
+          // this.classList.add("electionDropdown");
 
 }
 
