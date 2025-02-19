@@ -197,14 +197,6 @@ select:hover {
     }
 }
 
-#honor-tab {grid-area: honor;}
-#prefect-tab {grid-area: prefect;}
-#senate-tab {grid-area: senate;}
-#secretary-tab {grid-area: secretary;}
-
-.selected {animation: seltab-selected .2s ease-in-out; animation-fill-mode: both;}
-.unselected {animation: seltab-deselected .2s ease-in-out; animation-fill-mode: both;}
-
 .results {display:none};
 
 .chart {
@@ -304,3 +296,7 @@ select:hover {
     text-align: center;
 }
 
+#return-custom:hover {
+    color: var(--light);
+
+}
