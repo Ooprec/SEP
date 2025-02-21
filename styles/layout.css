@@ -1,12 +1,9 @@
 :root {
-    /* --light: #F2F4F5;
-    --laccent: #92896C;
-    --main: #7593A8;
-    --daccent: #765C59;
-    --dark:  #243A4D; */
+    /* --light: #F2F4F5; */
+
 
     --maroon: #793140;
-    --white: #fcfcfc;
+    --white: #FFFFFF;
     --maroon-but-darker: #582235;
 
     --br: .2rem;
@@ -15,10 +12,6 @@
     --normal-font-size: 14pt;
 }
 
-.light::selection {
-    color: var(--white);
-    background: var(--maroon);
-}
 
 body {
     font-family: sans-serif;
@@ -28,25 +21,16 @@ body {
     font-size: var(--normal-font-size);
 }
 
-.dark {
-    background-color: var(--dark);
-    color: var(--light);
-}
-
 .light {
-    background-color: var(--light);
+    background-color: var(--white);
     color: var(--dark)
 }
 
-.laccent {
-    background-color: var(--laccent);
-    color: var(--light);
+.light::selection {
+    color: var(--white);
+    background: var(--maroon);
 }
 
-.main {
-    background-color: var(--main);
-    color: var(--light);
-}
 
 .maroon {
     background-color: var(--maroon);
@@ -112,6 +96,17 @@ input[type="file"] {
     /* padding: .6rem 1.2rem; */
 }
 
+.custom-overlay-button:hover::selection {
+    background: var(--white);
+    color: var(--maroon-but-darker);
+    /* padding: .6rem 1.2rem; */
+}
+
+.custom-overlay-button::selection {
+    background: var(--maroon);
+    color: var(--white);
+}
+
 
 .hidden-button {
     display: none;
@@ -132,9 +127,10 @@ select {
     border: var(--border);
     border-radius: var(--br);
     padding: .4rem .8rem;
-    margin: 0rem .5rem;
+    margin: .5rem .5rem;
     font-family: sans-serif;
     transition: transform .25s;
+
 }
 
 select:hover {
