@@ -1,0 +1,182 @@
+:root {
+    --light: #F2F4F5;
+    /* --laccent: #92896C;
+    --main: #7593A8;
+    --daccent: #765C59;
+    --dark:  #243A4D; */
+
+    --maroon: #793140;
+    --white: #fcfcfc;
+    --maroon-but-darker: #582235;
+
+    --br: .2rem;
+    --border: .08rem solid var(--maroon-but-darker);
+    --bst: 1s;   
+}
+
+#Lbar-container {
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    padding-bottom: 1rem;
+}
+
+#Lbar-text {
+    color: var(--light);
+    padding-bottom: 1.7rem;
+    font-size: 12pt;
+    margin: auto;
+}
+
+#Lbar-border {
+    margin: auto;
+    width: 75%;
+    height: 1rem;
+    border: var(--border);
+}
+
+
+#Lbar-bar {
+    align-self: left;
+    width: 100%;
+    height: 100%;
+    background-color: var(--maroon);
+    transform-origin: left;
+    transform: scaleX(0);
+    animation-fill-mode: both;
+    
+}
+
+#Lbar-container {
+    height: 2rem;
+    width: 100%;
+}
+
+.q1 {
+    animation: Lbar-progress-q1 var(--bst) linear;
+}
+
+.q2 {
+    animation: Lbar-progress-q2 var(--bst) linear;
+}
+
+.q3 {
+    animation: Lbar-progress-q3 var(--bst) linear;
+}
+
+.q4 {
+    animation: Lbar-progress-q4 var(--bst) linear;
+}
+
+.q5 {
+    animation: Lbar-progress-q5 2s ease-out;
+}
+
+@keyframes Lbar-progress-q1 {
+    0% {transform: scaleX(0)}
+    100% {transform: scaleX(.2)}
+}
+
+@keyframes Lbar-progress-q2 {
+    0% {transform: scaleX(.2)}
+    100% {transform: scaleX(.4)}
+}
+
+@keyframes Lbar-progress-q3 {
+    0% {transform: scaleX(.4)}
+    100% {transform: scaleX(.6)}
+}
+
+@keyframes Lbar-progress-q4 {
+    0% {transform: scaleX(.6)}
+    100% {transform: scaleX(.8)}
+}
+
+@keyframes Lbar-progress-q5 {
+    0% {transform: scaleX(.8)}
+    100% {transform: scaleX(1)}
+}
+
+@keyframes Lbar-complete {
+    0% {transform: scaleX(0)}
+    100% {transform: scalex(1)}
+}
+
+.collapsible
+{
+    display: none;
+    border-color: var(--maroon-but-darker);
+    width: 100%;
+    height: 2rem;
+    animation-fill-mode: both;
+}
+
+.collapsible:hover 
+{
+    background-color: var(--maroon-but-darker);
+    animation: collapsible-selected .2s; 
+}
+
+@keyframes collapsible-selected
+{
+    0% {transform: scale(1);}
+    100% {transform: scale(1.1)}
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.collapsible-content {
+    width: 100%;
+    /* padding: 0 18px; */
+    overflow: hidden;
+    background-color: var(--light);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    position: sticky;
+    top: 2.5rem;
+}
+
+
+.collapsible-label {
+    color: var(--light);
+    background-color: var(--maroon);
+    font-size: 16pt;
+    font-family: sans-serif;
+    border: var(--border);
+    display: inline-block;
+    padding: .4rem .8rem;
+    margin-top: .8rem;
+    cursor: pointer;
+    align-content: center;
+    text-align: center;
+    transition: transform .25s;
+    width: 100%;
+}
+
+.collapsible-label:hover {
+    border: var(--border);
+    background-color: var(--maroon-but-darker);
+    color: var(--light);
+    transform: scale(1,1.07);
+    /* padding: .6rem 1.2rem; */
+}
+
+.electionDropdown
+{
+    overflow: scroll;
+    position: sticky;
+    top: 0;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.collapsible-content-election {
+    padding: 0 18px;
+    overflow: scroll;
+    background-color: var(--light);
+    max-height: 0;
+    width: 66%;
+    margin: auto;
+    background-color: #F3F3F3;
+    transition: max-height 0.2s ease-out;
+}

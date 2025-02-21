@@ -1,0 +1,242 @@
+
+
+// get the HTML elements of the loading bar
+var LCont = document.getElementById("Lbar-container");
+var LBar = document.getElementById("Lbar-bar");
+var LText = document.getElementById("Lbar-text");
+
+
+// wait
+LCont.addEventListener("click", (e) => {
+    if (LBar.classList.contains("unstarted"))
+    {
+        LBar.classList.add("q1");
+        LBar.classList.remove("unstarted");
+    }
+
+    if (LBar.classList.contains("q5"))
+    {
+        LText.style.color = "#F2F4F5";
+        LBar.classList.remove("q5");
+        LBar.classList.add("q1");
+    }
+})
+
+
+LBar.addEventListener("animationend", (e) => {
+    console.log("animation ended");
+    if (LBar.classList.contains("q1"))
+    {
+        LText.style.color = "#582235";
+        LText.innerHTML = "Stuffing ballot boxes...";
+        LBar.classList.add("q2");
+        LBar.classList.remove("q1");
+    }
+    else if (LBar.classList.contains("q2"))
+    {
+        LText.innerHTML = "Gerrymandering..."
+        LBar.classList.add("q3");
+        LBar.classList.remove("q2");
+    }
+    else if (LBar.classList.contains("q3"))
+    {
+        LText.innerHTML = "Bribing officials..."
+        LBar.classList.add("q4");
+        LBar.classList.remove("q3");
+    }
+    else if (LBar.classList.contains("q4"))
+    {
+        LText.innerHTML = "Contesting results..."
+        LBar.classList.add("q5");
+        LBar.classList.remove("q4");
+    }
+    else if (LBar.classList.contains("q5"))
+    {
+        LText.innerHTML = "Election complete!"
+    }
+})
+
+//pulls the run botton from html
+var LReload = document.getElementById("download");
+//resets finish
+var finish = false;
+//this runs when run is pressed and it resets the graph code
+LReload.addEventListener("click", (e) => {
+  finish = false;
+  done = false;
+})
+
+//pulls the election dropdown from html
+var LElection = document.getElementById("electionresultscollapsible");
+//resets done
+var done = false;
+//pulls votes allvotes and candidates from session storage
+let candidates = JSON.parse(sessionStorage.getItem('holder'));
+let votes = JSON.parse(sessionStorage.getItem('shelby')); 
+let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+
+//runs the automated graphing code. Activated on the press of election  results
+LElection.addEventListener("click", (e) => {
+  //updates votes allvotes and candidates from session storage
+  let candidates = JSON.parse(sessionStorage.getItem('holder'));
+  let votes = JSON.parse(sessionStorage.getItem('shelby')); 
+  let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+  //sets the win threshold
+  var threshold = allVotes.length/2;
+  //makes sure done is reset
+  done = false;
+  //this while loop continues until a winner of the eleciton is determined
+  while(done == false){
+    //updates votes allvotes and candidates from session storage
+    let candidates = JSON.parse(sessionStorage.getItem('holder'));
+    let votes = JSON.parse(sessionStorage.getItem('shelby')); 
+    let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    //calls the work and count functions. The work function graphs and the count function progresses to the next round.
+    work();
+    count();
+    //updates threshold
+    var threshold = allVotes.length/2;
+  //terminates the function when a winner is reached
+  for(var i in candidates){
+    
+      if(votes[i] > threshold ){
+          // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+          done = true
+      }
+  }
+}
+})  
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    if (this.id == "electionresultscollapsible" && !this.classList.contains("active"))
+      {
+        //   chartDiv = document.getElementById("chartDiv");  
+        //   chartDiv.innerHTML = "";
+        //   let ctx = document.createElement("canvas");
+        //   ctx.classList.toggle("chart")
+        //   let chartSettings2 = makeGraphs();
+        //   new Chart(ctx, chartSettings2);
+        //   ctx.classList.add("anim-flyin")
+        //   chartDiv.appendChild(ctx);
+
+          this.classList.add("electionDropdown");
+      }
+
+    // rest of dropdown code
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+   
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      if (content.id == "chartDiv")
+      {
+        content.style.maxHeight = "fit-content";
+      }
+      else{
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    }
+        }
+      )
+      
+      
+    
+    }
+    
+
+//this is the makeGraphs function which alows me to streamline the cration of graphs
+//I call this function in work().
+function makeGraphs() {
+   // toggle the 'selected' status for the newly selected tab
+   //creates a new chart element in layout.html        // make a new canvas element
+   //creates a new bar chart
+   let candiadates = JSON.parse(sessionStorage.getItem('holder'));
+   //the variable is set the list of counted first votes form the function vote
+   let dat = JSON.parse(sessionStorage.getItem('shelby')); 
+   return {
+       //the type of chart
+       type: 'bar',
+       //the data within the chart
+       data: {
+         //the names of each bar underneath the bar
+         labels: candiadates,
+
+         //somewhere here we should grab the datae
+         datasets: [{
+           //the title of the chart
+           label: '# of Votes',
+           //the integer value of each bar
+           //where the variable containing the voting data is used
+           data: dat,
+           //the width of each bar
+           borderWidth: 3,
+           borderColor: '#582235'
+         }]
+       },
+       options: {
+        animation: false,
+         //scaling options for the chart
+         scales: {
+           y: {
+             //starts counting from zero
+             beginAtZero: true
+           }
+         }
+       }
+     };
+
+}
+//cal a function on the click of the count button
+// document.getElementById("thingy").addEventListener("click", work);
+//the function called by the button. It generates
+function work() {
+
+    //gets variables from firebase
+    let candidates = JSON.parse(sessionStorage.getItem('holder'));
+    let votes = JSON.parse(sessionStorage.getItem('shelby')); 
+    let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+
+
+
+    //the div of the field
+    chartDiv = document.getElementById("chartDiv");
+    //code that stops the function from running if a winner has already been decided
+    if (finish) {
+        return;
+    }
+    //code that stops the function from running if a winner has already been decided
+    var threshold = allVotes.length /2;
+    for(var i in candidates){
+        if(votes[i] > threshold ){
+            console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+            let ctx = document.createElement("canvas");
+            ctx.classList.toggle("chart")
+            let chartSettings2 = makeGraphs();
+            new Chart(ctx, chartSettings2);
+            ctx.classList.add("anim-flyin")
+            chartDiv.appendChild(ctx);
+  
+            // this.classList.add("electionDropdown");
+            finish = true
+            return;
+        }
+    }  
+          //creates the html componants
+          let ctx = document.createElement("canvas");
+          ctx.classList.toggle("chart")
+          //calls the function makeGraphs which returns the data of the bar chart
+          let chartSettings2 = makeGraphs();
+          new Chart(ctx, chartSettings2);
+          ctx.classList.add("anim-flyin")
+          chartDiv.appendChild(ctx);
+
+          // this.classList.add("electionDropdown");
+
+}
+

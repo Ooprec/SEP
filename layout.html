@@ -3,49 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="./styles/layout.css">
+    <link rel="stylesheet" href="./styles/animations.css">
     <title>Layout</title>
 </head>
 <body class="light">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <div id="main-page" class="light">
-        <h1 id="header" class="maroon">Student Elections</h1>
+        
+        <h1 id="header" class="maroon" >
+            
+            <p id="header-text" class="title-anim maroon">Student Elections</p> 
+            
+        </h1>
 
+        <!--start collapsible-->
+        <label id="collapsible-label" class="collapsible-label maroon" for="collapsible">Upload Election</label>
+        <button type="button" id="collapsible" class="collapsible maroon">Upload Election</button>
+        <div class="collapsible-content">
+            <div id="instruct-div" class="light">
+                <label for="instructions" class="custom-overlay-button">Instructions</label>
+                <button id="instructions" onclick="window.location.href='instructions.html'" class="hidden-button"></button>
+            </div>
+            
         <form action="" id="uploadForm">
             <div id="inputs" class="light">
-                
-                <label for="csv">Upload CSV:</label>
+                <label for="csv" id="upload-csv-label" class="input-label">Upload CSV:</label>
                 <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
-                <input type="file" id="csv"> <br><br>
-
-                <label for="submit" class="custom-overlay-button">Submit</label>
-                <button type="submit" id="submit"></button>
-            </div>
-
-        </form>
-        
-        <div id="sections-parent">
-            <div id="sections">
+                <input type="file" id="csv" required> <br><br>
                 
-                <div id="tabs" class="tab-container">
-                    <div id="honor-tab" class="honor 0 selectable-tab unselected" onclick="selectTab(this)">Honor</div>
-                    <div id="prefect-tab" class="prefect 1 selectable-tab unselected" onclick="selectTab(this)">Prefect</div>
-                    <div id="senate-tab" class="senate 2 selectable-tab unselected" onclick="selectTab(this)">Senate</div>
-                    <div id="secretary-tab" class="secretary 3 selectable-tab unselected" onclick="selectTab(this)">Secretary</div>
-                </div>
-                    <div id="shown-results" class="light">
-                        
-                    </div>
-                </div>
+                <label for="csv-name" class="input-label">Election Name: </label>
+                <input type="text" id="csv-name" placeholder="" minlength="5">
 
+                <br><br>
+                <label for="submit" class="custom-overlay-button">Submit</label>
+                <button type="submit" class="hidden-button" id="submit" onclick="importCSVToDatabase()"></button>
+
+                
+                </div>
+            </form>
+        <div class="thin-bar maroon"></div>
+
+         </div> <!--end collapsible-->
+
+        <br>
+
+        <div id="Lbar-container">
+            <label for="Lbar-bar" id="Lbar-text">Test</label>
+            
+            <div id="Lbar-border">
+                <div id="Lbar-bar" class="unstarted"></div>
             </div>
-
-
+            
         </div>
+        <div id="post-form">
+            <select id="csv-options" onchange=""></select></select>
+            <label for="download" class="custom-overlay-button">Run</label>
+            <button id="download" onclick="document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')))" class="hidden-button" ></button>
+        
+            <label for="thingss" class="custom-overlay-button">Delete Project</label>
+            <button id="thingss" onclick="deleteProject()" class="hidden-button">Delete Project</button>
+        </div>
+    
 
     </div>
 
-    <script src="/layout.js"></script>
+     <!--start collapsible-->
+    <label id="collapsible-label" class="collapsible-label maroon" for="electionresultscollapsible">Election Results</label>
+    <button type="button" id="electionresultscollapsible" onclick="" class="collapsible maroon">Election Results</button>
+    
+    <div class="collapsible-content-election" id="election-results">
+        <div id="chartDiv"></div>
+    </div> <!--end collapsible-->
+    
+    <!--Links layout to upload and imports the csv database function-->
+    <script src="./scripts/animations.js"></script>
+    <script src="./scripts/layout.js"></script>
+    <script type="module" src="./scripts/upload.js"></script>
+    <script type="module" src="./scripts/vote.js"></script>
+    <script type="module">
+        import * as uploadjs from "./scripts/upload.js";
+        import * as votejs from "./scripts/vote.js";
+        import * as optjs from "./scripts/optimizations.js";
+        window.importCSVToDatabase = uploadjs.importCSVToDatabase;
+        window.loadFromDatabase = votejs.loadFromDatabase;
+        window.getCollectionList = uploadjs.getCollectionList;
+        window.vote = votejs.vote;
+        window.count = votejs.count;
+        window.checkLocal = optjs.checkLocal;
+        window.deleteProject = uploadjs.deleteProject;
+
+        getCollectionList();
+        checkLocal();
+
+        vote(JSON.parse(sessionStorage.getItem('allVotes')));
+      </script>
 </body>
 </html>
+
+</script>
