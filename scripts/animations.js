@@ -56,33 +56,47 @@ LBar.addEventListener("animationend", (e) => {
     }
 })
 
+//pulls the run botton from html
 var LReload = document.getElementById("download");
+//resets finish
 var finish = false;
+//this runs when run is pressed and it resets the graph code
 LReload.addEventListener("click", (e) => {
   finish = false;
   done = false;
 })
 
+//pulls the election dropdown from html
 var LElection = document.getElementById("electionresultscollapsible");
+//resets done
 var done = false;
+//pulls votes allvotes and candidates from session storage
 let candidates = JSON.parse(sessionStorage.getItem('holder'));
 let votes = JSON.parse(sessionStorage.getItem('shelby')); 
 let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
 
+//runs the automated graphing code. Activated on the press of election  results
 LElection.addEventListener("click", (e) => {
-
+  //updates votes allvotes and candidates from session storage
   let candidates = JSON.parse(sessionStorage.getItem('holder'));
   let votes = JSON.parse(sessionStorage.getItem('shelby')); 
   let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+  //sets the win threshold
   var threshold = allVotes.length/2;
+  //makes sure done is reset
   done = false;
+  //this while loop continues until a winner of the eleciton is determined
   while(done == false){
+    //updates votes allvotes and candidates from session storage
     let candidates = JSON.parse(sessionStorage.getItem('holder'));
     let votes = JSON.parse(sessionStorage.getItem('shelby')); 
     let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    //calls the work and count functions. The work function graphs and the count function progresses to the next round.
     work();
     count();
+    //updates threshold
     var threshold = allVotes.length/2;
+  //terminates the function when a winner is reached
   for(var i in candidates){
     
       if(votes[i] > threshold ){
