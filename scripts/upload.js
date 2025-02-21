@@ -104,3 +104,22 @@ export async function importCSVToDatabase () {
     }
 
 }
+
+export const deleteProject = async function(){
+  const projName = document.getElementById("csv-options").value;
+  console.log(projName);
+  const allDocumentsInCollection = await getDocs(collection(db, projName));
+  allDocumentsInCollection.forEach(item => {
+    deleteDoc(doc(db, projName, item.id));
+  });
+  const listRef = doc(db, "rank-choice-voting", "docList");
+  const docSnap = await getDoc(listRef);
+  let updatedArray = docSnap.data().docsArray;
+  let index = updatedArray.indexOf(projName);
+  console.log(index);
+  updatedArray.splice(index, 1);
+  await updateDoc(listRef, {
+    docsArray: updatedArray
+  });
+  
+}

@@ -25,6 +25,7 @@
                 <label for="instructions" class="custom-overlay-button">Instructions</label>
                 <button id="instructions" onclick="window.location.href='instructions.html'" class="hidden-button"></button>
             </div>
+            
         <form action="" id="uploadForm">
             <div id="inputs" class="light">
                 <label for="csv" id="upload-csv-label" class="input-label">Upload CSV:</label>
@@ -59,6 +60,9 @@
             <select id="csv-options" onchange=""></select></select>
             <label for="download" class="custom-overlay-button">Run</label>
             <button id="download" onclick="document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')))" class="hidden-button" ></button>
+        
+            <label for="thingss" class="custom-overlay-button">Delete Project</label>
+            <button id="thingss" onclick="deleteProject()" class="hidden-button">Delete Project</button>
         </div>
     
 
@@ -87,7 +91,8 @@
         window.vote = votejs.vote;
         window.count = votejs.count;
         window.checkLocal = optjs.checkLocal;
-        
+        window.deleteProject = uploadjs.deleteProject;
+
         getCollectionList();
         checkLocal();
 
