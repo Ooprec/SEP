@@ -198,67 +198,6 @@ export async function count() {
     sessionStorage.setItem('shelby', JSON.stringify(votes));
 
     vote(allVotes);
-
-
-
-    // for(var j in candidates){
-    //     if(votes[j] == firstMin){
-    //         //candidates[j] is the person with the lowest number of votes
-    //         for(var k in allVotes){
-    //             if( candidates[j] == allVotes[k].first){
-    //                 //set their first choice equal to their second)
-    //                 if (candidates.includes(allVotes[k].second))
-    //                 {
-    //                     allVotes[k].first = allVotes[k].second;
-    //                     allVotes[k].second = allVotes[k].third;
-    //                     allVotes[k].third = null;
-    //                 }
-                    
-    //                 else if (candidates.includes(allVotes[k].third)) {
-    //                     allVotes[k].first = allVotes[k].third;
-    //                     allVotes[k].second = null;
-    //                     allVotes[k].third = null;
-    //                 }
-    //                 else {
-    //                     allVotes.splice(k,1);
-    //                 }
-    //             }
-    //             if (candidates[j] == allVotes[k].second)
-    //             {
-    //                 if (candidates.includes(allVotes[k].third))
-    //                 {
-    //                     allVotes[k].second = allVotes[k].third;
-    //                     allVotes[k].third = null;
-    //                 }
-    //                 else
-    //                 {
-    //                     allVotes[k].second = null;
-    //                     allVotes[k].third = null;
-    //                 }
-    //             }
-    //             if (candidates[j] == allVotes[k].third)
-    //             {
-    //                 allVotes[k].third = null;
-    //             }
-    //             if (!candidates.includes(allVotes[k].first) && !candidates.includes(allVotes[k].second) && !candidates.includes(allVotes[k].third))
-    //                 {
-    //                     allVotes.splice(k,1)
-    //                 }
-                
-    //         }
-    //         candidates.splice(j,1);
-    //         sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
-    //         sessionStorage.setItem('holder',JSON.stringify(candidates));
-    //     }
-        
-    // }
-
-    
-
-    // if (tempCovington2 == [3,0,0])
-    // {
-    //     console.log(tempAll);
-    // }
     
     }
 

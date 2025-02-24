@@ -1,5 +1,4 @@
 :root {
-    /* --light: #F2F4F5; */
 
 
     --maroon: #793140;
@@ -53,8 +52,6 @@ body {
     color: var(--maroon-but-darker)
 }
 
-
-
 #uploadForm {
     text-align: center;
     margin: auto;
@@ -83,7 +80,7 @@ input[type="file"] {
 .custom-overlay-button:hover {
     border: var(--border);
     background-color: var(--maroon);
-    color: var(--light);
+    color: var(--white);
     transform: scale(1.07);
     /* padding: .6rem 1.2rem; */
 }
@@ -91,7 +88,7 @@ input[type="file"] {
 .custom-overlay-button:active {
     border: var(--border);
     background-color: var(--maroon-but-darker);
-    color: var(--light);
+    color: var(--white);
     transform: scale(1.03);
     /* padding: .6rem 1.2rem; */
 }
@@ -123,7 +120,7 @@ input[type="file"] {
 select {
     font-size: var(--normal-font-size);
     color: var(--maroon-but-darker);
-    background-color: var(--light);
+    background-color: var(--white);
     border: var(--border);
     border-radius: var(--br);
     padding: .4rem .8rem;
@@ -136,7 +133,7 @@ select {
 select:hover {
     border: var(--border);
     background-color: var(--maroon);
-    color: var(--light);
+    color: var(--white);
     transform: scale(1.07);
 }
 
@@ -160,7 +157,7 @@ select:hover {
     font-weight: bold;
     padding: .75rem;
     cursor: pointer;
-    color: var(--light);
+    color: var(--white);
     border: var(--border);
     background-color: var(--maroon);
     /* transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, transform .15s linear, border-radius .15s; */
@@ -225,7 +222,7 @@ select:hover {
     border-radius: var(--br);
     border: var(--border);
     color: var(--maroon);
-    background-color: var(--light);
+    background-color: var(--white);
 }
 
 #csv-name:focus {
@@ -296,6 +293,6 @@ select:hover {
 }
 
 #return-custom:hover {
-    color: var(--light);
+    color: var(--white);
 
 }

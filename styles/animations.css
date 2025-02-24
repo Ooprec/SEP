@@ -1,8 +1,9 @@
 :root {
-    --light: #F2F4F5;
     --maroon: #793140;
     --maroon-but-darker: #582235;
-    
+    --white: #FFFFFF;
+
+
     --br: .2rem;
     --border: .08rem solid var(--maroon-but-darker);
     --bst: 1s;   
@@ -17,7 +18,7 @@
 }
 
 #Lbar-text {
-    color: var(--light);
+    color: var(--white);
     padding-bottom: 1.7rem;
     font-size: 12pt;
     margin: auto;
@@ -123,7 +124,7 @@
     width: 100%;
     /* padding: 0 18px; */
     overflow: hidden;
-    background-color: var(--light);
+    background-color: var(--white);
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
@@ -133,7 +134,7 @@
 
 
 .collapsible-label {
-    color: var(--light);
+    color: var(--white);
     background-color: var(--maroon);
     font-size: 16pt;
     font-family: sans-serif;
@@ -151,7 +152,7 @@
 .collapsible-label:hover {
     border: var(--border);
     background-color: var(--maroon-but-darker);
-    color: var(--light);
+    color: var(--white);
     transform: scale(1,1.07);
     /* padding: .6rem 1.2rem; */
 }
@@ -167,7 +168,7 @@
 .collapsible-content-election {
     padding: 0 18px;
     overflow: scroll;
-    background-color: var(--light);
+    background-color: var(--white);
     max-height: 0;
     width: 66%;
     margin: auto;

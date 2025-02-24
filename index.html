@@ -20,26 +20,25 @@
         <!--start collapsible-->
         <label id="collapsible-label" class="collapsible-label maroon" for="collapsible">Upload Election</label>
         <button type="button" id="collapsible" class="collapsible maroon">Upload Election</button>
-        <div class="collapsible-content">
+        <div class="collapsible-content light">
             <div id="instruct-div" class="light">
-                <label for="instructions" class="custom-overlay-button">Instructions</label>
+                <label for="instructions" class="custom-overlay-button light">Instructions</label>
                 <button id="instructions" onclick="window.location.href='instructions.html'" class="hidden-button"></button>
             </div>
             
-        <form action="" id="uploadForm">
+        <form action="" id="uploadForm" class="light">
             <div id="inputs" class="light">
                 <label for="csv" id="upload-csv-label" class="input-label">Upload CSV:</label>
                 <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
                 <input type="file" id="csv" required> <br><br>
                 
-                <label for="csv-name" class="input-label">Election Name: </label>
-                <input type="text" id="csv-name" placeholder="" minlength="5">
+                <label for="csv-name" class="input-label light">Election Name: </label>
+                <input type="text" id="csv-name" class="light" placeholder="" minlength="5">
 
                 <br><br>
                 <label for="submit" class="custom-overlay-button">Submit</label>
                 <button type="submit" class="hidden-button" id="submit" onclick="importCSVToDatabase()"></button>
 
-                
                 </div>
             </form>
         <div class="thin-bar maroon"></div>
