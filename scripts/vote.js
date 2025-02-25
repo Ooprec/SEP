@@ -207,3 +207,4 @@ function testVote(candidates, vote)
 {
     return candidates.includes(vote);
 }
+
