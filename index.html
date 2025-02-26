@@ -58,10 +58,12 @@
         <div id="post-form">
             <select id="csv-options" class="light" onchange=""></select></select>
             <label for="download" class="custom-overlay-button">Run</label>
-            <button id="download" onclick="document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
+            <button id="download" onclick="document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); point(); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
         
             <label for="thingss" class="custom-overlay-button">Delete Project</label>
             <button id="thingss" onclick="deleteProject()" class="hidden-button">Delete Project</button>
+
+    
         </div>
     
 
@@ -91,6 +93,7 @@
         window.count = votejs.count;
         window.checkLocal = optjs.checkLocal;
         window.deleteProject = uploadjs.deleteProject;
+        window.point = votejs.point;
 
         getCollectionList();
         checkLocal();
