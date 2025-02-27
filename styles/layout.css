@@ -200,7 +200,7 @@ select:hover {
 .results {display:none};
 
 .chart {
-    width: 300px;
+    width: 25vw;
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
@@ -287,7 +287,6 @@ select:hover {
     padding: .3rem;
 }
 
-
 #instruct-div {
     padding-top: .35rem;
     padding-bottom: .15rem;
@@ -300,5 +299,28 @@ select:hover {
 
 #return-custom:hover {
     color: var(--white);
-
 }
+
+.indiv-chart-div {
+    width: 100%;
+    align-items: center;
+    margin: auto;
+}
+
+#chartDiv {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+}
+
+.election-done-div {
+        grid-column: span 2;
+}
+
+.indiv-chart-div-winner {
+    grid-column: span 2;
+    width: 50%;
+    align-items: center;
+    margin: auto;
+}
+

@@ -122,7 +122,10 @@ LElection.addEventListener("click", (e) => {
 
   let section = document.createElement("h2");
   section.classList.toggle("maroon");
-  chartDiv.appendChild(section);
+  let indivChartDiv = document.createElement("div");
+  indivChartDiv.classList.toggle("election-done-div");
+  indivChartDiv.appendChild(section);
+  chartDiv.appendChild(indivChartDiv);
   section.innerHTML = "Round 1 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
 
 
@@ -166,7 +169,10 @@ LElection.addEventListener("click", (e) => {
 
   let section2 = document.createElement("h2");
   section2.classList.toggle("maroon");
-  chartDiv.appendChild(section2);
+  let sectionDiv = document.createElement("div");
+  sectionDiv.classList.toggle("election-done-div");
+  sectionDiv.appendChild(section2);
+  chartDiv.appendChild(sectionDiv);
   section2.innerHTML = "Round 2 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
   
 
@@ -200,7 +206,7 @@ for (i = 0; i < coll.length; i++) {
     }
         }
       )
-      
+
     }
     
 
@@ -252,7 +258,10 @@ function makeGraphs() {
              //starts counting from zero
              beginAtZero: true
            }
-         }
+         },
+         responsive: true,
+         maintainAspectRatio: true,
+
        }
      };
 
@@ -293,7 +302,12 @@ function work() {
             let chartSettings2 = makeGraphs();
             new Chart(ctx, chartSettings2);
             ctx.classList.add("anim-flyin")
-            chartDiv.appendChild(ctx);
+
+            let indivChartDiv = document.createElement("div");
+            indivChartDiv.classList.toggle("indiv-chart-div-winner");
+            indivChartDiv.appendChild(ctx);
+
+            chartDiv.appendChild(indivChartDiv);
   
             // this.classList.add("electionDropdown");
             finish = true
@@ -307,7 +321,11 @@ function work() {
     let chartSettings2 = makeGraphs();
     new Chart(ctx, chartSettings2);
     ctx.classList.add("anim-flyin")
-    chartDiv.appendChild(ctx);
+    let indivChartDiv = document.createElement("div");
+    indivChartDiv.classList.toggle("indiv-chart-div");
+    indivChartDiv.appendChild(ctx);
+
+    chartDiv.appendChild(indivChartDiv);
 
     // this.classList.add("electionDropdown");
 
