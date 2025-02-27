@@ -227,6 +227,48 @@ export async function count() {
     
     }
 
+export function point(){
+    //a list of all of the unique candidates (index corresponds to their votes in votes list)
+    var candidates = JSON.parse(sessionStorage.getItem('holder')); // list of names
+    //a list of "voter objects" with their three choices as attributes
+    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); // all voters
+
+        var candidates = []
+        var votes = []
+    for (var i=0; i<allVotes.length; i++){
+        if(!candidates.includes(allVotes[i].first)){
+            candidates.push(allVotes[i].first);
+            votes.push(0);
+        }
+    }
+
+     for (var i in allVotes)
+    {
+        for (var j in candidates)
+        {
+            if (allVotes[i].first == candidates[j])
+            {
+                votes[j] = votes[j] + 5;
+            }
+            if (allVotes[i].second == candidates[j])
+                {
+                    console.log("thundercat")
+                    votes[j] = votes[j] + 3;
+                }
+            if (allVotes[i].second == candidates[j])
+                {
+                    votes[j] = votes[j] + 1;
+                }
+        }
+    }
+    var resultado = []
+    for(var i in candidates){
+        resultado.push(candidates[i] + " " + votes[i])
+    }
+    console.log(resultado);
+
+}
+
 
 //test
 function testVote(candidates, vote)
