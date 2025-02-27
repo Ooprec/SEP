@@ -174,7 +174,7 @@ LElection.addEventListener("click", (e) => {
   sectionDiv.appendChild(section2);
   chartDiv.appendChild(sectionDiv);
   section2.innerHTML = "Round 2 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
-  
+  sessionStorage.setItem('on-second', JSON.stringify(false));
 
 })  
 

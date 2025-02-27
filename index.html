@@ -56,7 +56,7 @@
             
         </div>
         <div id="post-form">
-            <select id="csv-options" class="light" onchange=""></select></select>
+            <select id="csv-options" class="light" onchange="loadFromDatabase();if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}"></select></select>
             <label for="download" class="custom-overlay-button">Run</label>
             <button id="download" onclick="sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
         
