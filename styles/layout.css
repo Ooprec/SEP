@@ -36,12 +36,18 @@ body {
     color: var(--white);
 }
 
-#header {
+h1, h2 {
     margin: auto;
     justify-content: center;
     align-content: center;
     text-align: center;
 }
+
+h2 {
+    padding: .4rem .8rem;
+}
+
+
 
 .maroon::selection {
     color: var(--maroon-but-darker);
@@ -195,8 +201,8 @@ select:hover {
 
 .chart {
     width: 300px;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 @keyframes fly-in {

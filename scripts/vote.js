@@ -84,8 +84,18 @@ export async function loadFromDatabase () {
 
 export async function vote(allVotes) {
 
-    let candidates = JSON.parse(sessionStorage.getItem('holder'));
-    let votes = []//JSON.parse(sessionStorage.getItem('shelby'));
+    let second = JSON.parse(sessionStorage.getItem('on-second'));
+    
+
+    if (second) {
+        var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
+    }
+    else {
+        var candidates = JSON.parse(sessionStorage.getItem('holder'));
+    }
+    
+
+    let votes = []
 
     for (i in candidates)
     {
@@ -97,34 +107,40 @@ export async function vote(allVotes) {
         votes[candidates.indexOf(allVotes[i].first)]++;
     }   
 
-    // for (var i in allVotes)
-    // {
-    //     for (var j in candidates)
-    //     {
-    //         if (allVotes[i].first == candidates[j])
-    //         {
-    //             votes[j] = votes[j] + 1;
-    //         }
-    //     }
-    // }
-
     //moves code back to session to be used for graphs
-    sessionStorage.setItem('shelby', JSON.stringify(votes));
-    sessionStorage.setItem('holder', JSON.stringify(candidates));
+    if (!second) {
+        sessionStorage.setItem('shelby', JSON.stringify(votes));
+        sessionStorage.setItem('holder', JSON.stringify(candidates));
+    }
+    else {
+        sessionStorage.setItem('shelby-second', JSON.stringify(votes));
+        sessionStorage.setItem('holder-second', JSON.stringify(candidates));
+    }
     
+        
     return (votes);
-       
         
 }
 
 export async function count() {
-    //a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
-    var votes = JSON.parse(sessionStorage.getItem('shelby')); //list of #
-    //a list of all of the unique candidates (index corresponds to their votes in votes list)
-    var candidates = JSON.parse(sessionStorage.getItem('holder')); // list of names
-    //a list of "voter objects" with their three choices as attributes
-    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); // all voters
+    let second = JSON.parse(sessionStorage.getItem('on-second'));
+    if (second) {
+        //a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
+        var votes = JSON.parse(sessionStorage.getItem('shelby-second')); //list of #
+        //a list of all of the unique candidates (index corresponds to their votes in votes list)
+        var candidates = JSON.parse(sessionStorage.getItem('holder-second')); // list of names
+        //a list of "voter objects" with their three choices as attributes
+        var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); // all voters
 
+    }
+    else {
+        //a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
+        var votes = JSON.parse(sessionStorage.getItem('shelby')); //list of #
+        //a list of all of the unique candidates (index corresponds to their votes in votes list)
+        var candidates = JSON.parse(sessionStorage.getItem('holder')); // list of names
+        //a list of "voter objects" with their three choices as attributes
+        var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); // all voters
+    }
 
 
     
@@ -135,6 +151,7 @@ export async function count() {
     for(var i in candidates){
         if(votes[i] > threshold ){
             // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+            sessionStorage.setItem("winner", JSON.stringify(candidates[i]));
             return;
         }
     }
@@ -156,7 +173,6 @@ export async function count() {
         }
     }
 
-    console.log(removedCandiadate + "_" + firstMin);
 
     
 
@@ -193,11 +209,21 @@ export async function count() {
     }
 
     //return to storage
-    sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
-    sessionStorage.setItem('holder',JSON.stringify(candidates));
-    sessionStorage.setItem('shelby', JSON.stringify(votes));
 
-    vote(allVotes);
+    if (!second) {
+        sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
+        sessionStorage.setItem('holder',JSON.stringify(candidates));
+        sessionStorage.setItem('shelby', JSON.stringify(votes));
+        vote(allVotes);
+    }
+    else {
+        sessionStorage.setItem('allVotes-second',JSON.stringify(allVotes));
+        sessionStorage.setItem('holder-second',JSON.stringify(candidates));
+        sessionStorage.setItem('shelby-second', JSON.stringify(votes));
+        vote(allVotes);
+    }
+
+    
     
     }
 
@@ -208,3 +234,53 @@ function testVote(candidates, vote)
     return candidates.includes(vote);
 }
 
+export function removeWinner()
+{
+    var winner = JSON.parse(sessionStorage.getItem("winner"));
+    var electionName = document.getElementById("csv-options").value;
+    var archivedElection = JSON.parse(sessionStorage.getItem(electionName + "-archived"));
+
+    var candidates = archivedElection.candidates;
+    var votes = archivedElection.shelby;
+    var allVotes = archivedElection.allVotes;
+
+    var winnerIndex = candidates.indexOf(winner);
+    candidates.splice(winnerIndex, 1);
+    votes.splice(winnerIndex, 1);
+
+    for (var i in allVotes)
+    {
+        if (allVotes[i].first == winner)
+        {
+            allVotes[i].first = allVotes[i].second;
+            allVotes[i].second = allVotes[i].third;
+            allVotes[i].third = null;
+        }
+        if (allVotes[i].second == winner)
+        {
+            allVotes[i].second = allVotes[i].third;
+            allVotes[i].third = null;
+        }
+        if (allVotes[i].third == winner)
+        {
+            allVotes[i].third = null;
+        }
+        if (allVotes[i].first == null && allVotes[i].second == null && allVotes[i].third == null)
+        {
+            allVotes.splice(i, 1);
+            i--;
+        }
+    }
+
+    
+    sessionStorage.setItem('on-second', JSON.stringify(true));
+
+    sessionStorage.setItem('allVotes-second', JSON.stringify(allVotes));
+    sessionStorage.setItem('shelby-second', JSON.stringify(votes));
+    sessionStorage.setItem('holder-second', JSON.stringify(candidates));
+
+
+    vote(allVotes);
+
+    
+}

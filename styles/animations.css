@@ -172,6 +172,5 @@
     max-height: 0;
     width: 66%;
     margin: auto;
-    background-color: #F3F3F3;
     transition: max-height 0.2s ease-out;
 }

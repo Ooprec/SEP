@@ -1,5 +1,4 @@
 
-
 // get the HTML elements of the loading bar
 var LCont = document.getElementById("Lbar-container");
 var LBar = document.getElementById("Lbar-bar");
@@ -24,7 +23,6 @@ LCont.addEventListener("click", (e) => {
 
 
 LBar.addEventListener("animationend", (e) => {
-    console.log("animation ended");
     if (LBar.classList.contains("q1"))
     {
         LText.style.color = "#582235";
@@ -71,16 +69,30 @@ var LElection = document.getElementById("electionresultscollapsible");
 //resets done
 var done = false;
 //pulls votes allvotes and candidates from session storage
-let candidates = JSON.parse(sessionStorage.getItem('holder'));
-let votes = JSON.parse(sessionStorage.getItem('shelby')); 
-let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+
+let second = JSON.parse(sessionStorage.getItem('on-second'));
+if (!second) {
+  var candidates = JSON.parse(sessionStorage.getItem('holder'));
+  var votes = JSON.parse(sessionStorage.getItem('shelby')); 
+  var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+}
+else {
+  var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
+  var votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
+  var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second'));   
+}
+
 
 //runs the automated graphing code. Activated on the press of election  results
 LElection.addEventListener("click", (e) => {
   //updates votes allvotes and candidates from session storage
-  let candidates = JSON.parse(sessionStorage.getItem('holder'));
-  let votes = JSON.parse(sessionStorage.getItem('shelby')); 
-  let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+  
+
+
+  var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+  var candidates = JSON.parse(sessionStorage.getItem('holder'));
+  var votes = JSON.parse(sessionStorage.getItem('shelby')); 
+
   //sets the win threshold
   var threshold = allVotes.length/2;
   //makes sure done is reset
@@ -88,9 +100,10 @@ LElection.addEventListener("click", (e) => {
   //this while loop continues until a winner of the eleciton is determined
   while(done == false){
     //updates votes allvotes and candidates from session storage
-    let candidates = JSON.parse(sessionStorage.getItem('holder'));
-    let votes = JSON.parse(sessionStorage.getItem('shelby')); 
-    let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    candidates = JSON.parse(sessionStorage.getItem('holder'));
+    votes = JSON.parse(sessionStorage.getItem('shelby')); 
+    allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    
     //calls the work and count functions. The work function graphs and the count function progresses to the next round.
     work();
     count();
@@ -102,9 +115,61 @@ LElection.addEventListener("click", (e) => {
       if(votes[i] > threshold ){
           // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
           done = true
+          var winner = candidates[i];
       }
+    } 
   }
-}
+
+  let section = document.createElement("h2");
+  section.classList.toggle("maroon");
+  chartDiv.appendChild(section);
+  section.innerHTML = "Round 1 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
+
+
+  sessionStorage.setItem('on-second', JSON.stringify(true));
+
+  removeWinner();
+
+  var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
+  var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
+  var votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
+
+  //sets the win thresh old
+  var threshold = allVotes.length/2;
+  //makes sure done is reset
+  done = false;
+  //this while loop continues until a winner of the election is determined
+  // console.log("first loop done")
+
+  
+
+  vote(allVotes);
+  finish = false;
+  while(done == false){
+    candidates = JSON.parse(sessionStorage.getItem('holder-second'));
+    votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
+    allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
+    //calls the work and count functions. The work function graphs and the count function progresses to the next round.
+    work();
+    count();
+    //updates threshold
+    var threshold = allVotes.length/2;
+    //terminates the function when a winner is reached
+    for(var i in candidates){
+        if(votes[i] > threshold ){
+            // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+            winner = candidates[i];
+            done = true
+        }
+      } 
+  }
+
+  let section2 = document.createElement("h2");
+  section2.classList.toggle("maroon");
+  chartDiv.appendChild(section2);
+  section2.innerHTML = "Round 2 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
+  
+
 })  
 
 var coll = document.getElementsByClassName("collapsible");
@@ -115,15 +180,6 @@ for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
     if (this.id == "electionresultscollapsible" && !this.classList.contains("active"))
       {
-        //   chartDiv = document.getElementById("chartDiv");  
-        //   chartDiv.innerHTML = "";
-        //   let ctx = document.createElement("canvas");
-        //   ctx.classList.toggle("chart")
-        //   let chartSettings2 = makeGraphs();
-        //   new Chart(ctx, chartSettings2);
-        //   ctx.classList.add("anim-flyin")
-        //   chartDiv.appendChild(ctx);
-
           this.classList.add("electionDropdown");
       }
 
@@ -145,20 +201,29 @@ for (i = 0; i < coll.length; i++) {
         }
       )
       
-      
-    
     }
     
 
 //this is the makeGraphs function which alows me to streamline the cration of graphs
 //I call this function in work().
 function makeGraphs() {
-   // toggle the 'selected' status for the newly selected tab
-   //creates a new chart element in layout.html        // make a new canvas element
-   //creates a new bar chart
-   let candiadates = JSON.parse(sessionStorage.getItem('holder'));
-   //the variable is set the list of counted first votes form the function vote
-   let dat = JSON.parse(sessionStorage.getItem('shelby')); 
+  // toggle the 'selected' status for the newly selected tab
+  //creates a new chart element in layout.html        // make a new canvas element
+  //creates a new bar chart
+  let second = JSON.parse(sessionStorage.getItem('on-second'));
+  if (!second) 
+  {
+    var candiadates = JSON.parse(sessionStorage.getItem('holder'));
+    //the variable is set the list of counted first votes form the function vote
+    var dat = JSON.parse(sessionStorage.getItem('shelby')); 
+  }
+  else
+  {
+    var candiadates = JSON.parse(sessionStorage.getItem('holder-second'));
+    //the variable is set the list of counted first votes form the function vote
+    var dat = JSON.parse(sessionStorage.getItem('shelby-second')); 
+  }
+   
    return {
        //the type of chart
        type: 'bar',
@@ -198,10 +263,18 @@ function makeGraphs() {
 function work() {
 
     //gets variables from firebase
-    let candidates = JSON.parse(sessionStorage.getItem('holder'));
-    let votes = JSON.parse(sessionStorage.getItem('shelby')); 
-    let allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    let second = JSON.parse(sessionStorage.getItem('on-second'));
 
+    if (!second) {
+      var candidates = JSON.parse(sessionStorage.getItem('holder'));
+      var votes = JSON.parse(sessionStorage.getItem('shelby')); 
+      var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    }
+    else {
+      var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
+      var votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
+      var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
+    }
 
 
     //the div of the field
@@ -227,16 +300,16 @@ function work() {
             return;
         }
     }  
-          //creates the html componants
-          let ctx = document.createElement("canvas");
-          ctx.classList.toggle("chart")
-          //calls the function makeGraphs which returns the data of the bar chart
-          let chartSettings2 = makeGraphs();
-          new Chart(ctx, chartSettings2);
-          ctx.classList.add("anim-flyin")
-          chartDiv.appendChild(ctx);
+    //creates the html componants
+    let ctx = document.createElement("canvas");
+    ctx.classList.toggle("chart")
+    //calls the function makeGraphs which returns the data of the bar chart
+    let chartSettings2 = makeGraphs();
+    new Chart(ctx, chartSettings2);
+    ctx.classList.add("anim-flyin")
+    chartDiv.appendChild(ctx);
 
-          // this.classList.add("electionDropdown");
+    // this.classList.add("electionDropdown");
 
 }
 

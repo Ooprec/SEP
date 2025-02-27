@@ -58,7 +58,7 @@
         <div id="post-form">
             <select id="csv-options" class="light" onchange=""></select></select>
             <label for="download" class="custom-overlay-button">Run</label>
-            <button id="download" onclick="document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
+            <button id="download" onclick="sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
         
             <label for="thingss" class="custom-overlay-button">Delete Election</label>
             <button id="thingss" onclick="deleteProject()" class="hidden-button">Delete Project</button>
@@ -71,13 +71,17 @@
     <label id="collapsible-label" class="collapsible-label maroon" for="electionresultscollapsible">Election Results</label>
     <button type="button" id="electionresultscollapsible" onclick="" class="collapsible maroon">Election Results</button>
     
-    <div class="collapsible-content-election" id="election-results">
-        <div id="chartDiv"></div>
+    <div class="collapsible-content-election light" id="election-results">
+        <div id="chartDiv" class="light"></div>
     </div> <!--end collapsible-->
+    <br>
+
+
+    <!-- Second Place Election Section -->
     
+
     <!--Links layout to upload and imports the csv database function-->
     <script src="./scripts/animations.js"></script>
-    <script src="./scripts/layout.js"></script>
     <script type="module" src="./scripts/upload.js"></script>
     <script type="module" src="./scripts/vote.js"></script>
     <script type="module">
@@ -91,10 +95,12 @@
         window.count = votejs.count;
         window.checkLocal = optjs.checkLocal;
         window.deleteProject = uploadjs.deleteProject;
+        window.removeWinner = votejs.removeWinner;
+
 
         getCollectionList();
         checkLocal();
-
+        sessionStorage.setItem('on-second', JSON.stringify(false));
         vote(JSON.parse(sessionStorage.getItem('allVotes')));
       </script>
 </body>
