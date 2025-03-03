@@ -255,7 +255,7 @@ export function point(){
                     console.log("thundercat")
                     votes[j] = votes[j] + 3;
                 }
-            if (allVotes[i].thired == candidates[j])
+            if (allVotes[i].second == candidates[j])
                 {
                     votes[j] = votes[j] + 1;
                 }
@@ -263,12 +263,10 @@ export function point(){
     }
     var resultado = []
     for(var i in candidates){
-        resultado.push(votes[i])
+        resultado.push(candidates[i] + " " + votes[i])
     }
     console.log(resultado);
-    sessionStorage.setItem('holder2',JSON.stringify(candidates));
-    sessionStorage.setItem('pointed', JSON.stringify(resultado));
-    // return resultado;
+
 }
 
 
