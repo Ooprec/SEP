@@ -51,9 +51,11 @@ LBar.addEventListener("animationend", (e) => {
     else if (LBar.classList.contains("q5"))
     {
         LText.innerHTML = "Election complete!"
-    }
+        if (document.getElementById("electionresultscollapsible").classList.contains('active')) {document.getElementById('chartDiv').innerHTML = ''}
+        document.getElementById("electionresultscollapsible").click();
+        
+  }
 })
-
 //pulls the run botton from html
 var LReload = document.getElementById("download");
 //resets finish
@@ -82,7 +84,7 @@ else {
   var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second'));   
 }
 
-
+var round = 0;
 //runs the automated graphing code. Activated on the press of election  results
 LElection.addEventListener("click", (e) => {
   //updates votes allvotes and candidates from session storage
@@ -92,6 +94,8 @@ LElection.addEventListener("click", (e) => {
   var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
   var candidates = JSON.parse(sessionStorage.getItem('holder'));
   var votes = JSON.parse(sessionStorage.getItem('shelby')); 
+
+  
 
   //sets the win threshold
   var threshold = allVotes.length/2;
@@ -113,7 +117,6 @@ LElection.addEventListener("click", (e) => {
   for(var i in candidates){
     
       if(votes[i] > threshold ){
-          // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
           done = true
           var winner = candidates[i];
       }
@@ -129,7 +132,6 @@ LElection.addEventListener("click", (e) => {
   section.innerHTML = "Round 1 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
 
 
-  sessionStorage.setItem('on-second', JSON.stringify(true));
 
   removeWinner();
 
@@ -148,6 +150,7 @@ LElection.addEventListener("click", (e) => {
 
   vote(allVotes);
   finish = false;
+  round = 0;
   while(done == false){
     candidates = JSON.parse(sessionStorage.getItem('holder-second'));
     votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
@@ -187,16 +190,21 @@ for (i = 0; i < coll.length; i++) {
     if (this.id == "electionresultscollapsible" && !this.classList.contains("active"))
       {
           this.classList.add("electionDropdown");
+          if (this.classList.contains("active"))
+          {
+            
+          }
       }
+      if (this.classList.contains("active")) {document.getElementById("chartDiv").innerHTML = "";}
 
     // rest of dropdown code
+    
     this.classList.toggle("active");
     var content = this.nextElementSibling;
-   
     if (content.style.maxHeight){
       content.style.maxHeight = null;
     } else {
-      if (content.id == "chartDiv")
+      if (content.id == "election-results")
       {
         content.style.maxHeight = "fit-content";
       }
@@ -230,47 +238,53 @@ function makeGraphs() {
     var dat = JSON.parse(sessionStorage.getItem('shelby-second')); 
   }
    
-   return {
-       //the type of chart
-       type: 'bar',
-       //the data within the chart
-       data: {
-         //the names of each bar underneath the bar
-         labels: candiadates,
-
-         //somewhere here we should grab the datae
-         datasets: [{
-           //the title of the chart
-           label: '# of Votes',
-           //the integer value of each bar
-           //where the variable containing the voting data is used
-           data: dat,
-           //the width of each bar
-           borderWidth: 3,
-           borderColor: '#582235'
-         }]
-       },
-       options: {
+  return {
+    //the type of chart
+    type: 'bar',
+      //the data within the chart
+      data: {
+      //the names of each bar underneath the bar
+      labels: candiadates,
+      datasets: [{
+        //the title of the chart
+        label: '# of Votes',
+        //the integer value of each bar
+        //where the variable containing the voting data is used
+        data: dat,
+        //the width of each bar
+        borderWidth: 3,
+        borderColor: '#582235'
+        }]
+      },
+      options: {
         animation: false,
-         //scaling options for the chart
-         scales: {
-           y: {
-             //starts counting from zero
-             beginAtZero: true
-           }
-         },
-         responsive: true,
-         maintainAspectRatio: true,
-
+        //scaling options for the chart
+        scales: {
+          y: {
+          //starts counting from zero
+            beginAtZero: true
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {  
+          title: {
+            display: true,
+            text: 'Round '+round,
+            color: '#582235',
+            font: {
+              size: 20
+            }
+          }
        }
-     };
-
+     }
+  }
 }
 //cal a function on the click of the count button
 // document.getElementById("thingy").addEventListener("click", work);
 //the function called by the button. It generates
 function work() {
-
+  
     //gets variables from firebase
     let second = JSON.parse(sessionStorage.getItem('on-second'));
 
@@ -326,7 +340,7 @@ function work() {
     indivChartDiv.appendChild(ctx);
 
     chartDiv.appendChild(indivChartDiv);
-
+    round++;
     // this.classList.add("electionDropdown");
 
 }

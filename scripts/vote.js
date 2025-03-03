@@ -30,7 +30,6 @@ export async function loadFromDatabase () {
         sessionStorage.setItem('shelby', JSON.stringify(archive.shelby));
         sessionStorage.setItem('holder', JSON.stringify(archive.candidates));
         let allVotes = sessionStorage.getItem('allVotes');
-        console.log("used archived data");
         vote(allVotes);
         return;
     }
@@ -150,7 +149,6 @@ export async function count() {
     //go through all the candidates
     for(var i in candidates){
         if(votes[i] > threshold ){
-            // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
             sessionStorage.setItem("winner", JSON.stringify(candidates[i]));
             return;
         }
@@ -252,7 +250,6 @@ export function point(){
             }
             if (allVotes[i].second == candidates[j])
                 {
-                    console.log("thundercat")
                     votes[j] = votes[j] + 3;
                 }
             if (allVotes[i].second == candidates[j])
@@ -265,7 +262,6 @@ export function point(){
     for(var i in candidates){
         resultado.push(candidates[i] + " " + votes[i])
     }
-    console.log(resultado);
 
 }
 

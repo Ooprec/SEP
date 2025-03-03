@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/layout.css">
     <link rel="stylesheet" href="./styles/animations.css">
-    <title>Layout</title>
+    <title>Student Election Project</title>
 </head>
 <body class="light">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -36,8 +36,8 @@
                 <input type="text" id="csv-name" class="light" placeholder="" minlength="5">
 
                 <br><br>
-                <label for="submit" class="custom-overlay-button">Submit</label>
-                <button type="submit" class="hidden-button" id="submit" onclick="importCSVToDatabase()"></button>
+                <label for="submit" class="custom-overlay-button" onclick="document.getElementById('submit').click()">Submit</label>
+                <input type="submit" class="hidden-button" id="submit" onclick=""></button>
 
                 </div>
             </form>
@@ -56,9 +56,9 @@
             
         </div>
         <div id="post-form">
-            <select id="csv-options" class="light" onchange="loadFromDatabase();if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}"></select></select>
+            <select id="csv-options" class="light" onchange="document.getElementById('chartDiv').innerHTML = ''; document.getElementById('download').click()"></select></select>
             <label for="download" class="custom-overlay-button">Run</label>
-            <button id="download" onclick="sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
+            <button id="download" onclick="sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click(); document.getElementById('chartDiv').innerHTML = ''}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click(); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
         
             <label for="thingss" class="custom-overlay-button">Delete Election</label>
             <button id="thingss" onclick="deleteProject()" class="hidden-button">Delete Project</button>
@@ -70,7 +70,7 @@
     </div>
 
      <!--start collapsible-->
-    <label id="collapsible-label" class="collapsible-label maroon" for="electionresultscollapsible">Election Results</label>
+    <label id="collapsible-label" class="collapsible-label maroon test-label" for="electionresultscollapsible">Election Results</label>
     <button type="button" id="electionresultscollapsible" onclick="" class="collapsible maroon">Election Results</button>
     
     <div class="collapsible-content-election light" id="election-results">
@@ -78,6 +78,8 @@
     </div> <!--end collapsible-->
     <br>
     
+
+
     <!--Links layout to upload and imports the csv database function-->
     <script src="./scripts/animations.js"></script>
     <script type="module" src="./scripts/upload.js"></script>
@@ -95,6 +97,7 @@
         window.deleteProject = uploadjs.deleteProject;
         window.removeWinner = votejs.removeWinner;
         window.point = votejs.point;
+        window.anotherFix = uploadjs.anotherFix;
 
         getCollectionList();
         checkLocal();

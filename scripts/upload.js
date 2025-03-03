@@ -25,6 +25,8 @@ export async function getCollectionList()
   const docsArray = docSnap.data().docsArray;
   const select = document.getElementById("csv-options");
 
+  console.log(docsArray);
+
   select.innerHTML = '';
 
   for (let i = 0; i<docsArray.length; i++) {
@@ -35,8 +37,29 @@ export async function getCollectionList()
 
   return docsArray;
   
-  // console.log(docSnap.data().docsArray);
 }
+
+export async function anotherFix() {
+  const listRef = doc(db, "rank-choice-voting", "docList");
+  const docSnap = await getDoc(listRef);
+  const docsArray = docSnap.data().docsArray;
+  const select = document.getElementById("csv-options");
+
+  console.log(docsArray);
+  let updatedArray = docsArray;
+  updatedArray.pop();
+  updatedArray.pop();
+
+  await updateDoc(listRef, {
+    docsArray: updatedArray
+  });
+  select.innerHTML = '';
+
+  
+  }
+
+
+
    //makes it so you can add csv data to a database
    //shoutout carson noble for this code
 export async function importCSVToDatabase () {
@@ -49,18 +72,19 @@ export async function importCSVToDatabase () {
       try{
             
             var uname = document.getElementById("csv-name").value;
-            if (uname.length < 5) {
-              // alert("Make sure the election name is at least eight characters long");
-              return;
-            }
             
             if (uname in getCollectionList()) {alert("Election name already taken"); return}
 
             const listRef = doc(db, "rank-choice-voting", "docList");
+            const docSnap = await getDoc(listRef);
+            const docsArray = docSnap.data().docsArray;
+            let updatedDoc = docsArray;
+            updatedDoc.push(uname);
+            
             await updateDoc(listRef, {
-              docsArray: arrayUnion(uname)
+              docsArray: updatedDoc,
             })
-
+            console.log("uname updates")
             var file = document.getElementById("csv").files[0];
             var reader = new FileReader();
             reader.onload = function(event) {
@@ -95,31 +119,55 @@ export async function importCSVToDatabase () {
               }
             };
             reader.readAsText(file);
-            file.innerHTML = null;     
+            file.innerHTML = null; 
+            location.reload();    
     }
     //catch commander to prevent system stoppage in the event of wrongly submitted info
-    catch (e) {
-        console.error("Error adding votes to database: ", e);
-        
+    catch (e) 
+    {
+        console.error("Error adding votes to database: ", e);   
     }
 
 }
 
 export const deleteProject = async function(){
   const projName = document.getElementById("csv-options").value;
-  console.log(projName);
+  const select = document.getElementById("csv-options");
+  const options = select.getElementsByTagName('option');
+  select.dispatchEvent(new Event('change'));
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].value === projName) {
+      select.removeChild(options[i]);
+      break;
+    }
+  }
+  select.dispatchEvent(new Event('change'));
   const allDocumentsInCollection = await getDocs(collection(db, projName));
   allDocumentsInCollection.forEach(item => {
     deleteDoc(doc(db, projName, item.id));
   });
   const listRef = doc(db, "rank-choice-voting", "docList");
   const docSnap = await getDoc(listRef);
+
+
   let updatedArray = docSnap.data().docsArray;
   let index = updatedArray.indexOf(projName);
-  console.log(index);
   updatedArray.splice(index, 1);
+  console.log(docSnap.data().docsArray + "___" + updatedArray);
+
   await updateDoc(listRef, {
     docsArray: updatedArray
   });
   
 }
+
+const submit = document.getElementById("submit");
+submit.addEventListener("click", (e)=> {
+  console.log(e)
+  e.preventDefault();
+  importCSVToDatabase();
+  getCollectionList();
+  // document.getElementById("csv-name").value = "";
+  // document.getElementById("csv").value = "";
+
+})

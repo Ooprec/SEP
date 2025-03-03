@@ -6,7 +6,8 @@
 
     --br: .2rem;
     --border: .08rem solid var(--maroon-but-darker);
-    --bst: 1s;   
+    --bst: .5s;   
+    --bst-long: .75s;
 }
 
 #Lbar-container {
@@ -49,7 +50,7 @@
 }
 
 .q1 {
-    animation: Lbar-progress-q1 var(--bst) linear;
+    animation: Lbar-progress-q1 var(--bst-long) ease-in;
 }
 
 .q2 {
@@ -65,7 +66,7 @@
 }
 
 .q5 {
-    animation: Lbar-progress-q5 2s ease-out;
+    animation: Lbar-progress-q5 var(--bst-long) ease-out;
 }
 
 @keyframes Lbar-progress-q1 {
