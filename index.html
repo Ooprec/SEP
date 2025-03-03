@@ -60,8 +60,8 @@
             <label for="download" class="custom-overlay-button">Run</label>
             <button id="download" onclick="sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click(); document.getElementById('chartDiv').innerHTML = ''}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click(); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
         
-            <label for="thingss" class="custom-overlay-button">Delete Election</label>
-            <button id="thingss" onclick="deleteProject()" class="hidden-button">Delete Project</button>
+            <label for="thingss" class="custom-overlay-button">Destroy Votes</label>
+            <button id="thingss" onclick="destroyVotes()" class="hidden-button">Delete Project</button>
 
     
         </div>
@@ -94,10 +94,9 @@
         window.vote = votejs.vote;
         window.count = votejs.count;
         window.checkLocal = optjs.checkLocal;
-        window.deleteProject = uploadjs.deleteProject;
+        window.destroyVotes = uploadjs.destroyVotes;
         window.removeWinner = votejs.removeWinner;
         window.point = votejs.point;
-        window.anotherFix = uploadjs.anotherFix;
 
         getCollectionList();
         checkLocal();
