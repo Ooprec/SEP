@@ -20,7 +20,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
 export async function loadFromDatabase () {
     const cname = document.getElementById("csv-options").value;
 
@@ -226,13 +225,17 @@ export async function count() {
     }
 
 export function point(){
+    
     //a list of all of the unique candidates (index corresponds to their votes in votes list)
-    var candidates = JSON.parse(sessionStorage.getItem('holder')); // list of names
+    const cname = document.getElementById("csv-options").value;
+    var candidates = JSON.parse(sessionStorage.getItem(cname+'-archived')).candidates;
     //a list of "voter objects" with their three choices as attributes
-    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); // all voters
+    var allVotes = JSON.parse(sessionStorage.getItem(cname+'-archived')).allVotes; // all voters
 
-        var candidates = []
-        var votes = []
+
+
+    var candidates = []
+    var votes = []
     for (var i=0; i<allVotes.length; i++){
         if(!candidates.includes(allVotes[i].first)){
             candidates.push(allVotes[i].first);

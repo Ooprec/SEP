@@ -61,22 +61,19 @@ var LReload = document.getElementById("download");
 //resets finish
 var finish = false;
 //this runs when run is pressed and it resets the graph code
-LReload.addEventListener("click", (e) => {
+LReload.addEventListener("click", (e) => {8
   point();
-pointle();
-let ctx = document.createElement("canvas");
-ctx.classList.toggle("chart")
-let chartSettings2 = pointle();
-new Chart(ctx, chartSettings2);
-ctx.classList.add("anim-flyin")
+  let ctx = document.createElement("canvas");
+  ctx.classList.toggle("chart")
+  let chartSettings2 = pointle();
+  new Chart(ctx, chartSettings2);
 
-let indivChartDiv = document.createElement("div");
-indivChartDiv.classList.toggle("indiv-chart-div-winner");
-indivChartDiv.appendChild(ctx);
+  let indivChartDiv = document.createElement("div");
+  indivChartDiv.appendChild(ctx);
 
-chartDiv.appendChild(indivChartDiv);
-finish = false;
-done = false;
+  chartDiv.appendChild(indivChartDiv);
+  finish = false;
+  done = false;
   finish = false;
   done = false;
 })
