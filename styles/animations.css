@@ -10,7 +10,7 @@
     --bst-long: .75s;
 }
 
-#Lbar-container {
+#Lbar-container, #Ubar-container {
     align-content: center;
     justify-content: center;
     text-align: center;
@@ -18,14 +18,14 @@
     padding-bottom: 1rem;
 }
 
-#Lbar-text {
+#Lbar-text, #Ubar-test {
     color: var(--white);
     padding-bottom: 1.7rem;
     font-size: 12pt;
     margin: auto;
 }
 
-#Lbar-border {
+#Lbar-border, #Ubar-border {
     margin: auto;
     width: 75%;
     height: 1rem;
@@ -47,6 +47,14 @@
 #Lbar-container {
     height: 2rem;
     width: 100%;
+}
+
+#Ubar-bar {
+    align-self: left;
+    width: 100%;
+    height: 100%;
+    background-color: var(--maroon);
+    transition: max-width .2s;
 }
 
 .q1 {
@@ -175,3 +183,4 @@
     margin: auto;
     transition: max-height 0.2s ease-out;
 }
+

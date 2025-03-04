@@ -3,6 +3,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebas
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
 import { getFirestore, collection, addDoc, getDocs, arrayUnion, updateDoc, getDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { Ubarhandler } from "./animations.js";
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -58,18 +60,20 @@ export async function importCSVToDatabase () {
       var csvData = event.target.result;
       //seperates the csv data into rows to seperate candidates
       var rows = csvData.split("\n");
+      var len = rows.length;
       //looping through all rows, fills rows
       for (var i = 1; i < rows.length; i++) {
         //cells is an array of cells
         var cells = rows[i].split(",");   
         //sets each vote casted by each person equal to a value
         //represented in fire base as (e.g. First: "Name of Candidate")
-        
+        Ubarhandler(len, i);
             var docRef = await addDoc(collection(db, uname), {
               first: cells[2],
               second: cells[3],
               third: cells[4],      
             });
+            
             //tests to make sure the code fires
             console.log("Document written with ID: ", docRef.id); 
             // console.log("Document written with ID: ", docRef.id);

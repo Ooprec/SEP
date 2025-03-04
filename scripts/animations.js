@@ -359,3 +359,10 @@ upload.addEventListener("change", (e) => {
   document.getElementById("replacement-button").innerHTML = fileName;
 
 });
+
+
+const Ubar = document.getElementById("Ubar-bar");
+
+export function Ubarhandler(max, current) {
+  Ubar.style.maxWidth = (100*(current/max)) + "%";
+}
