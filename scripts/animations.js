@@ -62,6 +62,21 @@ var LReload = document.getElementById("download");
 var finish = false;
 //this runs when run is pressed and it resets the graph code
 LReload.addEventListener("click", (e) => {
+  point();
+pointle();
+let ctx = document.createElement("canvas");
+ctx.classList.toggle("chart")
+let chartSettings2 = pointle();
+new Chart(ctx, chartSettings2);
+ctx.classList.add("anim-flyin")
+
+let indivChartDiv = document.createElement("div");
+indivChartDiv.classList.toggle("indiv-chart-div-winner");
+indivChartDiv.appendChild(ctx);
+
+chartDiv.appendChild(indivChartDiv);
+finish = false;
+done = false;
   finish = false;
   done = false;
 })
@@ -279,6 +294,59 @@ function makeGraphs() {
        }
      }
   }
+}
+
+
+
+
+//cal a function on the click of the count button
+// document.getElementById("thingy").addEventListener("click", work);
+//the function called by the button. It generates
+function pointle() {
+var candiadates = JSON.parse(sessionStorage.getItem('holder'));
+var dat = JSON.parse(sessionStorage.getItem('pointy')); 
+
+return {
+  //the type of chart
+  type: 'bar',
+    //the data within the chart
+    data: {
+    //the names of each bar underneath the bar
+    labels: candiadates,
+    datasets: [{
+      //the title of the chart
+      label: '# of Votes',
+      //the integer value of each bar
+      //where the variable containing the voting data is used
+      data: dat,
+      //the width of each bar
+      borderWidth: 3,
+      borderColor: '#582235'
+      }]
+    },
+    options: {
+      animation: false,
+      //scaling options for the chart
+      scales: {
+        y: {
+        //starts counting from zero
+          beginAtZero: true
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {  
+        title: {
+          display: true,
+          text: 'Round '+round,
+          color: '#582235',
+          font: {
+            size: 20
+          }
+        }
+     }
+   }
+}
 }
 //cal a function on the click of the count button
 // document.getElementById("thingy").addEventListener("click", work);
