@@ -49,16 +49,12 @@ export async function importCSVToDatabase () {
     const listRef = doc(db, "rank-choice-voting", "docList");
     const docSnap = await getDoc(listRef);
     const docsArray = docSnap.data().docsArray;
-    let updatedDoc = docsArray;
-    updatedDoc.push(uname);
+    
 
-    await updateDoc(listRef, {
-      docsArray: updatedDoc,
-    })
-    console.log("uname updates")
     var file = document.getElementById("csv").files[0];
     var reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = async function(event) {
+      
       var csvData = event.target.result;
       //seperates the csv data into rows to seperate candidates
       var rows = csvData.split("\n");
@@ -68,8 +64,8 @@ export async function importCSVToDatabase () {
         var cells = rows[i].split(",");   
         //sets each vote casted by each person equal to a value
         //represented in fire base as (e.g. First: "Name of Candidate")
-        try {
-            const docRef = addDoc(collection(db, uname), {
+        
+            var docRef = await addDoc(collection(db, uname), {
               first: cells[2],
               second: cells[3],
               third: cells[4],      
@@ -77,23 +73,23 @@ export async function importCSVToDatabase () {
             //tests to make sure the code fires
             console.log("Document written with ID: ", docRef.id); 
             // console.log("Document written with ID: ", docRef.id);
-        } 
-                
-        catch (e) {
-          console.error("Error adding votes to database: ", e);     
-        }  
       }
     };
     reader.readAsText(file);
     file.innerHTML = null; 
-       
+    let updatedDoc = docsArray;
+    updatedDoc.push(uname);
+
+    await updateDoc(listRef, {
+      docsArray: updatedDoc,
+    })
   }
   //catch commander to prevent system stoppage in the event of wrongly submitted info
   catch (e) 
   {
     console.error("Error adding votes to database: ", e);   
   }
-  location.reload(); 
+  // location.reload(); 
 
 }
 
@@ -129,11 +125,11 @@ export const destroyVotes = async function(){
 }
 
 const submit = document.getElementById("submit");
-submit.addEventListener("click", (e)=> {
+submit.addEventListener("click", async (e)=> {
   console.log(e)
   e.preventDefault();
-  importCSVToDatabase();
+  await importCSVToDatabase();
   getCollectionList();
-
+  // location.reload();
 
 })
