@@ -53,6 +53,7 @@
     align-self: left;
     width: 100%;
     height: 100%;
+    max-width: 0%;
     background-color: var(--maroon);
     transition: max-width .2s;
 }
