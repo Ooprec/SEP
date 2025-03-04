@@ -8,6 +8,11 @@
     --border: .08rem solid var(--maroon-but-darker);
     --bst: .5s;   
     --bst-long: .75s;
+    --normal-font-size: 14pt;
+}
+
+body {
+    font-size: var(--normal-font-size);
 }
 
 #Lbar-container, #Ubar-container {
@@ -21,7 +26,7 @@
 #Lbar-text, #Ubar-test {
     color: var(--white);
     padding-bottom: 1.7rem;
-    font-size: 12pt;
+    font-size: 80%;
     margin: auto;
 }
 

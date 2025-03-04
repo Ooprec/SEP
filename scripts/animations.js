@@ -301,7 +301,7 @@ function work() {
 
 
     //the div of the field
-    chartDiv = document.getElementById("chartDiv");
+    var chartDiv = document.getElementById("chartDiv");
     //code that stops the function from running if a winner has already been decided
     if (finish) {
         return;
