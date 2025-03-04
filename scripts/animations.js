@@ -300,6 +300,7 @@ function makeGraphs() {
 // document.getElementById("thingy").addEventListener("click", work);
 //the function called by the button. It generates
 function pointle() {
+  const cname = document.getElementById("csv-options").value;
   var candiadates = JSON.parse(sessionStorage.getItem(cname+'-archived')).candidates;
   var dat = JSON.parse(sessionStorage.getItem('pointy')); 
 
@@ -335,7 +336,7 @@ return {
       plugins: {  
         title: {
           display: true,
-          text: 'Round '+round,
+          text: 'Points',
           color: '#582235',
           font: {
             size: 20
