@@ -362,7 +362,14 @@ upload.addEventListener("change", (e) => {
 
 
 const Ubar = document.getElementById("Ubar-bar");
+const UbarText = document.getElementById("Ubar-text");
+UbarText.style.fontSize = "12pt";
 
 export function Ubarhandler(max, current) {
   Ubar.style.maxWidth = (100*(current/max)) + "%";
+  UbarText.style.color = "#582235";
+  UbarText.innerHTML = Math.floor(100*(current/max)) + "%";
+  if (UbarText.innerHTML == "100%") {
+    UbarText.innerHTML = "Done!";   
+  }
 }

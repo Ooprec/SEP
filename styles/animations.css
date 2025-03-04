@@ -23,7 +23,7 @@ body {
     padding-bottom: 1rem;
 }
 
-#Lbar-text, #Ubar-test {
+#Lbar-text, #Ubar-text {
     color: var(--white);
     padding-bottom: 1.7rem;
     font-size: 80%;
@@ -60,7 +60,7 @@ body {
     height: 100%;
     max-width: 0%;
     background-color: var(--maroon);
-    transition: max-width .2s;
+    transition: max-width .75s;
 }
 
 .q1 {

@@ -67,7 +67,7 @@ export async function importCSVToDatabase () {
         var cells = rows[i].split(",");   
         //sets each vote casted by each person equal to a value
         //represented in fire base as (e.g. First: "Name of Candidate")
-        Ubarhandler(len, i);
+        Ubarhandler(len, i+1);
             var docRef = await addDoc(collection(db, uname), {
               first: cells[2],
               second: cells[3],
