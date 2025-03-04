@@ -224,7 +224,7 @@ export async function count() {
     
     }
 
-export function point(){
+export async function point(){
     
     //a list of all of the unique candidates (index corresponds to their votes in votes list)
     const cname = document.getElementById("csv-options").value;

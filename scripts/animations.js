@@ -61,9 +61,11 @@ var LReload = document.getElementById("download");
 //resets finish
 var finish = false;
 //this runs when run is pressed and it resets the graph code
-LReload.addEventListener("click", (e) => {8
-  point();
+LReload.addEventListener("click", async (e) => {
+  await point();
   let ctx = document.createElement("canvas");
+  let point_graph = document.getElementById("point_graph");
+
   ctx.classList.toggle("chart")
   let chartSettings2 = pointle();
   new Chart(ctx, chartSettings2);
@@ -71,9 +73,7 @@ LReload.addEventListener("click", (e) => {8
   let indivChartDiv = document.createElement("div");
   indivChartDiv.appendChild(ctx);
 
-  chartDiv.appendChild(indivChartDiv);
-  finish = false;
-  done = false;
+  point_graph.appendChild(indivChartDiv);
   finish = false;
   done = false;
 })
@@ -300,8 +300,8 @@ function makeGraphs() {
 // document.getElementById("thingy").addEventListener("click", work);
 //the function called by the button. It generates
 function pointle() {
-var candiadates = JSON.parse(sessionStorage.getItem('holder'));
-var dat = JSON.parse(sessionStorage.getItem('pointy')); 
+  var candiadates = JSON.parse(sessionStorage.getItem(cname+'-archived')).candidates;
+  var dat = JSON.parse(sessionStorage.getItem('pointy')); 
 
 return {
   //the type of chart
@@ -312,7 +312,7 @@ return {
     labels: candiadates,
     datasets: [{
       //the title of the chart
-      label: '# of Votes',
+      label: 'Point Graph',
       //the integer value of each bar
       //where the variable containing the voting data is used
       data: dat,
