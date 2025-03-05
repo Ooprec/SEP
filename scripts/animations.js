@@ -51,37 +51,12 @@ LBar.addEventListener("animationend", (e) => {
     else if (LBar.classList.contains("q5"))
     {
         LText.innerHTML = "Election complete!"
-        if (document.getElementById("electionresultscollapsible").classList.contains('active')) {document.getElementById('chartDiv').innerHTML = ''}
-        document.getElementById("electionresultscollapsible").click();
+        // if (document.getElementById("electionresultscollapsible").classList.contains('active')) {document.getElementById('chartDiv').innerHTML = ''}
+        // document.getElementById("electionresultscollapsible").click();
         
   }
 })
-//pulls the run botton from html
-var LReload = document.getElementById("download");
-//resets finish
-var finish = false;
-//this runs when run is pressed and it resets the graph code
-LReload.addEventListener("click", async (e) => {
-  await point();
-  let ctx = document.createElement("canvas");
-  let point_graph = document.getElementById("point_graph");
-
-  ctx.classList.toggle("chart")
-  let chartSettings2 = pointle();
-  new Chart(ctx, chartSettings2);
-
-  let indivChartDiv = document.createElement("div");
-  indivChartDiv.appendChild(ctx);
-
-  point_graph.appendChild(indivChartDiv);
-  finish = false;
-  done = false;
-})
-
-//pulls the election dropdown from html
-var LElection = document.getElementById("electionresultscollapsible");
-//resets done
-var done = false;
+//pulls the run botton from htmlvar done = false;
 //pulls votes allvotes and candidates from session storage
 
 let second = JSON.parse(sessionStorage.getItem('on-second'));
@@ -96,12 +71,32 @@ else {
   var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second'));   
 }
 
-var round = 0;
 //runs the automated graphing code. Activated on the press of election  results
-LElection.addEventListener("click", (e) => {
   //updates votes allvotes and candidates from session storage
   
+var LReload = document.getElementById("download");
+//resets finish
+var finish = false;
+var done = false;
+var round = 0;
+//this runs when run is pressed and it resets the graph code
+LReload.addEventListener("click", async (e) => {
+  round = 0;
+  await point();
+  let ctx = document.createElement("canvas");
+  let point_graph = document.getElementById("point_graph");
 
+  ctx.classList.toggle("chart")
+  let chartSettings2 = pointle();
+  new Chart(ctx, chartSettings2);
+
+  let indivChartDiv2 = document.createElement("div");
+  indivChartDiv2.appendChild(ctx);
+
+  point_graph.innerHTML = '';
+  point_graph.appendChild(indivChartDiv2);
+  finish = false;
+  done = false;
 
   var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
   var candidates = JSON.parse(sessionStorage.getItem('holder'));
@@ -192,6 +187,13 @@ LElection.addEventListener("click", (e) => {
   sessionStorage.setItem('on-second', JSON.stringify(false));
 
 })  
+
+//pulls the election dropdown from html
+//resets done
+
+
+
+
 
 var coll = document.getElementsByClassName("collapsible");
 var i;
@@ -381,7 +383,7 @@ function work() {
             ctx.classList.toggle("chart")
             let chartSettings2 = makeGraphs();
             new Chart(ctx, chartSettings2);
-            ctx.classList.add("anim-flyin")
+            // ctx.classList.add("anim-flyin")
 
             let indivChartDiv = document.createElement("div");
             indivChartDiv.classList.toggle("indiv-chart-div-winner");
@@ -400,7 +402,7 @@ function work() {
     //calls the function makeGraphs which returns the data of the bar chart
     let chartSettings2 = makeGraphs();
     new Chart(ctx, chartSettings2);
-    ctx.classList.add("anim-flyin")
+    // ctx.classList.add("anim-flyin")
     let indivChartDiv = document.createElement("div");
     indivChartDiv.classList.toggle("indiv-chart-div");
     indivChartDiv.appendChild(ctx);

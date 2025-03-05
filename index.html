@@ -60,9 +60,9 @@
         
 
         <div id="post-form">
-            <select id="csv-options" class="light" onchange="document.getElementById('chartDiv').innerHTML = ''; document.getElementById('download').click()"></select></select>
+            <select id="csv-options" class="light" ></select></select>
             <label for="download" class="custom-overlay-button">Run</label>
-            <button id="download" onclick="sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click()}; loadFromDatabase();sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; if (document.getElementById('electionresultscollapsible').classList.contains('active') ) {document.getElementById('electionresultscollapsible').click(); document.getElementById('chartDiv').innerHTML = ''}; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click(); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
+            <button id="download" onclick="sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click(); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
         
             <label for="thingss" class="custom-overlay-button">Destroy Votes</label>
             <button id="thingss" onclick="destroyVotes()" class="hidden-button">Delete Project</button>
@@ -84,13 +84,14 @@
     <div id="point_graph"></div>
 
 
-     <!--start collapsible-->
-    <label id="collapsible-label" class="collapsible-label maroon test-label" for="electionresultscollapsible">Election Results</label>
+<div id = "chartDiv"></div>
+     <!-- start collapsible -->
+    <!-- <label id="collapsible-label" class="collapsible-label maroon test-label" for="electionresultscollapsible">Election Results</label>
     <button type="button" id="electionresultscollapsible" onclick="" class="collapsible maroon">Election Results</button>
     
     <div class="collapsible-content-election light" id="election-results">
-        <div id="chartDiv" class="light"></div>
-    </div> <!--end collapsible-->
+        <div id="chartDiv" class="light"></div> -->
+    </div>
     <br>
     
 
