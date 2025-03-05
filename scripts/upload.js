@@ -68,11 +68,7 @@ export async function importCSVToDatabase () {
         //sets each vote casted by each person equal to a value
         //represented in fire base as (e.g. First: "Name of Candidate")
         Ubarhandler(len, i+1);
-            var docRef = await addDoc(collection(db, uname), {
-              first: cells[2],
-              second: cells[3],
-              third: cells[4],      
-            });
+            var docRef = await addDoc(collection(db, uname),  {data:[cells[2], cells[3], cells[4].substring(0, cells[4].length-1)]});
             
             //tests to make sure the code fires
             console.log("Document written with ID: ", docRef.id); 

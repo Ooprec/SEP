@@ -46,8 +46,7 @@ export async function loadFromDatabase () {
     //Creates a list of objects, linking each voters decision to an object (voter)
     var allVotes = [];
     databaseItems.forEach((item) =>{
-        allVotes.push({ first: item.data().first, second: item.data().second, third: item.data().third });
-        
+        allVotes.push(item.data().data);
     });
 
     
@@ -56,8 +55,8 @@ export async function loadFromDatabase () {
     let votes = [];
 
     for (var i=0; i<allVotes.length; i++){
-        if(!candidates.includes(allVotes[i].first)){
-            candidates.push(allVotes[i].first);
+        if(!candidates.includes(allVotes[i][0])){
+            candidates.push(allVotes[i][0]);
             votes.push(0);
         }
     }
@@ -102,7 +101,7 @@ export async function vote(allVotes) {
 
     // tallies first round votes
     for(var i in allVotes){
-        votes[candidates.indexOf(allVotes[i].first)]++;
+        votes[candidates.indexOf(allVotes[i][0])]++;
     }   
 
     //moves code back to session to be used for graphs
@@ -156,8 +155,6 @@ export async function count() {
     var firstMin = Math.min(...votes)
    
 
-    // REWRITE THIS LATER
-
     // gets candidate and removes it from the list of candidates
     for (var j in candidates)
     {
@@ -166,12 +163,9 @@ export async function count() {
             var removedCandiadate = candidates[j];
             candidates.splice(j,1);
             votes.splice(j,1);
-            break;
+
         }
     }
-
-
-    
 
     // go through each voter and, if any of their choices are not in the candidates list, change that
 
@@ -180,32 +174,21 @@ export async function count() {
         
         let voter = allVotes[i];
         // check and see if the voters third vote is still an option
-
-        if (!testVote(candidates, voter.third))
+        console.log(voter.indexOf("Jeffery Madagascar"));
+        
+        if (voter.indexOf(removedCandiadate)>=0)
         {
-            voter.third = null;
+            console.log("bumbped")
+            voter.splice(voter.indexOf(removedCandiadate),1);
+            voter.push(null)
         }
-        // check and see if the voters second vote is still an option, if not, bump
-        if (!testVote(candidates, voter.second))
-        {
-            voter.second = voter.third;
-            voter.third = null;
-        }
-        // check and see if the voters first vote is still an option, if not, bumnp
-        if (!testVote(candidates, voter.first))
-        {
-            voter.first = voter.second;
-            voter.second = voter.third;
-            voter.third = null;
-        }
-        if (!testVote(candidates, voter.first) && !testVote(candidates, voter.second) && !testVote(candidates, voter.third) )
+        if (voter[0] == null && voter[1] == null && voter[2] == null)
         {
             allVotes.splice(i,1);
+            console.log("removed")
         }
         
     }
-
-    //return to storage
 
     if (!second) {
         sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
@@ -222,7 +205,7 @@ export async function count() {
 
     
     
-    }
+}
 
 export async function point(){
     
@@ -237,8 +220,8 @@ export async function point(){
     var candidates = []
     var votes = []
     for (var i=0; i<allVotes.length; i++){
-        if(!candidates.includes(allVotes[i].first)){
-            candidates.push(allVotes[i].first);
+        if(!candidates.includes(allVotes[i][0])){
+            candidates.push(allVotes[i][0]);
             votes.push(0);
         }
     }
@@ -247,15 +230,16 @@ export async function point(){
     {
         for (var j in candidates)
         {
-            if (allVotes[i].first == candidates[j])
+            var voter = allVotes[i]
+            if (voter[0] == candidates[j])
             {
                 votes[j] = votes[j] + 5;
             }
-            if (allVotes[i].second == candidates[j])
+            if (voter[1] == candidates[j])
                 {
                     votes[j] = votes[j] + 3;
                 }
-            if (allVotes[i].third == candidates[j])
+            if (voter[2] == candidates[j])
                 {
                     votes[j] = votes[j] + 1;
                 }
@@ -268,13 +252,6 @@ export async function point(){
     sessionStorage.setItem('pointy', JSON.stringify(votes));
 
 
-}
-
-
-//test
-function testVote(candidates, vote)
-{
-    return candidates.includes(vote);
 }
 
 export function removeWinner()
@@ -293,26 +270,9 @@ export function removeWinner()
 
     for (var i in allVotes)
     {
-        if (allVotes[i].first == winner)
-        {
-            allVotes[i].first = allVotes[i].second;
-            allVotes[i].second = allVotes[i].third;
-            allVotes[i].third = null;
-        }
-        if (allVotes[i].second == winner)
-        {
-            allVotes[i].second = allVotes[i].third;
-            allVotes[i].third = null;
-        }
-        if (allVotes[i].third == winner)
-        {
-            allVotes[i].third = null;
-        }
-        if (allVotes[i].first == null && allVotes[i].second == null && allVotes[i].third == null)
-        {
-            allVotes.splice(i, 1);
-            i--;
-        }
+        var voter = allVotes[i];
+        if (voter.indexOf(winner) >=0) {voter.splice(voter.indexOf(winner), 1);}
+        if (voter[0] == null && voter[1] == null && voter[2] == null) {allVotes.splice(i, 1); i--;}
     }
 
     

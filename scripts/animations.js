@@ -56,7 +56,34 @@ LBar.addEventListener("animationend", (e) => {
         
   }
 })
-//pulls the run botton from htmlvar done = false;
+//pulls the run botton from html
+var LReload = document.getElementById("download");
+//resets finish
+var finish = false;
+//this runs when run is pressed and it resets the graph code
+LReload.addEventListener("click", async (e) => {
+  return;
+  await point();
+  let ctx = document.createElement("canvas");
+  let point_graph = document.getElementById("point_graph");
+
+
+  ctx.classList.toggle("chart")
+  let chartSettings2 = pointle();
+  new Chart(ctx, chartSettings2);
+
+  let indivChartDiv = document.createElement("div");
+  indivChartDiv.appendChild(ctx);
+  point_graph.innerHTML = '';
+  point_graph.appendChild(indivChartDiv);
+  finish = false;
+  done = false;
+})
+
+//pulls the election dropdown from html
+var LElection = document.getElementById("electionresultscollapsible");
+//resets done
+var done = false;
 //pulls votes allvotes and candidates from session storage
 
 let second = JSON.parse(sessionStorage.getItem('on-second'));
@@ -114,7 +141,6 @@ LReload.addEventListener("click", async (e) => {
     candidates = JSON.parse(sessionStorage.getItem('holder'));
     votes = JSON.parse(sessionStorage.getItem('shelby')); 
     allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
-    
     //calls the work and count functions. The work function graphs and the count function progresses to the next round.
     work();
     count();
@@ -152,8 +178,6 @@ LReload.addEventListener("click", async (e) => {
   done = false;
   //this while loop continues until a winner of the election is determined
   // console.log("first loop done")
-
-  
 
   vote(allVotes);
   finish = false;
@@ -366,7 +390,6 @@ function work() {
       var votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
       var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
     }
-
 
     //the div of the field
     var chartDiv = document.getElementById("chartDiv");
