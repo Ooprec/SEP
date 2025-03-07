@@ -114,8 +114,8 @@
         window.removeWinner = votejs.removeWinner;
         window.point = votejs.point;
 
-        getCollectionList();
-        checkLocal();
+        await getCollectionList();
+        await loadFromDatabase();
         sessionStorage.setItem('on-second', JSON.stringify(false));
         vote(JSON.parse(sessionStorage.getItem('allVotes')));
       </script>

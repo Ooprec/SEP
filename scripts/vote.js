@@ -174,18 +174,15 @@ export async function count() {
         
         let voter = allVotes[i];
         // check and see if the voters third vote is still an option
-        console.log(voter.indexOf("Jeffery Madagascar"));
         
         if (voter.indexOf(removedCandiadate)>=0)
         {
-            console.log("bumbped")
             voter.splice(voter.indexOf(removedCandiadate),1);
             voter.push(null)
         }
         if (voter[0] == null && voter[1] == null && voter[2] == null)
         {
             allVotes.splice(i,1);
-            console.log("removed")
         }
         
     }
