@@ -14,7 +14,7 @@ const firebaseConfig = {
     storageBucket: "rank-choice-voting-393ff.appspot.com",
     messagingSenderId: "1070768963220",
     appId: "1:1070768963220:web:0c5e5968fa52688458fe81"
-  };
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

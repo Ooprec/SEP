@@ -23,7 +23,7 @@ body {
     padding-bottom: 1rem;
 }
 
-#Lbar-text, #Ubar-text {
+#Lbar-text, #Ubar-test {
     color: var(--white);
     padding-bottom: 1.7rem;
     font-size: 80%;
@@ -32,6 +32,7 @@ body {
 
 #Lbar-border, #Ubar-border {
     margin: auto;
+    border-radius: 5px;
     width: 75%;
     height: 1rem;
     border: var(--border);
@@ -60,7 +61,7 @@ body {
     height: 100%;
     max-width: 0%;
     background-color: var(--maroon);
-    transition: max-width .75s;
+    transition: max-width .2s;
 }
 
 .q1 {
@@ -188,10 +189,4 @@ body {
     width: 66%;
     margin: auto;
     transition: max-height 0.2s ease-out;
-}
-
-#point_graph{
-    margin: auto;
-    width: 30%;
-    height: 30%;
 }
