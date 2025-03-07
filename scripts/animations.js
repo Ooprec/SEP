@@ -108,15 +108,18 @@ var done = false;
 var round = 0;
 //this runs when run is pressed and it resets the graph code
 LReload.addEventListener("click", async (e) => {
+  //resets the round text
   round = 0;
+  //calls the point function witch calculates the points
   await point();
+  //makes the point graph by calling pointle
   let ctx = document.createElement("canvas");
   let point_graph = document.getElementById("point_graph");
-
   ctx.classList.toggle("chart")
   let chartSettings2 = pointle();
   new Chart(ctx, chartSettings2);
 
+  //appends the graph to te tml
   let indivChartDiv2 = document.createElement("div");
   indivChartDiv2.appendChild(ctx);
 
@@ -322,10 +325,9 @@ function makeGraphs() {
 
 
 
-//cal a function on the click of the count button
-// document.getElementById("thingy").addEventListener("click", work);
-//the function called by the button. It generates
+//this function does the point graph
 function pointle() {
+  //gets the session storage items
   const cname = document.getElementById("csv-options").value;
   var candiadates = JSON.parse(sessionStorage.getItem(cname+'-archived')).candidates;
   var dat = JSON.parse(sessionStorage.getItem('pointy')); 
