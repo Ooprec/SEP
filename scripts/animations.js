@@ -102,118 +102,133 @@ else {
   //updates votes allvotes and candidates from session storage
   
 var LReload = document.getElementById("download");
+var other = document.getElementById("other");
 //resets finish
 var finish = false;
 var done = false;
-var round = 0;
+var round = 1;
+const toggleSwitch = document.querySelector("#toggle-switch input");
+const importantPart = document.getElementById("important-part");
+
 //this runs when run is pressed and it resets the graph code
-LReload.addEventListener("click", async (e) => {
+[LReload, other].forEach(element=> {element.addEventListener("click", async (e) => {
   //resets the round text
-  round = 0;
-  //calls the point function witch calculates the points
-  await point();
-  //makes the point graph by calling pointle
-  let ctx = document.createElement("canvas");
-  let point_graph = document.getElementById("point_graph");
-  ctx.classList.toggle("chart")
-  let chartSettings2 = pointle();
-  new Chart(ctx, chartSettings2);
-
-  //appends the graph to te tml
-  let indivChartDiv2 = document.createElement("div");
-  indivChartDiv2.appendChild(ctx);
-
-  point_graph.innerHTML = '';
-  point_graph.appendChild(indivChartDiv2);
-  finish = false;
-  done = false;
-
-  var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
-  var candidates = JSON.parse(sessionStorage.getItem('holder'));
-  var votes = JSON.parse(sessionStorage.getItem('shelby')); 
-
+  round = 1;
   
+  //calls the point function witch calculates the points
+  if (importantPart.checked) {
+    await point();
+    let ctx = document.createElement("canvas");
+    let point_graph = document.getElementById("point_graph");
+    ctx.classList.toggle("chart")
+    let chartSettings2 = pointle();
+    new Chart(ctx, chartSettings2);
+    let indivChartDiv2 = document.createElement("div");
+    indivChartDiv2.appendChild(ctx);
 
-  //sets the win threshold
-  var threshold = allVotes.length/2;
-  //makes sure done is reset
-  done = false;
-  //this while loop continues until a winner of the eleciton is determined
-  while(done == false){
-    //updates votes allvotes and candidates from session storage
-    candidates = JSON.parse(sessionStorage.getItem('holder'));
-    votes = JSON.parse(sessionStorage.getItem('shelby')); 
-    allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
-    //calls the work and count functions. The work function graphs and the count function progresses to the next round.
-    work();
-    count();
-    //updates threshold
-    var threshold = allVotes.length/2;
-  //terminates the function when a winner is reached
-  for(var i in candidates){
-    
-      if(votes[i] > threshold ){
-          done = true
-          var winner = candidates[i];
-      }
-    } 
+    point_graph.innerHTML = '';
+    point_graph.appendChild(indivChartDiv2);
+    //makes the point graph by calling pointle
+
   }
+  else 
+    {
+    try {
+      document.getElementById("point_graph").innerHTML = '';
+    }
+    catch {}
 
-  let section = document.createElement("h2");
-  section.classList.toggle("maroon");
-  let indivChartDiv = document.createElement("div");
-  indivChartDiv.classList.toggle("election-done-div");
-  indivChartDiv.appendChild(section);
-  chartDiv.appendChild(indivChartDiv);
-  section.innerHTML = "Round 1 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
+    //appends the graph to te tml
+    
+    finish = false;
+    done = false;
 
+    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+    var candidates = JSON.parse(sessionStorage.getItem('holder'));
+    var votes = JSON.parse(sessionStorage.getItem('shelby')); 
 
-
-  removeWinner();
-
-  var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
-  var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
-  var votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
-
-  //sets the win thresh old
-  var threshold = allVotes.length/2;
-  //makes sure done is reset
-  done = false;
-  //this while loop continues until a winner of the election is determined
-  // console.log("first loop done")
-
-  vote(allVotes);
-  finish = false;
-  round = 0;
-  while(done == false){
-    candidates = JSON.parse(sessionStorage.getItem('holder-second'));
-    votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
-    allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
-    //calls the work and count functions. The work function graphs and the count function progresses to the next round.
-    work();
-    count();
-    //updates threshold
+    //sets the win threshold
     var threshold = allVotes.length/2;
+    //makes sure done is reset
+    done = false;
+    //this while loop continues until a winner of the eleciton is determined
+    while(done == false){
+      //updates votes allvotes and candidates from session storage
+      candidates = JSON.parse(sessionStorage.getItem('holder'));
+      votes = JSON.parse(sessionStorage.getItem('shelby')); 
+      allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
+      //calls the work and count functions. The work function graphs and the count function progresses to the next round.
+      work();
+      count();
+      //updates threshold
+      var threshold = allVotes.length/2;
     //terminates the function when a winner is reached
     for(var i in candidates){
+      
         if(votes[i] > threshold ){
-            // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
-            winner = candidates[i];
             done = true
+            var winner = candidates[i];
         }
-      } 
+      }
+    
+    }
+
+    let section = document.createElement("h2");
+    section.classList.toggle("maroon");
+    let indivChartDiv = document.createElement("div");
+    indivChartDiv.classList.toggle("election-done-div");
+    indivChartDiv.appendChild(section);
+    chartDiv.appendChild(indivChartDiv);
+    section.innerHTML = "Round 1 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
+
+
+
+    removeWinner();
+
+    var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
+    var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
+    var votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
+
+    //sets the win thresh old
+    var threshold = allVotes.length/2;
+    //makes sure done is reset
+    done = false;
+    //this while loop continues until a winner of the election is determined
+    // console.log("first loop done")
+
+    vote(allVotes);
+    finish = false;
+    round = 1;
+    while(done == false){
+      candidates = JSON.parse(sessionStorage.getItem('holder-second'));
+      votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
+      allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
+      //calls the work and count functions. The work function graphs and the count function progresses to the next round.
+      work();
+      count();
+      //updates threshold
+      var threshold = allVotes.length/2;
+      //terminates the function when a winner is reached
+      for(var i in candidates){
+          if(votes[i] > threshold ){
+              // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
+              winner = candidates[i];
+              done = true
+          }
+        } 
+    }
+
+    let section2 = document.createElement("h2");
+    section2.classList.toggle("maroon");
+    let sectionDiv = document.createElement("div");
+    sectionDiv.classList.toggle("election-done-div");
+    sectionDiv.appendChild(section2);
+    chartDiv.appendChild(sectionDiv);
+    section2.innerHTML = "Round 2 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
+    sessionStorage.setItem('on-second', JSON.stringify(false));
   }
-
-  let section2 = document.createElement("h2");
-  section2.classList.toggle("maroon");
-  let sectionDiv = document.createElement("div");
-  sectionDiv.classList.toggle("election-done-div");
-  sectionDiv.appendChild(section2);
-  chartDiv.appendChild(sectionDiv);
-  section2.innerHTML = "Round 2 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
-  sessionStorage.setItem('on-second', JSON.stringify(false));
-
-})  
+});
+});
 
 //pulls the election dropdown from html
 //resets done
@@ -466,3 +481,23 @@ export function Ubarhandler(max, current) {
     UbarText.innerHTML = "Done!";   
   }
 }
+
+const pointGraph = document.getElementById("point_graph");
+const chartDiv = document.getElementById("chartDiv");
+
+toggleSwitch.addEventListener("change", (e) => {
+  if (e.target.checked) {
+    console.log("Switched to Point-Based Voting");
+    // Add logic for Point-Based Voting
+    
+    
+  } else {
+    
+    // Add logic for Rank Choice Voting
+  }
+  if (pointGraph.hasChildNodes() || chartDiv.hasChildNodes()) 
+    {
+      document.getElementById("other").click();
+    }
+});
+

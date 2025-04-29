@@ -77,8 +77,16 @@
                 <div id="Lbar-bar" class="unstarted"></div>
             </div>
             
-        </div> <br><br>
-    
+        </div> <br>
+        <div id="switch-div">
+            <p id="switch-p-l">Rank Choice Voting</p>
+            <label id="toggle-switch" class="switch">
+                <input type="checkbox" id="important-part">
+                <span class="slider round"></span>
+            </label>
+            <p id="switch-p-r">Point-Based Voting</p>
+        </div>
+        <div id="other" onclick="document.getElementById('chartDiv').innerHTML = ''"></div>
 
     </div>
     <div id="point_graph"></div>

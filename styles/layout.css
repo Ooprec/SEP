@@ -1,8 +1,7 @@
 :root {
 
 
-    --maroon: #793140;
-    --white: #FFFFFF;
+    --maroon: #793140;--white: #FFFFFF;
     --maroon-but-darker: #582235;
 
     --br: .2rem;
@@ -338,4 +337,33 @@ select:hover {
     width: 50%;
     align-items: center;
     margin: auto;
+}
+
+#toggle-switch {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+#switch-div {
+    display: flex;
+    align-content: center;
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#switch-p-r {
+    margin-right: auto;
+}
+
+#switch-p-l {
+    margin-left: auto;
+}
+
+#switch-div p {
+    color: var(--maroon-but-darker);
+    font-weight: bold;
+    font-family: sans-serif
 }
