@@ -86,7 +86,7 @@
             </label>
             <p id="switch-p-r">Point-Based Voting</p>
         </div>
-        <div id="other" onclick="document.getElementById('chartDiv').innerHTML = ''"></div>
+        <div id="other" onclick="loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')));document.getElementById('chartDiv').innerHTML = ''"></div>
 
     </div>
     <div id="point_graph"></div>
