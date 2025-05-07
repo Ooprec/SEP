@@ -3,8 +3,20 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebas
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
 import { getFirestore, collection, addDoc, getDocs, arrayUnion, updateDoc, getDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
-import { Ubarhandler } from "./animations.js";
+// import { Ubarhandler } from "./animations.js";
 
+const Ubar = document.getElementById("Ubar-bar");
+const UbarText = document.getElementById("Ubar-text");
+// UbarText.style.fontSize = "12pt";
+console.log(Ubar);
+export function Ubarhandler(max, current) {
+  Ubar.style.maxWidth = (100*(current/max)) + "%";
+  UbarText.style.color = "#582235";
+  UbarText.innerHTML = Math.floor(100*(current/max)) + "%";
+  if (UbarText.innerHTML == "100%") {
+    UbarText.innerHTML = "Done!";   
+  }
+}
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -124,12 +136,12 @@ export const destroyVotes = async function(){
   
 }
 
-// const submit = document.getElementById("submit");
-// submit.addEventListener("click", async (e)=> {
-//   console.log(e)
-//   e.preventDefault();
-//   await importCSVToDatabase();
-//   getCollectionList();
+const submit = document.getElementById("submit");
+submit.addEventListener("click", async (e)=> {
+  console.log(e)
+  e.preventDefault();
+  await importCSVToDatabase();
+  getCollectionList();
   // location.reload();
 
-// })
+})

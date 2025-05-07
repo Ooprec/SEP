@@ -1,25 +1,25 @@
 
 // get the HTML elements of the loading bar
-var LCont = document.getElementById("Lbar-container");
+// var LCont = document.getElementById("Lbar-container");
 var LBar = document.getElementById("Lbar-bar");
 var LText = document.getElementById("Lbar-text");
 
+// console.log(LCont);
+// // wait
+// LCont.addEventListener("click", (e) => {
+//     if (LBar.classList.contains("unstarted"))
+//     {
+//         LBar.classList.add("q1");
+//         LBar.classList.remove("unstarted");
+//     }
 
-// wait
-LCont.addEventListener("click", (e) => {
-    if (LBar.classList.contains("unstarted"))
-    {
-        LBar.classList.add("q1");
-        LBar.classList.remove("unstarted");
-    }
-
-    if (LBar.classList.contains("q5"))
-    {
-        LText.style.color = "#F2F4F5";
-        LBar.classList.remove("q5");
-        LBar.classList.add("q1");
-    }
-})
+//     if (LBar.classList.contains("q5"))
+//     {
+//         LText.style.color = "#F2F4F5";
+//         LBar.classList.remove("q5");
+//         LBar.classList.add("q1");
+//     }
+// })
 
 
 LBar.addEventListener("animationend", (e) => {
@@ -453,25 +453,25 @@ function work() {
 
 }
 
-const upload = document.getElementById("csv");
-upload.addEventListener("change", (e) => {
-  if (upload.value == "") {
-    document.getElementById("replacement-button").innerHTML = "Choose File...";
-    return;
-  }
-  console.log(upload.value.split("\\")[2]);
-  let fileName = upload.value.split("\\")[2];
-  if (fileName.length > 15) {
-    fileName = fileName.substring(0, 15) + "...";
-  }
-  document.getElementById("replacement-button").innerHTML = fileName;
+// const upload = document.getElementById("csv");
+// upload.addEventListener("change", (e) => {
+//   if (upload.value == "") {
+//     document.getElementById("replacement-button").innerHTML = "Choose File...";
+//     return;
+//   }
+//   console.log(upload.value.split("\\")[2]);
+//   let fileName = upload.value.split("\\")[2];
+//   if (fileName.length > 15) {
+//     fileName = fileName.substring(0, 15) + "...";
+//   }
+//   document.getElementById("replacement-button").innerHTML = fileName;
 
-});
+// });
 
 
 const Ubar = document.getElementById("Ubar-bar");
 const UbarText = document.getElementById("Ubar-text");
-UbarText.style.fontSize = "12pt";
+// UbarText.style.fontSize = "12pt";
 
 export function Ubarhandler(max, current) {
   Ubar.style.maxWidth = (100*(current/max)) + "%";
