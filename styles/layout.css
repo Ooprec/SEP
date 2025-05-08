@@ -367,3 +367,10 @@ select:hover {
     font-weight: bold;
     font-family: sans-serif
 }
+
+.tempDiv {
+    height: 4rem;
+    width: 100vw;
+    background-color: var(--maroon);
+    color: var(--maroon);
+}
