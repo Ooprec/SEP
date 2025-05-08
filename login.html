@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="/login/login.css" rel="stylesheet" type="text/css" />
+</head>
+
+
+
+<body>
+
+<div class="babble">
+<img id = "mayoo" src="/styles/logo.png" alt="logo">
+<br>
+<label>
+  <b>
+  Welcome to the Ranked Choice Voting System, Please Log In!
+</b>
+</label>
+<br>
+  <!-- text box for email/username -->
+  <br>
+
+
+  <label>Email: </label>
+  <input type="text" placeholder="Enter Email" id="uname">
+  
+  
+  <br>
+  
+
+  <!-- text box for password -->
+  <label>Password: </label>
+  
+  <input type="password" placeholder="Enter Password" id="psw" >
+
+  
+
+  <br>
+  <br>
+  <button id="login" onclick="login(document.getElementById('uname').value, document.getElementById('psw').value);">Login</button>
+  <button id="signup" onclick="signup(document.getElementById('uname').value, document.getElementById('psw').value);">Sign Up</button>
+  <br>
+  <br>
+  <label id="watchOut">Please note: The password must be  <b>at least 6</b> characters</label>
+
+
+  <div class="tooltip">?
+    <span class="tooltiptext">Password doesn't need any special characters, only requries 6 characters
+      </span>
+  </div>
+
+</div>
+
+
+
+<script type="module" src="/login/login.js" defer></script>
+<script type="module">
+import * as loginjs from "/login/login.js";
+window.login = loginjs.login;
+window.signup = loginjs.signup;
+
+
+</script>
+</body>
+</html>

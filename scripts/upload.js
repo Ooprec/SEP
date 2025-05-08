@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, arrayUnion, updateDoc, getDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, arrayUnion, updateDoc, getDoc, setDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 import { Ubarhandler } from "./animations.js";
 
 
@@ -30,9 +30,14 @@ export async function getCollectionList()
   select.innerHTML = '';
 
   for (let i = 0; i<docsArray.length; i++) {
-    let tempElement = document.createElement('option');
-    tempElement.innerHTML = docsArray[i];
-    select.appendChild(tempElement);
+    let userEmail = sessionStorage.getItem("userEmail");
+    const creatorRef = doc(db, docsArray[i], "username");
+    const creator = await getDoc(creatorRef);
+    if(creator.data().username==userEmail){
+      let tempElement = document.createElement('option');
+      tempElement.innerHTML = docsArray[i];
+      select.appendChild(tempElement);
+    }
   }
 
   return docsArray;
@@ -69,11 +74,17 @@ export async function importCSVToDatabase () {
         //represented in fire base as (e.g. First: "Name of Candidate")
         Ubarhandler(len, i+1);
             var docRef = await addDoc(collection(db, uname),  {data:[cells[2], cells[3], cells[4].substring(0, cells[4].length-1)]});
+            var userAdmin = sessionStorage.getItem('userEmail');            
+      
             
             //tests to make sure the code fires
             console.log("Document written with ID: ", docRef.id); 
             // console.log("Document written with ID: ", docRef.id);
+
       }
+      await setDoc(doc(db, uname, "username"), {
+        username: userAdmin,
+      });
     };
     reader.readAsText(file);
     file.innerHTML = null; 

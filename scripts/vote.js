@@ -20,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function loadFromDatabase () {
+export async function loadFromDatabase() {
     const cname = document.getElementById("csv-options").value;
 
     if (sessionStorage.getItem(cname + "-archived")) {
@@ -28,57 +28,81 @@ export async function loadFromDatabase () {
         sessionStorage.setItem('allVotes', JSON.stringify(archive.allVotes));
         sessionStorage.setItem('shelby', JSON.stringify(archive.shelby));
         sessionStorage.setItem('holder', JSON.stringify(archive.candidates));
-        let allVotes = sessionStorage.getItem('allVotes');
-        vote(allVotes);
         return;
     }
     else {
-        const databaseItems = await getDocs(collection(db, cname));
-    
-    
-    try{  sessionStorage.removeItem("shelby");
-        sessionStorage.removeItem("holder");
-        sessionStorage.removeItem("allVotes");
-      }
-      catch {console.log("failed")}
-
+        var databaseItems = await getDocs(collection(db, cname));
     
     //Creates a list of objects, linking each voters decision to an object (voter)
-    var allVotes = [];
-    databaseItems.forEach((item) =>{
-        allVotes.push(item.data().data);
-    });
+    var allVotes = []; 
 
-    
+    try {
+        sessionStorage.removeItem("allVotes");
+        sessionStorage.removeItem("shelby");
+        sessionStorage.removeItem("holder");
+    }
+    catch {
+        console.log("Error deleting session storage items.");
+    }
+
+    // Pull all the documents from the specified collection in Firebase
+    for (const doc of databaseItems.docs) {
+        // console.log(`Document ID: ${doc.id}, Data:`, doc.data());
+    }
+
+    for (const item of databaseItems.docs) {
+        // console.log(item.data().data);
+        if (item.id != "username" ){
+            allVotes.push(item.data().data);
+        }
+    }
 
     let candidates = []
     let votes = [];
 
-    for (var i=0; i<allVotes.length; i++){
-        if(!candidates.includes(allVotes[i][0])){
+    // console.log(allVotes);
+
+    for (var i=0; i<allVotes.length; i++) {
+        if (!candidates.includes(allVotes[i][0])) 
+        {
             candidates.push(allVotes[i][0]);
             votes.push(0);
-        }
+        }   
     }
+
+    console.log(`Candidates: ${candidates}`);
+    console.log(`Votes: ${votes}`);
+    
+
+    // Remove duplicates from candidates
+    // candidates = [...new Set(candidates)];
+
+    let initVoteData = await initVote(allVotes);
+    votes = initVoteData.votes;
+    candidates = initVoteData.candidates;
+
 
     sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
     sessionStorage.setItem('shelby', JSON.stringify(votes));
     sessionStorage.setItem('holder', JSON.stringify(candidates));
 
     let archive = {
-        allVotes: allVotes,
-        shelby: votes,
-        candidates: candidates
+        allVotes: [...allVotes],
+        shelby: [...votes],
+        candidates: [...candidates]
     }
+
 
     sessionStorage.setItem(cname + "-archived", JSON.stringify(archive));
 
-    vote(allVotes);
-    }
+    console.log("Loaded from database: " + cname);
+
     
 
+    // vote(allVotes);
+    }
 }
-
+// dunno why but this needs to be here for the page to work
 export async function vote(allVotes) {
 
     let second = JSON.parse(sessionStorage.getItem('on-second'));
@@ -113,174 +137,200 @@ export async function vote(allVotes) {
         sessionStorage.setItem('shelby-second', JSON.stringify(votes));
         sessionStorage.setItem('holder-second', JSON.stringify(candidates));
     }
-    
-        
+
     return (votes);
         
 }
 
-export async function count() {
-    let second = JSON.parse(sessionStorage.getItem('on-second'));
-    if (second) {
-        //a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
-        var votes = JSON.parse(sessionStorage.getItem('shelby-second')); //list of #
-        //a list of all of the unique candidates (index corresponds to their votes in votes list)
-        var candidates = JSON.parse(sessionStorage.getItem('holder-second')); // list of names
-        //a list of "voter objects" with their three choices as attributes
-        var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); // all voters
+export async function newCount(votes, candidates, allVotes) {
+    //votes: a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
+    //candidates: a list of all of the unique candidates (index corresponds to their votes in votes list)
+    //allVotes: a list of voter lists with their three choices as elements in an array
 
-    }
-    else {
-        //a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
-        var votes = JSON.parse(sessionStorage.getItem('shelby')); //list of #
-        //a list of all of the unique candidates (index corresponds to their votes in votes list)
-        var candidates = JSON.parse(sessionStorage.getItem('holder')); // list of names
-        //a list of "voter objects" with their three choices as attributes
-        var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); // all voters
+    votes = [];
+
+    for (let i in candidates) {
+        votes.push(0);
     }
 
+    // Tally up allVotes
+    for (let i in allVotes) {
+        let vote = allVotes[i][0];
+        if (candidates.includes(vote)) {
+            votes[candidates.indexOf(vote)]++;
+        }
+        else{
+            // console.log("Vote: " + vote + " Candidate: " + candidates[candidates.indexOf(vote)]);
+        }
+    }
 
+    let firstMin = Math.min(...votes)
+    // check for the losing candidate and then remove them from the list of candidates and votes
+    let count = 0;
+
+    for (let i in votes)
+    {
+        if (votes[i] == firstMin) {count++};
+    }   
+    // if (count > 1)  {
+    //     let candidateVotes = {};
+    //     for (let i in candidates) {
+    //         candidateVotes[candidates[i]] = votes[i];
+    //     }
+    // }
+
+
+    if (firstMin == 0 && count == candidates.length) {
+        console.error("All candidates have 0 votes. No one can be eliminated.");
+        let e = {votes: [...votes],candidates: [...candidates],allVotes: [...allVotes],count: count,}
+        console.log(e);
+        }
+
+    for (let runs = 0; runs < count; runs++) 
+    {
+        for (let i in candidates)
+        {
+            if (votes[i] == firstMin)
+            {
+                var removedCandidate = candidates[i];
+                candidates.splice(i,1);
+                votes.splice(i,1);
+            }
+        }
+    }
     
-    //the number needed to "win" the election
-    var threshold = allVotes.length /2;
 
-    //go through all the candidates
-    for(var i in candidates){
-        if(votes[i] > threshold ){
-            sessionStorage.setItem("winner", JSON.stringify(candidates[i]));
-            return;
-        }
-    }
-
-    var firstMin = Math.min(...votes)
-   
-
-    // gets candidate and removes it from the list of candidates
-    for (var j in candidates)
+    // remove votes for the removed candidate from the allVotes list and bump the other votes up
+    for (let i in allVotes)
     {
-        if (votes[j] == firstMin)
-        {
-            var removedCandiadate = candidates[j];
-            candidates.splice(j,1);
-            votes.splice(j,1);
-
-        }
-    }
-
-    // go through each voter and, if any of their choices are not in the candidates list, change that
-
-    for (var i in allVotes)
-    {
-        
         let voter = allVotes[i];
-        // check and see if the voters third vote is still an option
-        
-        if (voter.indexOf(removedCandiadate)>=0)
+        if (voter.indexOf(removedCandidate)>=0)
         {
-            voter.splice(voter.indexOf(removedCandiadate),1);
+            voter.splice(voter.indexOf(removedCandidate),1);
             voter.push(null)
         }
         if (voter[0] == null && voter[1] == null && voter[2] == null)
         {
             allVotes.splice(i,1);
         }
-        
     }
 
-    if (!second) {
-        sessionStorage.setItem('allVotes',JSON.stringify(allVotes));
-        sessionStorage.setItem('holder',JSON.stringify(candidates));
-        sessionStorage.setItem('shelby', JSON.stringify(votes));
-        vote(allVotes);
-    }
-    else {
-        sessionStorage.setItem('allVotes-second',JSON.stringify(allVotes));
-        sessionStorage.setItem('holder-second',JSON.stringify(candidates));
-        sessionStorage.setItem('shelby-second', JSON.stringify(votes));
-        vote(allVotes);
-    }
-
+    let results = await newVote(allVotes, candidates);
     
-    
+    return {
+        votes: [...results.votes],
+        candidates: [...results.candidates],
+        allVotes: [...allVotes],
+        count: count,
+    }
+            
 }
 
-export async function point(){
-    
-    //a list of all of the unique candidates (index corresponds to their votes in votes list)
-    const cname = document.getElementById("csv-options").value;
-    var candidates = JSON.parse(sessionStorage.getItem(cname+'-archived')).candidates;
-    //a list of "voter objects" with their three choices as attributes
-    var allVotes = JSON.parse(sessionStorage.getItem(cname+'-archived')).allVotes; // all voters
+export async function newVote(allVotes, candidates) 
+{
 
+    let votes = [];
 
+    candidates = correctCandidateNames(candidates);
 
-    var candidates = []
-    var votes = []
-    for (var i=0; i<allVotes.length; i++){
-        if(!candidates.includes(allVotes[i][0])){
-            candidates.push(allVotes[i][0]);
-            votes.push(0);
-        }
+    for (i in candidates)
+    {
+        votes.push(0);
     }
 
-     for (var i in allVotes)
-    {
+    // tallies first round votes
+    for (var i in allVotes)
+        {
+        let vote = allVotes[i][0];
         for (var j in candidates)
         {
-            var voter = allVotes[i]
-            if (voter[0] == candidates[j])
+            if (vote == candidates[j])
             {
-                votes[j] = votes[j] + 5;
+                votes[j]++;
             }
-            if (voter[1] == candidates[j])
-                {
-                    votes[j] = votes[j] + 3;
-                }
-            if (voter[2] == candidates[j])
-                {
-                    votes[j] = votes[j] + 1;
-                }
+            else {
+                // console.log("Vote: " + vote + " Candidate: " + candidates[j]);
+            }
         }
-    }
-    var resultado = []
-    for(var i in candidates){
-        resultado.push(votes[i])
-    }
-    sessionStorage.setItem('pointy', JSON.stringify(votes));
+        
+        
+    }   
 
-
+    
+    
+    //moves code back to session to be used for graphs
+    return {
+        votes: [...votes], 
+        candidates: [...candidates]
+    };
 }
 
-export function removeWinner()
+export async function initVote(allVotes)
 {
-    var winner = JSON.parse(sessionStorage.getItem("winner"));
-    var electionName = document.getElementById("csv-options").value;
-    var archivedElection = JSON.parse(sessionStorage.getItem(electionName + "-archived"));
+    let votes = [];
+    let candidates = [];
 
-    var candidates = archivedElection.candidates;
-    var votes = archivedElection.shelby;
-    var allVotes = archivedElection.allVotes;
+    for (i in allVotes)
+    {
+        let voter = allVotes[i]
+        for (let j in voter)
+        {
+           candidates.push(voter[j]);
+        }
+    }
 
-    var winnerIndex = candidates.indexOf(winner);
-    candidates.splice(winnerIndex, 1);
-    votes.splice(winnerIndex, 1);
+    candidates = correctCandidateNames(candidates);
+
+    candidates = [...new Set(candidates)];
+
+    for (i in candidates)
+    {
+        votes.push(0);
+    }
 
     for (var i in allVotes)
     {
-        var voter = allVotes[i];
-        if (voter.indexOf(winner) >=0) {voter.splice(voter.indexOf(winner), 1);}
-        if (voter[0] == null && voter[1] == null && voter[2] == null) {allVotes.splice(i, 1); i--;}
+        let vote = allVotes[i][0];
+        votes[candidates.indexOf(vote)]++;
+        
     }
 
-    
-    sessionStorage.setItem('on-second', JSON.stringify(true));
+    return {
+        votes: [...votes],
+        candidates: [...candidates]
+    }
+}
 
-    sessionStorage.setItem('allVotes-second', JSON.stringify(allVotes));
-    sessionStorage.setItem('shelby-second', JSON.stringify(votes));
-    sessionStorage.setItem('holder-second', JSON.stringify(candidates));
 
 
-    vote(allVotes);
+function correctCandidateNames(candidates) {
+    let correctedCandidates = [...candidates];
 
-    
+    for (let i = 0; i < candidates.length; i++) {
+        for (let j = 0; j < candidates.length; j++) {
+            if (i !== j && candidates[j].length === candidates[i].length - 1) {
+                // Check if one name is missing a single letter
+                let missingLetterMatch = true;
+                let shorterName = candidates[j];
+                let longerName = candidates[i];
+
+                for (let k = 0, l = 0; k < longerName.length; k++) {
+                    if (longerName[k] !== shorterName[l]) {
+                        if (k !== l) {
+                            missingLetterMatch = false;
+                            break;
+                        }
+                    } else {
+                        l++;
+                    }
+                }
+
+                if (missingLetterMatch) {
+                    correctedCandidates[j] = longerName;
+                }
+            }
+        }
+    }
+
+    return correctedCandidates;
 }
