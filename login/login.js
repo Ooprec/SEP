@@ -23,7 +23,7 @@ export function login(email, password){
     .then((userCredential) => {
       // Signed in 
        
-      //email and username
+      //email is sent to server for user in upload
         sessionStorage.setItem('userEmail', userCredential.user.email);
     //redirects the user to main landing page
         location.replace("/instructions.html");

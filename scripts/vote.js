@@ -50,6 +50,7 @@ export async function loadFromDatabase() {
         // console.log(`Document ID: ${doc.id}, Data:`, doc.data());
     }
 
+        //neglects username document in field read
     for (const item of databaseItems.docs) {
         // console.log(item.data().data);
         if (item.id != "username" ){

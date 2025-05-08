@@ -30,9 +30,12 @@ export async function getCollectionList()
   select.innerHTML = '';
 
   for (let i = 0; i<docsArray.length; i++) {
+    //grab username from login (email)
     let userEmail = sessionStorage.getItem("userEmail");
+    //takes username from username document added through upload
     const creatorRef = doc(db, docsArray[i], "username");
     const creator = await getDoc(creatorRef);
+    //only add to dropdown if it is created by user
     if(creator.data().username==userEmail){
       let tempElement = document.createElement('option');
       tempElement.innerHTML = docsArray[i];
@@ -82,6 +85,7 @@ export async function importCSVToDatabase () {
             // console.log("Document written with ID: ", docRef.id);
 
       }
+      //adds username doc to each election
       await setDoc(doc(db, uname, "username"), {
         username: userAdmin,
       });
