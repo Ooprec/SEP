@@ -252,3 +252,47 @@ body {
   .slider.round:before {
     border-radius: 50%;
   }
+
+@keyframes flyOutLeft {
+from {
+    transform: translateX(0);
+    opacity: 1;
+}
+to {
+    transform: translateX(-120%);
+    opacity: 1;
+}
+}
+
+@keyframes flyInRight {
+from {
+    transform: translateX(120%);
+    opacity: 1;
+}
+to {
+    transform: translateX(0);
+    opacity: 1;
+}
+}
+
+@keyframes flyOutRight {
+from {
+    transform: translateX(0);
+    opacity: 1;
+}
+to {
+    transform: translateX(120%);
+    opacity: 1;
+}
+}
+
+@keyframes flyInLeft {
+from {
+    transform: translateX(-120%);
+    opacity: 1;
+}
+to {
+    transform: translateX(0);
+    opacity: 1;
+}
+}

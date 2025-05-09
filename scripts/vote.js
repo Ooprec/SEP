@@ -20,6 +20,80 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// export async function loadFromDatabase() {
+//     const cname = document.getElementById("csv-options").value;
+
+//     if (sessionStorage.getItem(cname + "-archived")) {
+//         let archive = JSON.parse(sessionStorage.getItem(cname + "-archived"));
+//         sessionStorage.setItem('allVotes', JSON.stringify(archive.allVotes));
+//         sessionStorage.setItem('shelby', JSON.stringify(archive.shelby));
+//         sessionStorage.setItem('holder', JSON.stringify(archive.candidates));
+//         return;
+//     }
+//     else {
+//         var databaseItems = await getDocs(collection(db, cname));
+    
+//     //Creates a list of objects, linking each voters decision to an object (voter)
+//     var allVotes = []; 
+
+//     try {
+//         sessionStorage.removeItem("allVotes");
+//         sessionStorage.removeItem("shelby");
+//         sessionStorage.removeItem("holder");
+//     }
+//     catch {
+//         console.log("Error deleting session storage items.");
+//     }
+
+//     // Pull all the documents from the specified collection in Firebase
+//     for (const doc of databaseItems.docs) {
+//         // console.log(`Document ID: ${doc.id}, Data:`, doc.data());
+//     }
+
+//     for (const item of databaseItems.docs) {
+//         // console.log(item.data().data);
+//         allVotes.push(item.data().data);
+//     }
+
+//     let candidates = []
+//     let votes = [];
+
+//     // console.log(allVotes);
+
+//     for (let i in allVotes) {
+//         if (!candidates.includes(allVotes[i])) 
+//         {
+//             candidates.push(allVotes[i]);
+//             votes.push(0);
+//         }   
+//     }
+
+//     let initVoteData = await initVote(allVotes);
+//     votes = initVoteData.votes;
+//     candidates = initVoteData.candidates;
+
+
+//     sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
+//     sessionStorage.setItem('shelby', JSON.stringify(votes));
+//     sessionStorage.setItem('holder', JSON.stringify(candidates));
+
+//     let archive = {
+//         allVotes: [...allVotes],
+//         shelby: [...votes],
+//         candidates: [...candidates]
+//     }
+
+
+//     sessionStorage.setItem(cname + "-archived", JSON.stringify(archive));
+
+//     console.log("Loaded from database: " + cname);
+
+    
+
+//     // vote(allVotes);
+//     }
+// }
+
 export async function loadFromDatabase() {
     const cname = document.getElementById("csv-options").value;
 
@@ -52,9 +126,11 @@ export async function loadFromDatabase() {
 
     for (const item of databaseItems.docs) {
         // console.log(item.data().data);
-        allVotes.push(item.data().data);
+        if (item.id != "username" ){
+            allVotes.push(item.data().data);
+        }
     }
-
+        
     let candidates = []
     let votes = [];
 
@@ -100,6 +176,8 @@ export async function loadFromDatabase() {
     // vote(allVotes);
     }
 }
+
+
 // dunno why but this needs to be here for the page to work
 export async function vote(allVotes) {
 

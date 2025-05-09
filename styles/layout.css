@@ -215,7 +215,7 @@ select:hover {
 .results {display:none};
 
 .chart {
-    width: 25vw;
+    width: 25%;
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
@@ -325,18 +325,13 @@ select:hover {
 #chartDiv {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
+    grid-gap: 2rem;
+    width: 85%;
+    margin: auto;
 }
 
 .election-done-div {
         grid-column: span 2;
-}
-
-.indiv-chart-div-winner {
-    grid-column: span 2;
-    width: 50%;
-    align-items: center;
-    margin: auto;
 }
 
 #toggle-switch {
@@ -373,4 +368,8 @@ select:hover {
     width: 100vw;
     background-color: var(--maroon);
     color: var(--maroon);
+}
+
+.point-graph {
+    width: 75%;
 }
