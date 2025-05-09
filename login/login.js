@@ -48,8 +48,7 @@ createUserWithEmailAndPassword(auth, email, password)
     console.log("don dieuu");
     const user = userCredential.user;
     sessionStorage.setItem('userEmail', userCredential.user.email);
-    //redirects the user to main landing page
-    // ...
+
   })
   .catch((error) => {
     const errorCode = error.code;
