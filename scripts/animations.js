@@ -1,3 +1,5 @@
+import {newCount, newVote, loadFromDatabase, initVote} from "./vote.js";
+
 
 // get the HTML elements of the loading bar
 // var LCont = document.getElementById("Lbar-container");
@@ -56,186 +58,9 @@ LBar.addEventListener("animationend", (e) => {
         
   }
 })
-//pulls the run botton from html
-var LReload = document.getElementById("download");
-//resets finish
-var finish = false;
-//this runs when run is pressed and it resets the graph code
-LReload.addEventListener("click", async (e) => {
-  return;
-  await point();
-  let ctx = document.createElement("canvas");
-  let point_graph = document.getElementById("point_graph");
 
-
-  ctx.classList.toggle("chart")
-  let chartSettings2 = pointle();
-  new Chart(ctx, chartSettings2);
-
-  let indivChartDiv = document.createElement("div");
-  indivChartDiv.appendChild(ctx);
-  point_graph.innerHTML = '';
-  point_graph.appendChild(indivChartDiv);
-  finish = false;
-  done = false;
-})
-
-//pulls the election dropdown from html
-var LElection = document.getElementById("electionresultscollapsible");
-//resets done
-var done = false;
-//pulls votes allvotes and candidates from session storage
-
-let second = JSON.parse(sessionStorage.getItem('on-second'));
-if (!second) {
-  var candidates = JSON.parse(sessionStorage.getItem('holder'));
-  var votes = JSON.parse(sessionStorage.getItem('shelby')); 
-  var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
-}
-else {
-  var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
-  var votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
-  var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second'));   
-}
-
-//runs the automated graphing code. Activated on the press of election  results
-  //updates votes allvotes and candidates from session storage
-  
-var LReload = document.getElementById("download");
-var other = document.getElementById("other");
-//resets finish
-var finish = false;
-var done = false;
-var round = 1;
+// resets done
 const toggleSwitch = document.querySelector("#toggle-switch input");
-const importantPart = document.getElementById("important-part");
-
-//this runs when run is pressed and it resets the graph code
-[LReload, other].forEach(element=> {element.addEventListener("click", async (e) => {
-  //resets the round text
-  round = 1;
-  
-  //calls the point function witch calculates the points
-  if (importantPart.checked) {
-    await point();
-    let ctx = document.createElement("canvas");
-    let point_graph = document.getElementById("point_graph");
-    ctx.classList.toggle("chart")
-    let chartSettings2 = pointle();
-    new Chart(ctx, chartSettings2);
-    let indivChartDiv2 = document.createElement("div");
-    indivChartDiv2.appendChild(ctx);
-
-    point_graph.innerHTML = '';
-    point_graph.appendChild(indivChartDiv2);
-    //makes the point graph by calling pointle
-
-  }
-  else 
-    {
-    try {
-      document.getElementById("point_graph").innerHTML = '';
-    }
-    catch {}
-
-    //appends the graph to te tml
-    
-    finish = false;
-    done = false;
-
-    var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
-    var candidates = JSON.parse(sessionStorage.getItem('holder'));
-    var votes = JSON.parse(sessionStorage.getItem('shelby')); 
-
-    //sets the win threshold
-    var threshold = allVotes.length/2;
-    //makes sure done is reset
-    done = false;
-    //this while loop continues until a winner of the eleciton is determined
-    while(done == false){
-      //updates votes allvotes and candidates from session storage
-      candidates = JSON.parse(sessionStorage.getItem('holder'));
-      votes = JSON.parse(sessionStorage.getItem('shelby')); 
-      allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
-      //calls the work and count functions. The work function graphs and the count function progresses to the next round.
-      work();
-      count();
-      //updates threshold
-      var threshold = allVotes.length/2;
-    //terminates the function when a winner is reached
-    for(var i in candidates){
-      
-        if(votes[i] > threshold ){
-            done = true
-            var winner = candidates[i];
-        }
-      }
-    
-    }
-
-    let section = document.createElement("h2");
-    section.classList.toggle("maroon");
-    let indivChartDiv = document.createElement("div");
-    indivChartDiv.classList.toggle("election-done-div");
-    indivChartDiv.appendChild(section);
-    chartDiv.appendChild(indivChartDiv);
-    section.innerHTML = "Round 1 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
-
-
-
-    removeWinner();
-
-    var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
-    var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
-    var votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
-
-    //sets the win thresh old
-    var threshold = allVotes.length/2;
-    //makes sure done is reset
-    done = false;
-    //this while loop continues until a winner of the election is determined
-    // console.log("first loop done")
-
-    vote(allVotes);
-    finish = false;
-    round = 1;
-    while(done == false){
-      candidates = JSON.parse(sessionStorage.getItem('holder-second'));
-      votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
-      allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
-      //calls the work and count functions. The work function graphs and the count function progresses to the next round.
-      work();
-      count();
-      //updates threshold
-      var threshold = allVotes.length/2;
-      //terminates the function when a winner is reached
-      for(var i in candidates){
-          if(votes[i] > threshold ){
-              // console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
-              winner = candidates[i];
-              done = true
-          }
-        } 
-    }
-
-    let section2 = document.createElement("h2");
-    section2.classList.toggle("maroon");
-    let sectionDiv = document.createElement("div");
-    sectionDiv.classList.toggle("election-done-div");
-    sectionDiv.appendChild(section2);
-    chartDiv.appendChild(sectionDiv);
-    section2.innerHTML = "Round 2 Results: " + winner + " has won the election with " + votes[candidates.indexOf(winner)] + " votes";
-    sessionStorage.setItem('on-second', JSON.stringify(false));
-  }
-});
-});
-
-//pulls the election dropdown from html
-//resets done
-
-
-
-
 
 var coll = document.getElementsByClassName("collapsible");
 var i;
@@ -251,7 +76,7 @@ for (i = 0; i < coll.length; i++) {
             
           }
       }
-      if (this.classList.contains("active")) {document.getElementById("chartDiv").innerHTML = "";}
+      if (this.classList.contains("active")) {}
 
     // rest of dropdown code
     
@@ -271,42 +96,27 @@ for (i = 0; i < coll.length; i++) {
         }
       )
 
-    }
+}
     
-
-//this is the makeGraphs function which alows me to streamline the cration of graphs
-//I call this function in work().
-function makeGraphs() {
-  // toggle the 'selected' status for the newly selected tab
-  //creates a new chart element in layout.html        // make a new canvas element
-  //creates a new bar chart
-  let second = JSON.parse(sessionStorage.getItem('on-second'));
-  if (!second) 
-  {
-    var candiadates = JSON.parse(sessionStorage.getItem('holder'));
-    //the variable is set the list of counted first votes form the function vote
-    var dat = JSON.parse(sessionStorage.getItem('shelby')); 
+function makeGraphs2(candidates, data, round) {
+  //creates a new chart element in layout.html        
+  if (candidates.length != data.length) {
+    console.error("Candidates and data length mismatch.");
+    return;
   }
-  else
-  {
-    var candiadates = JSON.parse(sessionStorage.getItem('holder-second'));
-    //the variable is set the list of counted first votes form the function vote
-    var dat = JSON.parse(sessionStorage.getItem('shelby-second')); 
-  }
-   
   return {
     //the type of chart
     type: 'bar',
       //the data within the chart
       data: {
       //the names of each bar underneath the bar
-      labels: candiadates,
+      labels: [...candidates],
       datasets: [{
         //the title of the chart
         label: '# of Votes',
         //the integer value of each bar
         //where the variable containing the voting data is used
-        data: dat,
+        data: [...data],
         //the width of each bar
         borderWidth: 3,
         borderColor: '#582235'
@@ -337,120 +147,422 @@ function makeGraphs() {
   }
 }
 
+// Add an event listener for a custom event
+document.addEventListener("displayRounds", async (e) => {
+  
+  var totalRounds = 0;
+
+  async function beforeStart() {
+    // Check if session storage items are set
+    if (!sessionStorage.getItem('holder') || !sessionStorage.getItem('shelby') || !sessionStorage.getItem('allVotes')) {
+      console.error("Required session storage items are missing.");
+      
+    }
+    else {return true;}
+    
+  }
+
+  console.log("Displaying rounds and graphs...");
+
+  // returns a div with the graph of the round
+  // this function is called in the while loop of handleRoundsAndGraphs
+  async function makeGraphDivPerRound(candidates, votes, round) {
+    let ctx = document.createElement("canvas");
+    ctx.classList.add("chart");
+    let chartSettings = makeGraphs2(candidates, votes, round);
+    new Chart(ctx, chartSettings);
+
+    let indivChartDiv = document.createElement("div");
+    indivChartDiv.classList.add("indiv-chart-div");
+    indivChartDiv.classList.add("vote-graph");
+    indivChartDiv.appendChild(ctx);
+    return indivChartDiv;
+  }
 
 
-
-//this function does the point graph
-function pointle() {
-  //gets the session storage items
-  const cname = document.getElementById("csv-options").value;
-  var candiadates = JSON.parse(sessionStorage.getItem(cname+'-archived')).candidates;
-  var dat = JSON.parse(sessionStorage.getItem('pointy')); 
-
-return {
-  //the type of chart
-  type: 'bar',
-    //the data within the chart
-    data: {
-    //the names of each bar underneath the bar
-    labels: candiadates,
-    datasets: [{
-      //the title of the chart
-      label: 'Point Graph',
-      //the integer value of each bar
-      //where the variable containing the voting data is used
-      data: dat,
-      //the width of each bar
-      borderWidth: 3,
-      borderColor: '#582235'
-      }]
-    },
-    options: {
-      animation: false,
-      //scaling options for the chart
-      scales: {
-        y: {
-        //starts counting from zero
-          beginAtZero: true
+  // gets the archived data from session storage
+  // this function is called in the beginning of the script and between rounds
+  async function getArchivedData() {
+    // await loadFromDatabase();
+    try 
+    {
+      // get the name of the election
+      let cname = document.getElementById("csv-options").value;
+      // get the archived data from session storage
+      let archivedData = JSON.parse(sessionStorage.getItem(cname + '-archived'));
+      // if the data exists, return it
+      if (archivedData) {
+        let allVotes = archivedData.allVotes;
+        let candidates = archivedData.candidates;
+        let votes = archivedData.shelby;
+        return {
+          allVotes: [...allVotes],
+          candidates: [...candidates],
+          votes: [...votes]
         }
-      },
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: {  
-        title: {
-          display: true,
-          text: 'Points',
-          color: '#582235',
-          font: {
-            size: 20
+      } 
+      else {
+        console.error("Archived data not found in session storage.");
+        return null;
+      }
+    }
+    catch (error) {
+      console.error("Error retrieving archived data:", error);
+      return null;
+    }
+  }
+
+  // runs the round
+  // this function is called in the while loop of handleRoundsAndGraphs
+  async function runRound(candidates, votes, allVotes, round) {
+    // get the results from the next round of elimination
+    let roundResults = await newCount(votes, candidates, allVotes);
+    return { 
+      results: await makeGraphDivPerRound(roundResults.candidates, roundResults.votes, round),
+      candidates: [...roundResults.candidates],
+      votes: [...roundResults.votes],
+      allVotes: [...roundResults.allVotes],
+      round: round+1,
+    }
+  }
+
+  // remove the round 1 winner from the candidates and votes
+  // this function is called between the first and second rounds
+  async function removeWinner(archivedData, winner) 
+  {
+    let candidates = [...archivedData.candidates];
+    let votes = [...archivedData.votes];
+    let allVotes = [...archivedData.allVotes];
+
+    for (var i in candidates) 
+    {
+      if (candidates[i] == winner)
+      {
+        candidates.splice(i, 1);
+        votes.splice(i, 1);
+
+        for (let i in allVotes)
+        {
+          let voter = allVotes[i];
+          if (voter.indexOf(winner) >= 0)
+          {
+              voter.splice(voter.indexOf(winner),1);
+              voter.push(null)
+          }
+          if (voter[0] == null && voter[1] == null && voter[2] == null)
+          {
+              allVotes.splice(i,1);
           }
         }
-     }
-   }
-}
-}
-//cal a function on the click of the count button
-// document.getElementById("thingy").addEventListener("click", work);
-//the function called by the button. It generates
-function work() {
-  
-    //gets variables from firebase
-    let second = JSON.parse(sessionStorage.getItem('on-second'));
 
-    if (!second) {
-      var candidates = JSON.parse(sessionStorage.getItem('holder'));
-      var votes = JSON.parse(sessionStorage.getItem('shelby')); 
-      var allVotes = JSON.parse(sessionStorage.getItem('allVotes')); 
-    }
-    else {
-      var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
-      var votes = JSON.parse(sessionStorage.getItem('shelby-second')); 
-      var allVotes = JSON.parse(sessionStorage.getItem('allVotes-second')); 
-    }
+        let results = await newVote(allVotes, candidates);
 
-    //the div of the field
-    var chartDiv = document.getElementById("chartDiv");
-    //code that stops the function from running if a winner has already been decided
-    if (finish) {
-        return;
-    }
-    //code that stops the function from running if a winner has already been decided
-    var threshold = allVotes.length /2;
-    for(var i in candidates){
-        if(votes[i] > threshold ){
-            console.log(candidates[i] + " has won the election with " + votes[i] + " votes")
-            let ctx = document.createElement("canvas");
-            ctx.classList.toggle("chart")
-            let chartSettings2 = makeGraphs();
-            new Chart(ctx, chartSettings2);
-            // ctx.classList.add("anim-flyin")
-
-            let indivChartDiv = document.createElement("div");
-            indivChartDiv.classList.toggle("indiv-chart-div-winner");
-            indivChartDiv.appendChild(ctx);
-
-            chartDiv.appendChild(indivChartDiv);
-  
-            // this.classList.add("electionDropdown");
-            finish = true
-            return;
+        sessionStorage.setItem('holder', JSON.stringify(results.candidates));
+        sessionStorage.setItem('shelby', JSON.stringify(results.votes));
+        sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
+        
+        return {
+          candidates: [...results.candidates],
+          votes: [...results.votes],
+          allVotes: [...allVotes],
         }
-    }  
-    //creates the html componants
+      }
+    }
+  }
+  
+  // the core loop of this script
+  // this does one election round, finding one winner
+  async function handleRoundsAndGraphs() {
+    totalRounds++;
+    var winningVotes = 0;
+    
+    // check if the session storage is ready to go
+    let ready = await beforeStart()
+
+    // if not, alert the user
+    if (!ready) {
+      alert("BAD BAD BAD");
+    }
+
+    // set up all the variables
+    var candidates = JSON.parse(sessionStorage.getItem('holder'));
+    var votes = JSON.parse(sessionStorage.getItem('shelby'));
+    var allVotes = JSON.parse(sessionStorage.getItem('allVotes'));
+    let round = 1;
+
+    var chartDiv = document.getElementById("chartDiv");
+
+    let limit = 0;
+    var running = true;
+    var runningBefore = true;
+    
+    var threshold = allVotes.length;
+    
+    var winner;
+    
+    while (running)
+    {
+      if (!winner) {chartDiv.appendChild(await makeGraphDivPerRound(candidates, votes, round));}
+  
+      let totalVotes = votes.reduce((sum, voteCount) => sum + voteCount, 0);
+      threshold = Math.floor(totalVotes/2);
+     
+      limit++;
+      // console.log(`Candidates: ${candidates}`);
+      let roundResults = await runRound(candidates, votes, allVotes, round);
+
+      votes = [...roundResults.votes];
+      candidates = [...roundResults.candidates];
+      allVotes = [...roundResults.allVotes];
+      round = roundResults.round;
+      
+      if (!runningBefore) {running = false};
+
+      totalVotes = votes.reduce((sum, voteCount) => sum + voteCount, 0);
+      threshold = Math.floor(totalVotes/2);
+
+      // check for winning
+      for (var i in votes) { 
+        if (votes[i] >= threshold) {
+          console.log("winner winner chicken dinner")
+          runningBefore = false;
+          winner = candidates[i];
+          winningVotes = votes[i];
+          chartDiv.appendChild(await makeGraphDivPerRound(candidates, votes, round));
+        }
+      }
+      
+    }
+    
+    return {
+      winner: winner,
+      winningVotes: winningVotes,
+    };
+  }
+
+  async function betweenRounds(winner, round, chartDiv, winningVotes)
+  {
+    let section2 = document.createElement("h2");
+    section2.classList.toggle("maroon");
+    let sectionDiv = document.createElement("div");
+    sectionDiv.classList.toggle("election-done-div");
+    sectionDiv.appendChild(section2);
+    chartDiv.appendChild(sectionDiv);
+    let text = [null, "first", "second"];
+    
+    section2.innerHTML = `Round ${round} Results: ${winner}  has won the ${text[round]} round with ${winningVotes} votes`;
+  }
+
+  function checkDisplay() {
+    const currentElection = document.getElementById("csv-options").value;
+    const displayedElection = chartDiv.getAttribute("data-election");
+
+    if (displayedElection && displayedElection !== currentElection) {
+      while (chartDiv.firstChild) {
+        chartDiv.removeChild(chartDiv.firstChild);
+      }
+    }
+    else if (displayedElection == currentElection) 
+    {
+      return false
+    }
+
+    chartDiv.setAttribute("data-election", currentElection);
+    return true;
+  }
+
+  if (checkDisplay())
+  {
+    var firstWinningData = await handleRoundsAndGraphs();
+    var archivedData = await getArchivedData();
+    
+    var firstWinner = firstWinningData.winner;
+    var firstWinningVotes = firstWinningData.winningVotes;
+
+    await betweenRounds(firstWinner, totalRounds, chartDiv, firstWinningVotes);
+
+
+    var newData = await removeWinner(archivedData, firstWinner);
+
+    var candidates = [...newData.candidates];
+    var votes = [...newData.votes];
+    var allVotes = [...newData.allVotes];
+    
+    sessionStorage.setItem('holder', JSON.stringify(candidates));
+    sessionStorage.setItem('shelby', JSON.stringify(votes));
+    sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
+
+    var secondWinningData = await handleRoundsAndGraphs();
+    
+    var secondWinner = secondWinningData.winner;
+    var secondWinningVotes = secondWinningData.winningVotes;
+    await betweenRounds(secondWinner, totalRounds, chartDiv, secondWinningVotes);
+
+    // run the point based voting function
+    newPoint();
+  }
+});
+
+const csvOptions = document.getElementById("csv-options");
+
+// this function is called when the user selects a new election from the dropdown menu
+// it checks if the data is already in session storage, and if not, it downloads it from the database
+csvOptions.addEventListener("change", async (e) => {
+  const selectedOption = e.target.value;
+  if (!sessionStorage.getItem(`${selectedOption}-archived`)) {
+    console.log(`Archived data for ${selectedOption} not found. Downloading...`);
+    try {
+      await loadFromDatabase();
+      console.log(`Archived data for ${selectedOption} has been downloaded.`);
+    } catch (error) {
+      console.error("Error downloading archived data:", error);
+    }
+  } else {
+    console.log(`Archived data for ${selectedOption} already exists. Grabbing data...`);
+    var archivedData = JSON.parse(sessionStorage.getItem(`${selectedOption}-archived`));
+    let allVotes = [...archivedData.allVotes];
+    let voteResults = await initVote(allVotes);
+    sessionStorage.setItem('shelby', JSON.stringify([...voteResults.votes]));
+    sessionStorage.setItem('holder', JSON.stringify([...voteResults.candidates]));
+    sessionStorage.setItem('allVotes', JSON.stringify([...allVotes]));
+
+
+    console.log("Archived data:", archivedData);
+  }
+}); 
+
+// this function is called in the point based voting function
+function makePointGraph(candidates, data) {
+  //creates a new chart element in layout.html        
+  if (candidates.length != data.length) {
+    console.error("Candidates and data length mismatch.");
+    return;
+  }
+  return {
+    //the type of chart
+    type: 'bar',
+      //the data within the chart
+      data: {
+      //the names of each bar underneath the bar
+      labels: [...candidates],
+      datasets: [{
+        //the title of the chart
+        label: '# of points',
+        //the integer value of each bar
+        //where the variable containing the voting data is used
+        data: [...data],
+        //the width of each bar
+        borderWidth: 3,
+        borderColor: '#582235'
+        }]
+      },
+      options: {
+        animation: false,
+        //scaling options for the chart
+        scales: {
+          y: {
+          //starts counting from zero
+            beginAtZero: true
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {  
+          title: {
+            display: true,
+            text: 'Point-based Voting',
+            color: '#582235',
+            font: {
+              size: 20
+            }
+          }
+        }
+      }
+  }
+
+}
+
+// my new and improved point based voting function
+// this function is called a lot
+function newPoint() {
+  const cname = document.getElementById("chartDiv").getAttribute("data-election");
+  var archivedData = JSON.parse(sessionStorage.getItem(cname+'-archived'));
+  var candidates = archivedData.candidates;
+  var allVotes = archivedData.allVotes;
+  var points = [];
+
+  // make the points array the same length as the candidates array
+  for (let i in candidates) 
+  {
+    points.push(0);
+  }
+
+  // tally up the points
+  for (let i in allVotes) 
+  {
+    var vote = allVotes[i];
+    for (let j in candidates) 
+    {
+      if (vote[0] == candidates[j]) 
+      {
+        points[j] += 5;
+      }
+      else if (vote[1] == candidates[j]) 
+      {
+        points[j] += 3;
+      }
+      else if (vote[2] == candidates[j])
+      {
+        points[j] += 1;
+      }
+    }
+  }
+
+  const pointDiv = document.getElementById("point_graph");
+
+  if (pointDiv.getAttribute("data-election") == cname) {
+    // do nothing, the graphs are already displayed
+    return;
+  }
+  else {
+
+    pointDiv.innerHTML = ""; // Clear previous content
+    // say which election the graphs are for
+    pointDiv.setAttribute("data-election", cname);
+
+    let chartData = makePointGraph(candidates, points);
+
     let ctx = document.createElement("canvas");
-    ctx.classList.toggle("chart")
-    //calls the function makeGraphs which returns the data of the bar chart
-    let chartSettings2 = makeGraphs();
-    new Chart(ctx, chartSettings2);
-    // ctx.classList.add("anim-flyin")
+    ctx.classList.add("chart");
+    new Chart(ctx, chartData);
+
     let indivChartDiv = document.createElement("div");
-    indivChartDiv.classList.toggle("indiv-chart-div");
+    indivChartDiv.classList.add("indiv-chart-div");
+    indivChartDiv.classList.add("point-graph");
     indivChartDiv.appendChild(ctx);
 
-    chartDiv.appendChild(indivChartDiv);
-    round++;
-    // this.classList.add("electionDropdown");
+    pointDiv.appendChild(indivChartDiv);
+  }
+  
 
+  // find the winner and second place
+  let winningVotes = Math.max(...points);
+  let winner = candidates[points.indexOf(winningVotes)];
+  let winnerIndex = points.indexOf(winningVotes);
+  points.splice(winnerIndex, 1); // Remove the first place points
+  candidates.splice(winnerIndex, 1); // Remove the first place candidate
+  let secondWinningVotes = Math.max(...points); // Find the second highest points
+  let secondWinner = candidates[points.indexOf(secondWinningVotes)]; // Find the corresponding candidate
+
+  // create the div for the results
+  let section2 = document.createElement("h2");
+  section2.classList.toggle("maroon");
+  let sectionDiv = document.createElement("div");
+  sectionDiv.classList.toggle("election-done-div");
+  sectionDiv.appendChild(section2);
+  pointDiv.appendChild(sectionDiv);
+
+  section2.innerHTML = `Point-Based Voting Results: ${winner}  has won the election with ${winningVotes} points. <br> ${secondWinner} has come in second with ${secondWinningVotes} points`;
 }
 
 // const upload = document.getElementById("csv");
@@ -489,15 +601,14 @@ toggleSwitch.addEventListener("change", (e) => {
   if (e.target.checked) {
     console.log("Switched to Point-Based Voting");
     // Add logic for Point-Based Voting
-    
+    chartDiv.style.display = "none";
+    pointGraph.style.display = "block";
+    // newPoint();
     
   } else {
+    chartDiv.style.display = "grid";
+    pointGraph.style.display = "none";
     
     // Add logic for Rank Choice Voting
   }
-  if (pointGraph.hasChildNodes() || chartDiv.hasChildNodes()) 
-    {
-      document.getElementById("other").click();
-    }
 });
-

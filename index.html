@@ -57,17 +57,16 @@
 
         <br>
 
-        
-
         <div id="post-form">
-            <select id="csv-options" class="light" ></select></select>
+            <select id="csv-options" class="light" onchange=""></select></select>
             <label for="download" class="custom-overlay-button">Run</label>
-            <button id="download" onclick="sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click(); document.getElementById('Lbar-container').click()" class="hidden-button" ></button>
-        
+            <!-- <button id="download" onclick="sessionStorage.setItem('on-second', JSON.stringify(false));document.getElementById('chartDiv').innerHTML = ''; loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes'))); document.getElementById('Lbar-container').click(); document.getElementById('Lbar-container').click()" class="hidden-button" ></button> -->
+            
+            <button id="download" onclick="document.dispatchEvent(new CustomEvent('displayRounds'))" class="hidden-button" ></button>
+
             <label for="thingss" class="custom-overlay-button">Destroy Votes</label>
             <button id="thingss" onclick="destroyVotes()" class="hidden-button">Delete Project</button>
 
-    
         </div>
 
         <div id="Lbar-container">
@@ -84,21 +83,16 @@
                 <input type="checkbox" id="important-part">
                 <span class="slider round"></span>
             </label>
-            <p id="switch-p-r">Point-Based Voting</p>
+            <p id="switch-p-r" >Point-Based Voting</p>
         </div>
-        <div id="other" onclick="loadFromDatabase();vote(JSON.parse(sessionStorage.getItem('allVotes')));document.getElementById('chartDiv').innerHTML = ''"></div>
+        <div id="other" onclick=""></div>
 
     </div>
-    <div id="point_graph"></div>
+    <div id="point_graph" style="display: none" data-election="None"></div>
 
 
-<div id = "chartDiv"></div>
-     <!-- start collapsible -->
-    <!-- <label id="collapsible-label" class="collapsible-label maroon test-label" for="electionresultscollapsible">Election Results</label>
-    <button type="button" id="electionresultscollapsible" onclick="" class="collapsible maroon">Election Results</button>
-    
-    <div class="collapsible-content-election light" id="election-results">
-        <div id="chartDiv" class="light"></div> -->
+<div id = "chartDiv" style="display: grid" data-election="None"></div>
+
     </div>
     <br>
     
@@ -121,11 +115,12 @@
         window.destroyVotes = uploadjs.destroyVotes;
         window.removeWinner = votejs.removeWinner;
         window.point = votejs.point;
+        window.updateVote = votejs.updateVote;
+
 
         await getCollectionList();
         await loadFromDatabase();
-        sessionStorage.setItem('on-second', JSON.stringify(false));
-        vote(JSON.parse(sessionStorage.getItem('allVotes')));
+        await vote(JSON.parse(sessionStorage.getItem('allVotes')), JSON.parse(sessionStorage.getItem('holder')));
       </script>
 </body>
 </html>
