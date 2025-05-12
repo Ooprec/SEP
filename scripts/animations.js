@@ -308,7 +308,7 @@ document.addEventListener("displayRounds", async (e) => {
       threshold = Math.floor(totalVotes/2);
      
       limit++;
-      // console.log(`Candidates: ${candidates}`);
+
       let roundResults = await runRound(candidates, votes, allVotes, round);
 
       votes = [...roundResults.votes];
@@ -350,7 +350,7 @@ document.addEventListener("displayRounds", async (e) => {
     chartDiv.appendChild(sectionDiv);
     let text = [null, "first", "second"];
     
-    section2.innerHTML = `Round ${round} Results: ${winner}  has won the ${text[round]} round with ${winningVotes} votes`;
+    section2.innerHTML = `${winner}  has won the ${text[round]} seat with ${winningVotes} votes`;
   }
 
   function checkDisplay() {

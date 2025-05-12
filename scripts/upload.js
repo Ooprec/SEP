@@ -36,7 +36,14 @@ export async function getCollectionList()
     const creatorRef = doc(db, docsArray[i], "username");
     const creator = await getDoc(creatorRef);
     //only add to dropdown if it is created by user
-    if(creator.data().username==userEmail){
+    
+    try {
+      var check = creator.data().username == userEmail;
+    } 
+    catch {
+      var check =true
+    }
+    if(check){
       let tempElement = document.createElement('option');
       tempElement.innerHTML = docsArray[i];
       select.appendChild(tempElement);
@@ -45,6 +52,9 @@ export async function getCollectionList()
 
   return docsArray;
 }
+
+
+
 
 export async function importCSVToDatabase () {
   // const studentPieces = await getDocs(collection(db, "rank-choice-voting"));

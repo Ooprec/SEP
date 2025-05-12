@@ -47,12 +47,10 @@ export async function loadFromDatabase() {
 
     // Pull all the documents from the specified collection in Firebase
     for (const doc of databaseItems.docs) {
-        // console.log(`Document ID: ${doc.id}, Data:`, doc.data());
     }
 
         //neglects username document in field read
     for (const item of databaseItems.docs) {
-        // console.log(item.data().data);
         if (item.id != "username" ){
             allVotes.push(item.data().data);
         }
@@ -61,7 +59,6 @@ export async function loadFromDatabase() {
     let candidates = []
     let votes = [];
 
-    // console.log(allVotes);
 
     for (var i=0; i<allVotes.length; i++) {
         if (!candidates.includes(allVotes[i][0])) 
@@ -70,13 +67,6 @@ export async function loadFromDatabase() {
             votes.push(0);
         }   
     }
-
-    console.log(`Candidates: ${candidates}`);
-    console.log(`Votes: ${votes}`);
-    
-
-    // Remove duplicates from candidates
-    // candidates = [...new Set(candidates)];
 
     let initVoteData = await initVote(allVotes);
     votes = initVoteData.votes;
@@ -161,7 +151,6 @@ export async function newCount(votes, candidates, allVotes) {
             votes[candidates.indexOf(vote)]++;
         }
         else{
-            // console.log("Vote: " + vote + " Candidate: " + candidates[candidates.indexOf(vote)]);
         }
     }
 
@@ -184,7 +173,6 @@ export async function newCount(votes, candidates, allVotes) {
     if (firstMin == 0 && count == candidates.length) {
         console.error("All candidates have 0 votes. No one can be eliminated.");
         let e = {votes: [...votes],candidates: [...candidates],allVotes: [...allVotes],count: count,}
-        console.log(e);
         }
 
     for (let runs = 0; runs < count; runs++) 
@@ -250,7 +238,6 @@ export async function newVote(allVotes, candidates)
                 votes[j]++;
             }
             else {
-                // console.log("Vote: " + vote + " Candidate: " + candidates[j]);
             }
         }
         
