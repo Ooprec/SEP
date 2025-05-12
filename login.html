@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>replit</title>
-  <link href="/login/login.css" rel="stylesheet" type="text/css" />
+  <link href="./login/login.css" rel="stylesheet" type="text/css" />
 </head>
 
 
@@ -13,7 +13,7 @@
 <body>
 
 <div class="babble">
-<img id = "mayoo" src="/styles/logo.png" alt="logo">
+<img id = "mayoo" src="./styles/logo.png" alt="logo">
 <br>
 <label>
   <b>
@@ -45,9 +45,11 @@
   <button id="signup" onclick="signup(document.getElementById('uname').value, document.getElementById('psw').value);">Sign Up</button>
   <br>
   <br>
+
+ <!-- note underneath sign up button -->
   <label id="watchOut">Please note: The password must be  <b>at least 6</b> characters</label>
 
-
+    <!-- tooltip that list the restrictions put on the password -->
   <div class="tooltip">?
     <span class="tooltiptext">Password doesn't need any special characters, only requries 6 characters
       </span>
@@ -57,9 +59,9 @@
 
 
 
-<script type="module" src="/login/login.js" defer></script>
+<script type="module" src="./login/login.js" defer></script>
 <script type="module">
-import * as loginjs from "/login/login.js";
+import * as loginjs from "./login/login.js";
 window.login = loginjs.login;
 window.signup = loginjs.signup;
 

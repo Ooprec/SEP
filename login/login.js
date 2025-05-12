@@ -26,7 +26,7 @@ export function login(email, password){
       //email is sent to server for user in upload
         sessionStorage.setItem('userEmail', userCredential.user.email);
     //redirects the user to main landing page
-        location.replace("/instructions.html");
+        location.replace("./instructions.html");
     console.log("eh")
     })
     .catch((error) => {
@@ -48,8 +48,7 @@ createUserWithEmailAndPassword(auth, email, password)
     console.log("don dieuu");
     const user = userCredential.user;
     sessionStorage.setItem('userEmail', userCredential.user.email);
-    //redirects the user to main landing page
-    // ...
+
   })
   .catch((error) => {
     const errorCode = error.code;
