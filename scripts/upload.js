@@ -41,7 +41,8 @@ export async function getCollectionList()
       var check = creator.data().username == userEmail;
     } 
     catch {
-      var check =true
+      var check = true;
+      // location.replace("login.html");
     }
     if(check){
       let tempElement = document.createElement('option');

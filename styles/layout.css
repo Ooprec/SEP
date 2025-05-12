@@ -373,3 +373,13 @@ select:hover {
 .point-graph {
     width: 75%;
 }
+
+#instruc-div {
+    width: 100%;
+    margin: auto;
+    padding: 2rem;
+}
+
+#goto-instructions-label {
+    padding-top: 2rem;
+}

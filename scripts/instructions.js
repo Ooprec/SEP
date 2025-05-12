@@ -145,3 +145,18 @@ submit.addEventListener("click", async (e)=> {
   // location.reload();
 
 })
+
+const upload = document.getElementById("csv");
+upload.addEventListener("change", (e) => {
+  if (upload.value == "") {
+    document.getElementById("replacement-button").innerHTML = "Choose File...";
+    return;
+  }
+  console.log(upload.value.split("\\")[2]);
+  let fileName = upload.value.split("\\")[2];
+  if (fileName.length > 15) {
+    fileName = fileName.substring(0, 15) + "...";
+  }
+  document.getElementById("replacement-button").innerHTML = fileName;
+
+});
