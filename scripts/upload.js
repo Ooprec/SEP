@@ -40,7 +40,7 @@ export async function getCollectionList()
     try {
       
         var check = (creator.data().username == userEmail);
-        if (userEmail == "cooperstancil@gmail.com") {check = true;}
+        // if (userEmail == "cooperstancil@gmail.com") {check = true;}
       
       
       if(check){

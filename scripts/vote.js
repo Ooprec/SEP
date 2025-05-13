@@ -1,5 +1,3 @@
-//henry
-
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
@@ -33,64 +31,60 @@ export async function loadFromDatabase() {
     else {
         var databaseItems = await getDocs(collection(db, cname));
     
-    //Creates a list of objects, linking each voters decision to an object (voter)
-    var allVotes = []; 
+        //Creates a list of objects, linking each voters decision to an object (voter)
+        var allVotes = []; 
 
-    try {
-        sessionStorage.removeItem("allVotes");
-        sessionStorage.removeItem("shelby");
-        sessionStorage.removeItem("holder");
-    }
-    catch {
-        console.log("Error deleting session storage items.");
-    }
-
-    // Pull all the documents from the specified collection in Firebase
-    for (const doc of databaseItems.docs) {
-    }
-
-        //neglects username document in field read
-    for (const item of databaseItems.docs) {
-        if (item.id != "username" ){
-            allVotes.push(item.data().data);
+        try {
+            sessionStorage.removeItem("allVotes");
+            sessionStorage.removeItem("shelby");
+            sessionStorage.removeItem("holder");
         }
-    }
+        catch {
+            console.log("Error deleting session storage items.");
+        }
 
-    let candidates = []
-    let votes = [];
+        // Pull all the documents from the specified collection in Firebase
+        for (const doc of databaseItems.docs) {
+        }
 
+            //neglects username document in field read
+        for (const item of databaseItems.docs) {
+            if (item.id != "username" ){
+                allVotes.push(item.data().data);
+            }
+        }
 
-    for (var i=0; i<allVotes.length; i++) {
-        if (!candidates.includes(allVotes[i][0])) 
-        {
-            candidates.push(allVotes[i][0]);
-            votes.push(0);
-        }   
-    }
+        let candidates = []
+        let votes = [];
 
-    let initVoteData = await initVote(allVotes);
-    votes = initVoteData.votes;
-    candidates = initVoteData.candidates;
+        for (var i=0; i<allVotes.length; i++) {
+            if (!candidates.includes(allVotes[i][0])) 
+            {
+                candidates.push(allVotes[i][0]);
+                votes.push(0);
+            }   
+        }
 
+        // get the initial vote data
+        let initVoteData = await initVote(allVotes);
+        votes = initVoteData.votes;
+        candidates = initVoteData.candidates;
 
-    sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
-    sessionStorage.setItem('shelby', JSON.stringify(votes));
-    sessionStorage.setItem('holder', JSON.stringify(candidates));
+        // set the session storage items
+        sessionStorage.setItem('allVotes', JSON.stringify(allVotes));
+        sessionStorage.setItem('shelby', JSON.stringify(votes));
+        sessionStorage.setItem('holder', JSON.stringify(candidates));
 
-    let archive = {
-        allVotes: [...allVotes],
-        shelby: [...votes],
-        candidates: [...candidates]
-    }
+        let archive = {
+            allVotes: [...allVotes],
+            shelby: [...votes],
+            candidates: [...candidates]
+        }
 
+        // set the archive in session storage
+        sessionStorage.setItem(cname + "-archived", JSON.stringify(archive));
 
-    sessionStorage.setItem(cname + "-archived", JSON.stringify(archive));
-
-    console.log("Loaded from database: " + cname);
-
-    
-
-    // vote(allVotes);
+        console.log("Loaded from database: " + cname);
     }
 }
 
@@ -120,23 +114,19 @@ export async function newCount(votes, candidates, allVotes) {
     // check for the losing candidate and then remove them from the list of candidates and votes
     let count = 0;
 
+    // tally up how many candidates have the same number of votes as the losing candidate
     for (let i in votes)
     {
         if (votes[i] == firstMin) {count++};
     }   
-    // if (count > 1)  {
-    //     let candidateVotes = {};
-    //     for (let i in candidates) {
-    //         candidateVotes[candidates[i]] = votes[i];
-    //     }
-    // }
 
-
+    // if all candidates have 0 votes, then problems arise
     if (firstMin == 0 && count == candidates.length) {
         console.error("All candidates have 0 votes. No one can be eliminated.");
         let e = {votes: [...votes],candidates: [...candidates],allVotes: [...allVotes],count: count,}
         }
 
+    // remove the losing candidate from the list of candidates and votes
     for (let runs = 0; runs < count; runs++) 
     {
         for (let i in candidates)
@@ -165,9 +155,11 @@ export async function newCount(votes, candidates, allVotes) {
             allVotes.splice(i,1);
         }
     }
-
+    
+    // tally
     let results = await newVote(allVotes, candidates);
     
+    // return
     return {
         votes: [...results.votes],
         candidates: [...results.candidates],
@@ -177,6 +169,7 @@ export async function newCount(votes, candidates, allVotes) {
             
 }
 
+// this function is used to tally the votes
 export async function newVote(allVotes, candidates) 
 {
 
