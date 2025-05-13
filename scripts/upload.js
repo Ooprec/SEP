@@ -39,7 +39,9 @@ export async function getCollectionList()
     
     // try {
     try {
-      let check = (creator.data().username == userEmail);
+      
+        var check = (creator.data().username == userEmail);
+      
       
       // catch {
       //   // var check = true;
