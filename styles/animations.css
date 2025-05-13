@@ -21,7 +21,11 @@ body {
     text-align: center;
     margin: auto;
     padding-bottom: 1rem;
+    
 }
+
+#Lbar-container {display: none}
+
 
 #Lbar-text, #Ubar-test {
     color: var(--white);
