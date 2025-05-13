@@ -31,23 +31,29 @@ export async function getCollectionList()
 
   for (let i = 0; i<docsArray.length; i++) {
     //grab username from login (email)
-    let userEmail = sessionStorage.getItem("userEmail");
+    let userEmail = localStorage.getItem("userEmail");
     //takes username from username document added through upload
     const creatorRef = doc(db, docsArray[i], "username");
     const creator = await getDoc(creatorRef);
     //only add to dropdown if it is created by user
     
+    // try {
     try {
-      var check = creator.data().username == userEmail;
-    } 
-    catch {
-      var check = true;
-      // location.replace("login.html");
+      let check = (creator.data().username == userEmail);
+      
+      // catch {
+      //   // var check = true;
+      //   window.alert("You are not logged in. Please log in to view your elections.");
+      //   location.replace("login.html");
+      // }
+      if(check){
+        let tempElement = document.createElement('option');
+        tempElement.innerHTML = docsArray[i];
+        select.appendChild(tempElement);
+      }
     }
-    if(check){
-      let tempElement = document.createElement('option');
-      tempElement.innerHTML = docsArray[i];
-      select.appendChild(tempElement);
+    catch (e) {
+      console.log("Error getting creator data: ", e);
     }
   }
 
@@ -58,10 +64,7 @@ export async function getCollectionList()
 
 
 export async function importCSVToDatabase () {
-  // const studentPieces = await getDocs(collection(db, "rank-choice-voting"));
-  //   studentPieces.forEach((piece) =>{
-  //     deleteDoc(doc(db, "rank-choice-voting", piece.id));
-  //   } );
+
   console.log("importing")
   try{   
     var uname = document.getElementById("csv-name").value;
@@ -88,9 +91,8 @@ export async function importCSVToDatabase () {
         //represented in fire base as (e.g. First: "Name of Candidate")
         Ubarhandler(len, i+1);
             var docRef = await addDoc(collection(db, uname),  {data:[cells[2], cells[3], cells[4].substring(0, cells[4].length-1)]});
-            var userAdmin = sessionStorage.getItem('userEmail');            
+            var userAdmin = localStorage.getItem('userEmail');            
       
-            
             //tests to make sure the code fires
             console.log("Document written with ID: ", docRef.id); 
             // console.log("Document written with ID: ", docRef.id);

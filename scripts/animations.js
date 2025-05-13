@@ -6,24 +6,6 @@ import {newCount, newVote, loadFromDatabase, initVote} from "./vote.js";
 var LBar = document.getElementById("Lbar-bar");
 var LText = document.getElementById("Lbar-text");
 
-// console.log(LCont);
-// // wait
-// LCont.addEventListener("click", (e) => {
-//     if (LBar.classList.contains("unstarted"))
-//     {
-//         LBar.classList.add("q1");
-//         LBar.classList.remove("unstarted");
-//     }
-
-//     if (LBar.classList.contains("q5"))
-//     {
-//         LText.style.color = "#F2F4F5";
-//         LBar.classList.remove("q5");
-//         LBar.classList.add("q1");
-//     }
-// })
-
-
 LBar.addEventListener("animationend", (e) => {
     if (LBar.classList.contains("q1"))
     {
@@ -149,7 +131,6 @@ function makeGraphs2(candidates, data, round) {
 
 // Add an event listener for a custom event
 document.addEventListener("displayRounds", async (e) => {
-  
   var totalRounds = 0;
 
   async function beforeStart() {

@@ -93,45 +93,7 @@ export async function loadFromDatabase() {
     // vote(allVotes);
     }
 }
-// dunno why but this needs to be here for the page to work
-export async function vote(allVotes) {
 
-    let second = JSON.parse(sessionStorage.getItem('on-second'));
-    
-
-    if (second) {
-        var candidates = JSON.parse(sessionStorage.getItem('holder-second'));
-    }
-    else {
-        var candidates = JSON.parse(sessionStorage.getItem('holder'));
-    }
-    
-
-    let votes = []
-
-    for (i in candidates)
-    {
-        votes.push(0);
-    }
-
-    // tallies first round votes
-    for(var i in allVotes){
-        votes[candidates.indexOf(allVotes[i][0])]++;
-    }   
-
-    //moves code back to session to be used for graphs
-    if (!second) {
-        sessionStorage.setItem('shelby', JSON.stringify(votes));
-        sessionStorage.setItem('holder', JSON.stringify(candidates));
-    }
-    else {
-        sessionStorage.setItem('shelby-second', JSON.stringify(votes));
-        sessionStorage.setItem('holder-second', JSON.stringify(candidates));
-    }
-
-    return (votes);
-        
-}
 
 export async function newCount(votes, candidates, allVotes) {
     //votes: a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
@@ -283,6 +245,8 @@ export async function initVote(allVotes)
         
     }
 
+    sessionStorage.setItem('shelby', JSON.stringify(votes));
+    sessionStorage.setItem('holder', JSON.stringify(candidates));
     return {
         votes: [...votes],
         candidates: [...candidates]

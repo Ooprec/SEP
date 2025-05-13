@@ -77,11 +77,11 @@
         window.removeWinner = votejs.removeWinner;
         window.point = votejs.point;
         window.updateVote = votejs.updateVote;
-
+        window.initVote = votejs.initVote;
 
         await getCollectionList();
         await loadFromDatabase();
-        await vote(JSON.parse(sessionStorage.getItem('allVotes')), JSON.parse(sessionStorage.getItem('holder')));
+        await initVote(JSON.parse(sessionStorage.getItem('allVotes')));
       </script>
 </body>
 </html>
