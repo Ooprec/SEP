@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, arrayUnion, updateDoc, getDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, setDoc, getDocs, arrayUnion, updateDoc, getDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 // import { Ubarhandler } from "./animations.js";
 
 const Ubar = document.getElementById("Ubar-bar");
@@ -51,10 +51,7 @@ export async function getCollectionList()
 }
 
 export async function importCSVToDatabase () {
-  // const studentPieces = await getDocs(collection(db, "rank-choice-voting"));
-  //   studentPieces.forEach((piece) =>{
-  //     deleteDoc(doc(db, "rank-choice-voting", piece.id));
-  //   } );
+
   console.log("importing")
   try{   
     var uname = document.getElementById("csv-name").value;
@@ -81,11 +78,17 @@ export async function importCSVToDatabase () {
         //represented in fire base as (e.g. First: "Name of Candidate")
         Ubarhandler(len, i+1);
             var docRef = await addDoc(collection(db, uname),  {data:[cells[2], cells[3], cells[4].substring(0, cells[4].length-1)]});
-            
+            var userAdmin = localStorage.getItem('userEmail');            
+      
             //tests to make sure the code fires
             console.log("Document written with ID: ", docRef.id); 
             // console.log("Document written with ID: ", docRef.id);
+
       }
+      //adds username doc to each election
+      await setDoc(doc(db, uname, "username"), {
+        username: userAdmin,
+      });
     };
     reader.readAsText(file);
     file.innerHTML = null; 

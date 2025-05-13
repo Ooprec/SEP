@@ -63,63 +63,63 @@ export async function getCollectionList()
 
 
 
-export async function importCSVToDatabase () {
+// export async function importCSVToDatabase () {
 
-  console.log("importing")
-  try{   
-    var uname = document.getElementById("csv-name").value;
+//   console.log("importing")
+//   try{   
+//     var uname = document.getElementById("csv-name").value;
             
-    if (uname in getCollectionList()) {alert("Election name already taken"); return}
-    const listRef = doc(db, "rank-choice-voting", "docList");
-    const docSnap = await getDoc(listRef);
-    const docsArray = docSnap.data().docsArray;
+//     if (uname in getCollectionList()) {alert("Election name already taken"); return}
+//     const listRef = doc(db, "rank-choice-voting", "docList");
+//     const docSnap = await getDoc(listRef);
+//     const docsArray = docSnap.data().docsArray;
     
 
-    var file = document.getElementById("csv").files[0];
-    var reader = new FileReader();
-    reader.onload = async function(event) {
+//     var file = document.getElementById("csv").files[0];
+//     var reader = new FileReader();
+//     reader.onload = async function(event) {
       
-      var csvData = event.target.result;
-      //seperates the csv data into rows to seperate candidates
-      var rows = csvData.split("\n");
-      var len = rows.length;
-      //looping through all rows, fills rows
-      for (var i = 1; i < rows.length; i++) {
-        //cells is an array of cells
-        var cells = rows[i].split(",");   
-        //sets each vote casted by each person equal to a value
-        //represented in fire base as (e.g. First: "Name of Candidate")
-        Ubarhandler(len, i+1);
-            var docRef = await addDoc(collection(db, uname),  {data:[cells[2], cells[3], cells[4].substring(0, cells[4].length-1)]});
-            var userAdmin = localStorage.getItem('userEmail');            
+//       var csvData = event.target.result;
+//       //seperates the csv data into rows to seperate candidates
+//       var rows = csvData.split("\n");
+//       var len = rows.length;
+//       //looping through all rows, fills rows
+//       for (var i = 1; i < rows.length; i++) {
+//         //cells is an array of cells
+//         var cells = rows[i].split(",");   
+//         //sets each vote casted by each person equal to a value
+//         //represented in fire base as (e.g. First: "Name of Candidate")
+//         Ubarhandler(len, i+1);
+//             var docRef = await addDoc(collection(db, uname),  {data:[cells[2], cells[3], cells[4].substring(0, cells[4].length-1)]});
+//             var userAdmin = localStorage.getItem('userEmail');            
       
-            //tests to make sure the code fires
-            console.log("Document written with ID: ", docRef.id); 
-            // console.log("Document written with ID: ", docRef.id);
+//             //tests to make sure the code fires
+//             console.log("Document written with ID: ", docRef.id); 
+//             // console.log("Document written with ID: ", docRef.id);
 
-      }
-      //adds username doc to each election
-      await setDoc(doc(db, uname, "username"), {
-        username: userAdmin,
-      });
-    };
-    reader.readAsText(file);
-    file.innerHTML = null; 
-    let updatedDoc = docsArray;
-    updatedDoc.push(uname);
+//       }
+//       //adds username doc to each election
+//       await setDoc(doc(db, uname, "username"), {
+//         username: userAdmin,
+//       });
+//     };
+//     reader.readAsText(file);
+//     file.innerHTML = null; 
+//     let updatedDoc = docsArray;
+//     updatedDoc.push(uname);
 
-    await updateDoc(listRef, {
-      docsArray: updatedDoc,
-    })
-  }
-  //catch commander to prevent system stoppage in the event of wrongly submitted info
-  catch (e) 
-  {
-    console.error("Error adding votes to database: ", e);   
-  }
-  // location.reload(); 
+//     await updateDoc(listRef, {
+//       docsArray: updatedDoc,
+//     })
+//   }
+//   //catch commander to prevent system stoppage in the event of wrongly submitted info
+//   catch (e) 
+//   {
+//     console.error("Error adding votes to database: ", e);   
+//   }
+//   // location.reload(); 
 
-}
+// }
 
 export const destroyVotes = async function(){
   const election = document.getElementById("csv-options").value;
