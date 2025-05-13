@@ -129,10 +129,12 @@ function makeGraphs2(candidates, data, round) {
   }
 }
 
-// Add an event listener for a custom event
+// Add an event listener for the custom event that's triggered by the run button
 document.addEventListener("displayRounds", async (e) => {
+  // total # of rounds
   var totalRounds = 0;
 
+  // check if the session storage is ready to go
   async function beforeStart() {
     // Check if session storage items are set
     if (!sessionStorage.getItem('holder') || !sessionStorage.getItem('shelby') || !sessionStorage.getItem('allVotes')) {
@@ -148,8 +150,11 @@ document.addEventListener("displayRounds", async (e) => {
   // returns a div with the graph of the round
   // this function is called in the while loop of handleRoundsAndGraphs
   async function makeGraphDivPerRound(candidates, votes, round) {
+    // make the chart element
     let ctx = document.createElement("canvas");
+    // give it the class of chart
     ctx.classList.add("chart");
+
     let chartSettings = makeGraphs2(candidates, votes, round);
     new Chart(ctx, chartSettings);
 
@@ -323,10 +328,13 @@ document.addEventListener("displayRounds", async (e) => {
 
   async function betweenRounds(winner, round, chartDiv, winningVotes)
   {
-    let section2 = document.createElement("h2");
-    section2.classList.toggle("maroon");
+    let section2 = document.createElement("p");
+    
+
     let sectionDiv = document.createElement("div");
-    sectionDiv.classList.toggle("election-done-div");
+    sectionDiv.classList.toggle("light");
+    sectionDiv.classList.toggle("winning-text");
+
     sectionDiv.appendChild(section2);
     chartDiv.appendChild(sectionDiv);
     let text = [null, "first", "second"];
@@ -334,7 +342,7 @@ document.addEventListener("displayRounds", async (e) => {
     section2.innerHTML = `${winner}  has won the ${text[round]} seat with ${winningVotes} votes`;
   }
 
-  function checkDisplay() {
+function checkDisplay() {
     const currentElection = document.getElementById("csv-options").value;
     const displayedElection = chartDiv.getAttribute("data-election");
 
@@ -352,8 +360,21 @@ document.addEventListener("displayRounds", async (e) => {
     return true;
   }
 
+  function makeHeader(round) {
+    let header = document.createElement("h2");
+    header.classList.toggle("maroon");
+    let headerDiv = document.createElement("div");
+    headerDiv.classList.toggle("election-done-div");
+    header.innerHTML = `Seat ${round} Results`;
+    headerDiv.appendChild(header);
+
+    chartDiv.appendChild(headerDiv);
+    return header;
+  }
+
   if (checkDisplay())
   {
+    makeHeader(totalRounds+1);
     var firstWinningData = await handleRoundsAndGraphs();
     var archivedData = await getArchivedData();
     
@@ -361,8 +382,7 @@ document.addEventListener("displayRounds", async (e) => {
     var firstWinningVotes = firstWinningData.winningVotes;
 
     await betweenRounds(firstWinner, totalRounds, chartDiv, firstWinningVotes);
-
-
+    makeHeader(totalRounds+1);
     var newData = await removeWinner(archivedData, firstWinner);
 
     var candidates = [...newData.candidates];
@@ -384,11 +404,13 @@ document.addEventListener("displayRounds", async (e) => {
   }
 });
 
+
 const csvOptions = document.getElementById("csv-options");
 
 // this function is called when the user selects a new election from the dropdown menu
 // it checks if the data is already in session storage, and if not, it downloads it from the database
 csvOptions.addEventListener("change", async (e) => {
+
   const selectedOption = e.target.value;
   if (!sessionStorage.getItem(`${selectedOption}-archived`)) {
     console.log(`Archived data for ${selectedOption} not found. Downloading...`);
@@ -545,9 +567,6 @@ function newPoint() {
 
   section2.innerHTML = `Point-Based Voting Results: ${winner}  has won the election with ${winningVotes} points. <br> ${secondWinner} has come in second with ${secondWinningVotes} points`;
 }
-
-
-
 
 const Ubar = document.getElementById("Ubar-bar");
 const UbarText = document.getElementById("Ubar-text");
