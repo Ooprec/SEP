@@ -30,6 +30,7 @@ export function login(email, password){
     console.log("eh")
     })
     .catch((error) => {
+      alert("Either the email or password are invalid or you have not yet created an account, please use the sign up button if that is the case.");
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
@@ -41,6 +42,7 @@ export function signup(email, password){
     console.log("don dieu");
     console.log(email);
     console.log(password);
+    
 //requires REAL email aswell as 6 character password
 createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
@@ -51,6 +53,7 @@ createUserWithEmailAndPassword(auth, email, password)
 
   })
   .catch((error) => {
+    alert("The account associated with " + email + " has already been created");
     const errorCode = error.code;
     const errorMessage = error.message;
     // ..
