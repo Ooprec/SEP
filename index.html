@@ -15,11 +15,16 @@
             <img id = "mayo" src="./assets/logo.png" alt="logo">
             <p id="header-text" class="title-anim">Student Elections</p> 
         </h1>
+    <!-- This is the navigation bar html bit the class active indicates which page is open-->
+    <div class="topnav">
+        <a href="#home" onclick="location.replace('./instructions.html')">Upload</a>
+        <a class="active" href="#news">Elections</a>
+    </div>
 
-        <div id="instruct-div">
+        <!-- <div id="instruct-div">
             <button id="goto-instructions" class="hidden-button" onclick="location.replace('./instructions.html')"></button>
             <label  id="goto-instructions-label" for="goto-instructions" class="custom-overlay-button">Go to Instructions</label>
-        </div>
+        </div> -->
 
 
         <div id="post-form">
@@ -29,7 +34,7 @@
             
             <button id="download" onclick="document.dispatchEvent(new CustomEvent('displayRounds'))" class="hidden-button" ></button>
 
-            <label for="thingss" class="custom-overlay-button">Destroy Votes</label>
+            <label for="thingss" class="custom-overlay-button">Delete Election</label>
             <button id="thingss" onclick="destroyVotes()" class="hidden-button">Delete Project</button>
 
         </div>

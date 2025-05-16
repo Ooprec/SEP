@@ -7,12 +7,26 @@
     <link rel="stylesheet" href="./styles/layout.css">
     <link rel="stylesheet" href="./styles/animations.css">
 </head>
-<body>
-    <h1 class="maroon hed" id="header">How to Download a CSV from Google Sheets</h1>
-    <div id="instructs" class="main list-text"  class="light">
-        <p class="list-header light">Formatting the CSV</p>
+<body class="light">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div id="main-page" class="light">
+        
+        <h1 id="header" class="maroon" >
+            <img id = "mayo" src="./assets/logo.png" alt="logo">
+            <p id="header-text" class="title-anim">Student Elections</p> 
+        </h1>
+    
+ <!-- This is the navigation bar html bit the class active indicates which page is open-->
+        <div class="topnav">
+  <a class="active" href="#home" >Upload</a>
+  <a href="#news" onclick="window.location.href='index.html'">Elections</a>
+
+</div>
+
+
+        <p class="list-header light">Formatting the CSV:</p>
         <p class="light">The name of the header doesn't need to match exactly, but the positions of vote columns does.</p>
-        <table id="instruc-table" class="light">
+        <table id="instruc-table" class="center">
             <tr>
                 <th class="light">Timestamp</th>
                 <th class="light">Email</th>
@@ -30,20 +44,19 @@
         </table>
         <p class="list-header light">Downloading the CSV</p>
         <ol class="light">
-            <li class="light">Open your Google Sheets document.</li>
-            <li class="light">Click on the "File" menu.</li>
-            <li class="light">Select "Download" from the dropdown menu.</li>
-            <li class="light">Choose "Comma-separated values (.csv, current sheet)" from the options.</li>
-            <li class="light">The file will be downloaded to your computer.</li>
+            <p class="light">1. Open your Google Sheets document.</p>
+            <p class="light">2. Click on the "File" menu.</p>
+            <p class="light">3. Select "Download" from the dropdown menu.</p>
+            <p class="light">4. Choose "Comma-separated values (.csv, current sheet)" from the options.</p>
+            <p class="light">5. The file will be downloaded to your computer.</p>
         </ol>
-    <label id="return-custom" for="return" class="custom-overlay-button">Return Home</label>
-    <button id="return" onclick="window.location.href='index.html'" class="hidden-button"></button>
+    <!-- <label id="return-custom" for="return" class="custom-overlay-button">Return Home</label>
+    <button id="return" onclick="window.location.href='index.html'" class="hidden-button"></button> -->
     <script type="module" src="./scripts/instructions.js" defer></script>
     
     
     
-    <br>
-    <br>
+    
         <br>
     
         <!-- start collapsible -->
