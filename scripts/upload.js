@@ -57,6 +57,25 @@ export async function getCollectionList()
   return docsArray;
 }
 
+
+
+export const areYouSure = async function(){
+  //event listener running on the click
+  
+    //can you delete?
+    if(window.confirm("Are you sure you want to delete this election?")){
+      alert("Election deleted")
+      destroyVotes();
+    }else{
+      //if no
+      alert("Election not deleted");
+    }
+  
+  
+  };
+
+
+
 export const destroyVotes = async function(){
   const election = document.getElementById("csv-options").value;
   const select = document.getElementById("csv-options");

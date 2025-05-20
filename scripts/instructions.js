@@ -108,10 +108,15 @@ export async function importCSVToDatabase () {
 
 }
 
+
+
+
 export const destroyVotes = async function(){
   const election = document.getElementById("csv-options").value;
   const select = document.getElementById("csv-options");
   const options = select.getElementsByTagName('option');
+  console.log("mustarfd");
+    
   select.dispatchEvent(new Event('change'));
   for (let i = 0; i < options.length; i++) {
     if (options[i].value === election) {
@@ -136,9 +141,13 @@ export const destroyVotes = async function(){
   await updateDoc(listRef, {
     docsArray: updatedArray
   });
-  
+
+
 }
 
+
+
+try{
 const submit = document.getElementById("submit");
 submit.addEventListener("click", async (e)=> {
   console.log(e)
@@ -147,8 +156,13 @@ submit.addEventListener("click", async (e)=> {
   getCollectionList();
   // location.reload();
 
-})
 
+});
+}catch(error){
+  console.log("gruh");
+}
+
+try{
 const upload = document.getElementById("csv");
 upload.addEventListener("change", (e) => {
   if (upload.value == "") {
@@ -163,3 +177,6 @@ upload.addEventListener("change", (e) => {
   document.getElementById("replacement-button").innerHTML = fileName;
 
 });
+}catch(error){
+  console.log("guac");
+}

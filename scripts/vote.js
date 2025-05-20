@@ -88,6 +88,15 @@ export async function loadFromDatabase() {
     }
 }
 
+function areYouSure() {
+    let text = "Press a button!\nEither OK or Cancel.";
+    if (confirm(text) == true) {
+      text = "You pressed OK!";
+    } else {
+      text = "You canceled!";
+    }
+    document.getElementById("demo").innerHTML = text;
+  }
 
 export async function newCount(votes, candidates, allVotes) {
     //votes: a list of total first choice votes for each candidate. ex) [14, 17, 6, 20]
