@@ -31,41 +31,49 @@ export async function getCollectionList()
 
   for (let i = 0; i<docsArray.length; i++) {
     //grab username from login (email)
-    let userEmail = localStorage.getItem("userEmail");
+    let userEmail = sessionStorage.getItem("userEmail");
     //takes username from username document added through upload
     const creatorRef = doc(db, docsArray[i], "username");
+    console.log(docsArray[i]);
+    var myElections = [];
     const creator = await getDoc(creatorRef);
     //only add to dropdown if it is created by user
     
-    try {
-      
+
+      try{
         var check = (creator.data().username == userEmail);
+        console.log("this is check" + check);
         // if (userEmail == "cooperstancil@gmail.com") {check = true;}
-      
+      console.log(creator.data().username);
+      console.log(userEmail);
       
       if(check){
+        console.log("This belongs to: " + creator.data().username);
         let tempElement = document.createElement('option');
         tempElement.innerHTML = docsArray[i];
         select.appendChild(tempElement);
+        myElections.push(docsArray[i]);
       }
+    } catch {
+      console.log(docsArray[i] + " has no username");
     }
-    catch (e) {
-      console.log("Error getting creator data: ", e);
     }
+    console.log("ended getCollectionList function")
+    return myElections;
   }
 
-  return docsArray;
-}
+
+
 
 
 
 export const areYouSure = async function(){
   //event listener running on the click
-  
-    //can you delete?
+    // //can you delete?
     if(window.confirm("Are you sure you want to delete this election?")){
-      alert("Election deleted")
       destroyVotes();
+      alert("Election deleted")
+     
     }else{
       //if no
       alert("Election not deleted");
@@ -76,13 +84,14 @@ export const areYouSure = async function(){
 
 
 
-export const destroyVotes = async function(){
+export async function destroyVotes(){
   const election = document.getElementById("csv-options").value;
   const select = document.getElementById("csv-options");
   const options = select.getElementsByTagName('option');
   select.dispatchEvent(new Event('change'));
   for (let i = 0; i < options.length; i++) {
     if (options[i].value === election) {
+      console.log("rh");
       select.removeChild(options[i]);
       break;
     }
@@ -91,6 +100,7 @@ export const destroyVotes = async function(){
   const allDocumentsInCollection = await getDocs(collection(db, election));
   allDocumentsInCollection.forEach(item => {
     deleteDoc(doc(db, election, item.id));
+    console.log("herm");
   });
   const listRef = doc(db, "rank-choice-voting", "docList");
   const docSnap = await getDoc(listRef);
@@ -99,7 +109,7 @@ export const destroyVotes = async function(){
   let updatedArray = docSnap.data().docsArray;
   let index = updatedArray.indexOf(election);
   updatedArray.splice(index, 1);
-  console.log(docSnap.data().docsArray + "___" + updatedArray);
+  console.log("check this " + docSnap.data().docsArray + "___" + updatedArray);
 
   await updateDoc(listRef, {
     docsArray: updatedArray

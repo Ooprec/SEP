@@ -6,6 +6,7 @@ import {newCount, newVote, loadFromDatabase, initVote} from "./vote.js";
 var LBar = document.getElementById("Lbar-bar");
 var LText = document.getElementById("Lbar-text");
 
+try{
 LBar.addEventListener("animationend", (e) => {
     if (LBar.classList.contains("q1"))
     {
@@ -40,6 +41,10 @@ LBar.addEventListener("animationend", (e) => {
         
   }
 })
+}
+catch{
+ console.log("Heh.. hey!");
+}
 
 // resets done
 const toggleSwitch = document.querySelector("#toggle-switch input");
@@ -409,6 +414,7 @@ const csvOptions = document.getElementById("csv-options");
 
 // this function is called when the user selects a new election from the dropdown menu
 // it checks if the data is already in session storage, and if not, it downloads it from the database
+try{
 csvOptions.addEventListener("change", async (e) => {
 
   const selectedOption = e.target.value;
@@ -433,6 +439,10 @@ csvOptions.addEventListener("change", async (e) => {
     console.log("Archived data:", archivedData);
   }
 }); 
+}
+catch{
+  console.log("Hey.. heh");
+}
 
 // this function is called in the point based voting function
 function makePointGraph(candidates, data) {
@@ -584,6 +594,7 @@ export function Ubarhandler(max, current) {
 const pointGraph = document.getElementById("point_graph");
 const chartDiv = document.getElementById("chartDiv");
 
+try{
 toggleSwitch.addEventListener("change", (e) => {
   if (e.target.checked) {
     console.log("Switched to Point-Based Voting");
@@ -599,3 +610,7 @@ toggleSwitch.addEventListener("change", (e) => {
     // Add logic for Rank Choice Voting
   }
 });
+}
+catch{
+  console.log("i blame sebastian for everything");
+}

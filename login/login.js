@@ -24,7 +24,7 @@ export function login(email, password){
       // Signed in 
        
       //email is sent to server for user in upload
-        localStorage.setItem('userEmail', userCredential.user.email);
+        sessionStorage.setItem('userEmail', userCredential.user.email);
     //redirects the user to main landing page
         location.replace("./instructions.html");
     console.log("eh")
