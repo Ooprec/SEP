@@ -4,11 +4,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebas
 // https://firebase.google.com/docs/firestore
 import { getFirestore, collection, addDoc, setDoc, getDocs, arrayUnion, updateDoc, getDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 // import { Ubarhandler } from "./animations.js";
+import { getCollectionList } from "./upload.js";
 
 const Ubar = document.getElementById("Ubar-bar");
 const UbarText = document.getElementById("Ubar-text");
 // UbarText.style.fontSize = "12pt";
-console.log(Ubar);
+// console.log(Ubar);
 export function Ubarhandler(max, current) {
   Ubar.style.maxWidth = (100*(current/max)) + "%";
   UbarText.style.color = "#582235";
@@ -32,23 +33,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function getCollectionList()
-{
-  const listRef = doc(db, "rank-choice-voting", "docList");
-  const docSnap = await getDoc(listRef);
-  const docsArray = docSnap.data().docsArray;
-  const select = document.getElementById("csv-options");
 
-  select.innerHTML = '';
-
-  for (let i = 0; i<docsArray.length; i++) {
-    let tempElement = document.createElement('option');
-    tempElement.innerHTML = docsArray[i];
-    select.appendChild(tempElement);
-  }
-
-  return docsArray;
-}
 
 export async function importCSVToDatabase () {
 
@@ -78,7 +63,7 @@ export async function importCSVToDatabase () {
         //represented in fire base as (e.g. First: "Name of Candidate")
         Ubarhandler(len, i+1);
             var docRef = await addDoc(collection(db, uname),  {data:[cells[2], cells[3], cells[4].substring(0, cells[4].length-1)]});
-            var userAdmin = localStorage.getItem('userEmail');            
+            var userAdmin = sessionStorage.getItem('userEmail');            
       
             //tests to make sure the code fires
             console.log("Document written with ID: ", docRef.id); 
@@ -148,18 +133,18 @@ export const destroyVotes = async function(){
 
 
 try{
-const submit = document.getElementById("submit");
-submit.addEventListener("click", async (e)=> {
-  console.log(e)
-  e.preventDefault();
-  await importCSVToDatabase();
-  getCollectionList();
-  // location.reload();
+  const submit = document.getElementById("submit");
+  submit.addEventListener("click", async (e)=> {
+    console.log(e)
+    e.preventDefault();
+    await importCSVToDatabase();
+    getCollectionList();
+    // location.reload();
 
 
 });
 }catch(error){
-  console.log("gruh");
+  console.log("gruhette");
 }
 
 try{
@@ -178,5 +163,5 @@ upload.addEventListener("change", (e) => {
 
 });
 }catch(error){
-  console.log("guac");
+  console.log("guacca");
 }
