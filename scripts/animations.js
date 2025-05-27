@@ -9,7 +9,6 @@ var LBar = document.getElementById("Lbar-bar");
 var LText = document.getElementById("Lbar-text");
 
 
-
 LBar.addEventListener("animationend", (e) => {
     if (LBar.classList.contains("q1"))
     {
@@ -415,7 +414,6 @@ const csvOptions = document.getElementById("csv-options");
 
 // this function is called when the user selects a new election from the dropdown menu
 // it checks if the data is already in session storage, and if not, it downloads it from the database
-try{
 csvOptions.addEventListener("change", async (e) => {
 
   const selectedOption = e.target.value;
@@ -443,9 +441,6 @@ csvOptions.addEventListener("change", async (e) => {
 }catch{
   console.log("something, sebastian will fix this message later")
 }
-
-
-
 // this function is called in the point based voting function
 function makePointGraph(candidates, data) {
   //creates a new chart element in layout.html        
@@ -612,7 +607,6 @@ toggleSwitch.addEventListener("change", (e) => {
     // Add logic for Rank Choice Voting
   }
 });
-}
-catch{
+}catch{
   console.log("oops");
 }

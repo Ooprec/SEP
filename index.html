@@ -37,17 +37,8 @@
             <button id="download" onclick="document.dispatchEvent(new CustomEvent('displayRounds'))" class="hidden-button" ></button>
 
             <label for="thingss" class="custom-overlay-button">Delete Election</label>
-            <button id="thingss" onclick="areYouSure()" class="hidden-button">Delete Project</button>
+            <button id="thingss" onclick="destroyVotes()" class="hidden-button">Delete Project</button>
 
-        
-
-    <!-- tooltip that list the restrictions put on the password -->
-  <div class="tooltip">?
-    <span class="tooltiptext">Select file from the dropdown, click run to see election results, if you want to delete an old election, use the delete button.
-      </span>
-  </div>
-
-</div>
         </div>
 
         <div id="Lbar-container" display="none">
@@ -66,13 +57,7 @@
                 <span class="slider round"></span>
             </label>
             <p id="switch-p-r" >Point-Based Voting</p>
-            
         </div>
-        <div class="tooltip">?
-            <span class="tooltiptext">Rank Choice Voting (New system that uses conventional rank choice voting system) and Point-Based system (Old school system that calculates via points)
-              </span>
-          </div>
-          <br></br>
         <div id="other" onclick=""></div>
 
     </div>
@@ -86,12 +71,10 @@
     <script type="module" src="./scripts/animations.js" defer></script>
     <script type="module" src="./scripts/upload.js" defer></script>
     <script type="module" src="./scripts/vote.js" defer></script>
-    <script type="module" src="./scripts/instructions.js" defer></script>
     <script type="module">
         import * as uploadjs from "./scripts/upload.js";
         import * as votejs from "./scripts/vote.js";
         import * as optjs from "./scripts/optimizations.js";
-        import * as instructionsjs from "./scripts/instructions.js";
         window.importCSVToDatabase = uploadjs.importCSVToDatabase;
         window.loadFromDatabase = votejs.loadFromDatabase;
         window.getCollectionList = uploadjs.getCollectionList;
@@ -103,7 +86,6 @@
         window.point = votejs.point;
         window.updateVote = votejs.updateVote;
         window.initVote = votejs.initVote;
-        window.areYouSure = uploadjs.areYouSure;
 
         await getCollectionList();
         await loadFromDatabase();

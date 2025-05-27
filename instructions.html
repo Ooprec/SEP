@@ -72,12 +72,7 @@
             <div id="inputs" class="light">
                 <label for="csv" id="upload-csv-label" class="input-label">Upload CSV:</label>
                 <label for="csv" id="replacement-button" class="custom-overlay-button">Choose File...</label>
-                <div class="tooltip">?
-                    <span class="tooltiptext">Upload a CSV here, wait for the loading bar to complete, and then use the navigation bar to maneuver to the elections tab
-                      </span>
-                  </div>
                 <input type="file" id="csv" accept=".csv" required> <br><br>
-                
                 
                 <label for="csv-name" class="input-label light">Election Name: </label>
                 <input type="text" id="csv-name" class="light" placeholder="" minlength="5">
@@ -85,8 +80,6 @@
                 <br><br>
                 <label for="submit" class="custom-overlay-button" onclick="">Submit</label>
                 <button type="submit" class="hidden-button" id="submit" onclick=""></button>
-
-                
 
                 </div>
             </form>
@@ -107,6 +100,11 @@
             import * as instructionsjs from "./scripts/instructions.js";
     </script>
 
-        
+          <script type="module">
+            import * as instructionsjs from "./scripts/instructions.js";
+
+
+
+    </script>
 </body>
 </html></html>

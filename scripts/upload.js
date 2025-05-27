@@ -70,35 +70,13 @@ export async function getCollectionList()
     return myElections;
   }
 
-
-
-
-
-export const areYouSure = async function(){
-  //event listener running on the click
-    // //can you delete?
-    if(window.confirm("Are you sure you want to delete this election?")){
-      destroyVotes();
-      alert("Election deleted")
-     
-    }else{
-      //if no
-      alert("Election not deleted");
-    }
-  
-  
-  };
-
-
-
-export async function destroyVotes(){
+export const destroyVotes = async function(){
   const election = document.getElementById("csv-options").value;
   const select = document.getElementById("csv-options");
   const options = select.getElementsByTagName('option');
   select.dispatchEvent(new Event('change'));
   for (let i = 0; i < options.length; i++) {
     if (options[i].value === election) {
-      console.log("rh");
       select.removeChild(options[i]);
       break;
     }
@@ -107,7 +85,6 @@ export async function destroyVotes(){
   const allDocumentsInCollection = await getDocs(collection(db, election));
   allDocumentsInCollection.forEach(item => {
     deleteDoc(doc(db, election, item.id));
-    console.log("herm");
   });
   const listRef = doc(db, "rank-choice-voting", "docList");
   const docSnap = await getDoc(listRef);
@@ -116,7 +93,7 @@ export async function destroyVotes(){
   let updatedArray = docSnap.data().docsArray;
   let index = updatedArray.indexOf(election);
   updatedArray.splice(index, 1);
-  console.log("check this " + docSnap.data().docsArray + "___" + updatedArray);
+  console.log(docSnap.data().docsArray + "___" + updatedArray);
 
   await updateDoc(listRef, {
     docsArray: updatedArray
