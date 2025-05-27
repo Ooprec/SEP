@@ -20,18 +20,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+
+
 export async function getCollectionList()
 {
   const listRef = doc(db, "rank-choice-voting", "docList");
   const docSnap = await getDoc(listRef);
   const docsArray = docSnap.data().docsArray;
   const select = document.getElementById("csv-options");
-
+  select.style.display = "inline";
   select.innerHTML = '';
+  let userEmail = sessionStorage.getItem("userEmail");
+
 
   for (let i = 0; i<docsArray.length; i++) {
     //grab username from login (email)
-    let userEmail = sessionStorage.getItem("userEmail");
     //takes username from username document added through upload
     const creatorRef = doc(db, docsArray[i], "username");
     console.log(docsArray[i]);
@@ -57,6 +61,12 @@ export async function getCollectionList()
     } catch {
       console.log(docsArray[i] + " has no username");
     }
+    
+    }
+    
+    while(myElections.length == 0){
+      select.style.display = "none";
+      console.log("fard");
     }
     console.log("ended getCollectionList function")
     return myElections;

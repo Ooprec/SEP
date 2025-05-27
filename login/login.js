@@ -49,7 +49,7 @@ createUserWithEmailAndPassword(auth, email, password)
     // Signed up 
     console.log("don dieuu");
     const user = userCredential.user;
-    localStorage.setItem('userEmail', userCredential.user.email);
+    sessionStorage.setItem('userEmail', userCredential.user.email);
     location.replace("./instructions.html");
   })
   .catch((error) => {
