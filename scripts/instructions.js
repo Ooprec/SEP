@@ -11,7 +11,7 @@ import { getCollectionList } from "./upload.js";
 const Ubar = document.getElementById("Ubar-bar");
 const UbarText = document.getElementById("Ubar-text");
 // UbarText.style.fontSize = "12pt";
-console.log(Ubar);
+// console.log(Ubar);
 export function Ubarhandler(max, current) {
   Ubar.style.maxWidth = (100*(current/max)) + "%";
   UbarText.style.color = "#582235";
@@ -68,7 +68,7 @@ export async function importCSVToDatabase () {
         //represented in fire base as (e.g. First: "Name of Candidate")
         Ubarhandler(len, i+1);
             var docRef = await addDoc(collection(db, uname),  {data:[cells[2], cells[3], cells[4].substring(0, cells[4].length-1)]});
-            var userAdmin = localStorage.getItem('userEmail');            
+            var userAdmin = sessionStorage.getItem('userEmail');            
       
             //tests to make sure the code fires
             console.log("Document written with ID: ", docRef.id); 
@@ -97,10 +97,15 @@ export async function importCSVToDatabase () {
   // location.reload(); 
 }
 
+
+
+
 export const destroyVotes = async function(){
   const election = document.getElementById("csv-options").value;
   const select = document.getElementById("csv-options");
   const options = select.getElementsByTagName('option');
+  console.log("mustarfd");
+    
   select.dispatchEvent(new Event('change'));
   for (let i = 0; i < options.length; i++) {
     if (options[i].value === election) {
@@ -125,19 +130,27 @@ export const destroyVotes = async function(){
   await updateDoc(listRef, {
     docsArray: updatedArray
   });
-  
+
+
 }
 
-const submit = document.getElementById("submit");
-submit.addEventListener("click", async (e)=> {
-  console.log(e)
-  e.preventDefault();
-  await importCSVToDatabase();
-  getCollectionList();
-  // location.reload();
-  console.log(submit);
-})
 
+try{
+  const submit = document.getElementById("submit");
+  submit.addEventListener("click", async (e)=> {
+    console.log(e)
+    e.preventDefault();
+    await importCSVToDatabase();
+    getCollectionList();
+    // location.reload();
+
+
+});
+}catch(error){
+  console.log("gruhette");
+}
+
+try{
 const upload = document.getElementById("csv");
 upload.addEventListener("change", (e) => {
   if (upload.value == "") {
@@ -152,3 +165,6 @@ upload.addEventListener("change", (e) => {
   document.getElementById("replacement-button").innerHTML = fileName;
 
 });
+}catch(error){
+  console.log("guacca");
+}

@@ -51,6 +51,8 @@ createUserWithEmailAndPassword(auth, email, password)
     const user = userCredential.user;
     sessionStorage.setItem('userEmail', userCredential.user.email);
 
+    localStorage.setItem('userEmail', userCredential.user.email);
+    location.replace("./instructions.html");
   })
   .catch((error) => {
     alert("The account associated with " + email + " has already been created");
