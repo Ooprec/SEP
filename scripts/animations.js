@@ -1,10 +1,13 @@
+import { getCollectionList } from "./upload.js";
 import {newCount, newVote, loadFromDatabase, initVote} from "./vote.js";
 
 
 // get the HTML elements of the loading bar
 // var LCont = document.getElementById("Lbar-container");
+try{
 var LBar = document.getElementById("Lbar-bar");
 var LText = document.getElementById("Lbar-text");
+
 
 LBar.addEventListener("animationend", (e) => {
     if (LBar.classList.contains("q1"))
@@ -40,7 +43,9 @@ LBar.addEventListener("animationend", (e) => {
         
   }
 })
-
+} catch{
+  console.log("something, sebastian will fix this message later")
+}
 // resets done
 const toggleSwitch = document.querySelector("#toggle-switch input");
 
@@ -77,8 +82,8 @@ for (i = 0; i < coll.length; i++) {
     }
         }
       )
-
 }
+
     
 function makeGraphs2(candidates, data, round) {
   //creates a new chart element in layout.html        
@@ -267,7 +272,7 @@ document.addEventListener("displayRounds", async (e) => {
 
     // if not, alert the user
     if (!ready) {
-      alert("BAD BAD BAD");
+      alert("There are no elections to run");
     }
 
     // set up all the variables
@@ -404,7 +409,7 @@ function checkDisplay() {
   }
 });
 
-
+try{
 const csvOptions = document.getElementById("csv-options");
 
 // this function is called when the user selects a new election from the dropdown menu
@@ -433,7 +438,9 @@ csvOptions.addEventListener("change", async (e) => {
     console.log("Archived data:", archivedData);
   }
 }); 
-
+}catch{
+  console.log("something, sebastian will fix this message later")
+}
 // this function is called in the point based voting function
 function makePointGraph(candidates, data) {
   //creates a new chart element in layout.html        
@@ -584,6 +591,7 @@ export function Ubarhandler(max, current) {
 const pointGraph = document.getElementById("point_graph");
 const chartDiv = document.getElementById("chartDiv");
 
+try{
 toggleSwitch.addEventListener("change", (e) => {
   if (e.target.checked) {
     console.log("Switched to Point-Based Voting");
@@ -599,3 +607,6 @@ toggleSwitch.addEventListener("change", (e) => {
     // Add logic for Rank Choice Voting
   }
 });
+}catch{
+  console.log("oops");
+}

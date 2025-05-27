@@ -26,36 +26,49 @@ export async function getCollectionList()
   const docSnap = await getDoc(listRef);
   const docsArray = docSnap.data().docsArray;
   const select = document.getElementById("csv-options");
-
-  select.innerHTML = '';
+  // select.id="csv-options";
+  select.style.display = "none";
 
   for (let i = 0; i<docsArray.length; i++) {
     //grab username from login (email)
-    let userEmail = localStorage.getItem("userEmail");
+    let userEmail = sessionStorage.getItem("userEmail");
     //takes username from username document added through upload
     const creatorRef = doc(db, docsArray[i], "username");
+    console.log(docsArray[i]);
+    var myElections = [];
     const creator = await getDoc(creatorRef);
     //only add to dropdown if it is created by user
     
-    try {
-      
+
+      try{
         var check = (creator.data().username == userEmail);
+        console.log("this is check" + check);
         // if (userEmail == "cooperstancil@gmail.com") {check = true;}
-      
+      console.log(creator.data().username);
+      console.log(userEmail);
       
       if(check){
+        console.log("This belongs to: " + creator.data().username);
         let tempElement = document.createElement('option');
         tempElement.innerHTML = docsArray[i];
         select.appendChild(tempElement);
+        myElections.push(docsArray[i]);
       }
+    } catch {
+      console.log(docsArray[i] + " has no username");
     }
-    catch (e) {
-      console.log("Error getting creator data: ", e);
     }
-  }
+    console.log("try reapery");
+    if(myElections.length >= 0){
+      console.log("reapery");
+    // document.getElementById("selectBucket").appendChild(select);
+      select.style.display = "inline";
 
-  return docsArray;
-}
+    }
+    console.log("ended getCollectionList function")
+    console.log(myElections);
+    return myElections;
+  }
 
 export const destroyVotes = async function(){
   const election = document.getElementById("csv-options").value;

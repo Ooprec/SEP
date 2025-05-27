@@ -4,6 +4,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebas
 // https://firebase.google.com/docs/firestore
 import { getFirestore, collection, addDoc, setDoc, getDocs, arrayUnion, updateDoc, getDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 // import { Ubarhandler } from "./animations.js";
+import { getCollectionList } from "./upload.js";
+
+
 
 const Ubar = document.getElementById("Ubar-bar");
 const UbarText = document.getElementById("Ubar-text");
@@ -14,8 +17,11 @@ export function Ubarhandler(max, current) {
   UbarText.style.color = "#582235";
   UbarText.innerHTML = Math.floor(100*(current/max)) + "%";
   if (UbarText.innerHTML == "100%") {
-    UbarText.innerHTML = "Done!";   
+    UbarText.innerHTML = "Done!"; 
+
   }
+    // window.location.href='index.html'
+
 }
 
 // Your web app's Firebase configuration
@@ -32,23 +38,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function getCollectionList()
-{
-  const listRef = doc(db, "rank-choice-voting", "docList");
-  const docSnap = await getDoc(listRef);
-  const docsArray = docSnap.data().docsArray;
-  const select = document.getElementById("csv-options");
 
-  select.innerHTML = '';
-
-  for (let i = 0; i<docsArray.length; i++) {
-    let tempElement = document.createElement('option');
-    tempElement.innerHTML = docsArray[i];
-    select.appendChild(tempElement);
-  }
-
-  return docsArray;
-}
 
 export async function importCSVToDatabase () {
 
@@ -105,7 +95,6 @@ export async function importCSVToDatabase () {
     console.error("Error adding votes to database: ", e);   
   }
   // location.reload(); 
-
 }
 
 export const destroyVotes = async function(){
@@ -146,7 +135,7 @@ submit.addEventListener("click", async (e)=> {
   await importCSVToDatabase();
   getCollectionList();
   // location.reload();
-
+  console.log(submit);
 })
 
 const upload = document.getElementById("csv");
