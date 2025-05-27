@@ -20,18 +20,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+
+
 export async function getCollectionList()
 {
   const listRef = doc(db, "rank-choice-voting", "docList");
   const docSnap = await getDoc(listRef);
   const docsArray = docSnap.data().docsArray;
   const select = document.getElementById("csv-options");
-  // select.id="csv-options";
-  select.style.display = "none";
+  select.style.display = "inline";
+  select.innerHTML = '';
+  let userEmail = sessionStorage.getItem("userEmail");
+
 
   for (let i = 0; i<docsArray.length; i++) {
     //grab username from login (email)
-    let userEmail = sessionStorage.getItem("userEmail");
     //takes username from username document added through upload
     const creatorRef = doc(db, docsArray[i], "username");
     console.log(docsArray[i]);
@@ -57,26 +61,47 @@ export async function getCollectionList()
     } catch {
       console.log(docsArray[i] + " has no username");
     }
+    
     }
-    console.log("try reapery");
-    if(myElections.length >= 0){
-      console.log("reapery");
-    // document.getElementById("selectBucket").appendChild(select);
-      select.style.display = "inline";
-
+    
+    while(myElections.length == 0){
+      select.style.display = "none";
+      console.log("fard");
     }
     console.log("ended getCollectionList function")
-    console.log(myElections);
     return myElections;
   }
 
-export const destroyVotes = async function(){
+
+
+
+
+
+export const areYouSure = async function(){
+  //event listener running on the click
+    // //can you delete?
+    if(window.confirm("Are you sure you want to delete this election?")){
+      destroyVotes();
+      alert("Election deleted")
+     
+    }else{
+      //if no
+      alert("Election not deleted");
+    }
+  
+  
+  };
+
+
+
+export async function destroyVotes(){
   const election = document.getElementById("csv-options").value;
   const select = document.getElementById("csv-options");
   const options = select.getElementsByTagName('option');
   select.dispatchEvent(new Event('change'));
   for (let i = 0; i < options.length; i++) {
     if (options[i].value === election) {
+      console.log("rh");
       select.removeChild(options[i]);
       break;
     }
@@ -85,6 +110,7 @@ export const destroyVotes = async function(){
   const allDocumentsInCollection = await getDocs(collection(db, election));
   allDocumentsInCollection.forEach(item => {
     deleteDoc(doc(db, election, item.id));
+    console.log("herm");
   });
   const listRef = doc(db, "rank-choice-voting", "docList");
   const docSnap = await getDoc(listRef);
@@ -93,7 +119,7 @@ export const destroyVotes = async function(){
   let updatedArray = docSnap.data().docsArray;
   let index = updatedArray.indexOf(election);
   updatedArray.splice(index, 1);
-  console.log(docSnap.data().docsArray + "___" + updatedArray);
+  console.log("check this " + docSnap.data().docsArray + "___" + updatedArray);
 
   await updateDoc(listRef, {
     docsArray: updatedArray

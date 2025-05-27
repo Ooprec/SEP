@@ -50,7 +50,7 @@ createUserWithEmailAndPassword(auth, email, password)
     console.log("don dieuu");
     const user = userCredential.user;
     sessionStorage.setItem('userEmail', userCredential.user.email);
-
+    location.replace("./instructions.html");
   })
   .catch((error) => {
     alert("The account associated with " + email + " has already been created");

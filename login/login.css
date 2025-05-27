@@ -1,9 +1,10 @@
 html{
-    background-image: url('./styles/ranchDressing.jpg');
+
     
     
 }
 
+/* Makes the welcome line above the login section */
 header{
     color:rgb(255, 255, 255);
     margin: auto;
@@ -12,6 +13,8 @@ header{
     position: absolute;
    align-content: center;
 }
+
+/* Aligns the school logo */
 #mayoo{
     align-content: center;
     margin: auto;
@@ -27,7 +30,7 @@ header{
 }
 
 
-
+/* div for the entire login area */
   .babble{
     margin: 0;
     padding: 0;
@@ -39,11 +42,13 @@ header{
 
    
 }
+/* signup button */ 
 #signup{
     transition: 0.3s;
     background-color: white;
       
 }
+/* sign up on hover */
 #signup:hover{
    transition: 0.3s;
     background-color: #ad1a3772; 
@@ -52,12 +57,13 @@ header{
 
   
 }
-
+/* login button */ 
 #login{
     transition: 0.3s;
     background-color: white;
       
 }
+/* login button on hover */ 
 #login:hover{
    transition: 0.3s;
     background-color: #ad1a3772; 
@@ -67,6 +73,7 @@ header{
   
 }
 
+/* At least 6 warning */
 #watchOut{
     color: white;
 }
