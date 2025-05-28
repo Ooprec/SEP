@@ -29,8 +29,6 @@ export async function getCollectionList()
   const docSnap = await getDoc(listRef);
   const docsArray = docSnap.data().docsArray;
   const select = document.getElementById("csv-options");
-  select.style.display = "inline";
-  select.innerHTML = '';
   let userEmail = sessionStorage.getItem("userEmail");
 
 
@@ -64,9 +62,16 @@ export async function getCollectionList()
     
     }
     
-    while(myElections.length == 0){
-      select.style.display = "none";
-      console.log("fard");
+    //checks if you no elecitons
+    if(myElections.length == 0){
+      console.log("sigma");
+      //makes a new html element to add to the dropdown
+      const empty = document.createElement('option');
+      //gives the html element a vlue and a text
+      empty.value = 'no_elections';
+      empty.text = 'You have no elections';
+      //adds it to the dropdown
+      select.appendChild(empty);
     }
     console.log("ended getCollectionList function")
     return myElections;
@@ -125,4 +130,5 @@ export async function destroyVotes(){
     docsArray: updatedArray
   });
   
+  getCollectionList();
 }

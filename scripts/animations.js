@@ -134,9 +134,14 @@ function makeGraphs2(candidates, data, round) {
   }
 }
 
+const csvOptions = document.getElementById("csv-options");
+
 // Add an event listener for the custom event that's triggered by the run button
 document.addEventListener("displayRounds", async (e) => {
   // total # of rounds
+  if (csvOptions.value == 'no_elections'){
+    return
+  }
   var totalRounds = 0;
 
   // check if the session storage is ready to go
@@ -272,7 +277,7 @@ document.addEventListener("displayRounds", async (e) => {
 
     // if not, alert the user
     if (!ready) {
-      alert("BAD BAD BAD");
+      alert("You have no elections");
     }
 
     // set up all the variables
@@ -410,7 +415,6 @@ function checkDisplay() {
 });
 
 
-const csvOptions = document.getElementById("csv-options");
 
 // this function is called when the user selects a new election from the dropdown menu
 // it checks if the data is already in session storage, and if not, it downloads it from the database
