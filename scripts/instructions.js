@@ -40,7 +40,10 @@ export async function importCSVToDatabase () {
   console.log("importing")
   try{   
     var uname = document.getElementById("csv-name").value;
-            
+    if(uname == ""){
+      alert("Please give your election a name!");
+      return
+    }      
     if (uname in getCollectionList()) {alert("Election name already taken"); return}
     const listRef = doc(db, "rank-choice-voting", "docList");
     const docSnap = await getDoc(listRef);
@@ -100,7 +103,7 @@ export const destroyVotes = async function(){
   const election = document.getElementById("csv-options").value;
   const select = document.getElementById("csv-options");
   const options = select.getElementsByTagName('option');
-  console.log("mustarfd");
+  // console.log("mustarfd");
     
   select.dispatchEvent(new Event('change'));
   for (let i = 0; i < options.length; i++) {
@@ -121,7 +124,7 @@ export const destroyVotes = async function(){
   let updatedArray = docSnap.data().docsArray;
   let index = updatedArray.indexOf(election);
   updatedArray.splice(index, 1);
-  console.log(docSnap.data().docsArray + "___" + updatedArray);
+  // console.log(docSnap.data().docsArray + "___" + updatedArray);
 
   await updateDoc(listRef, {
     docsArray: updatedArray
@@ -135,7 +138,7 @@ export const destroyVotes = async function(){
 try{
   const submit = document.getElementById("submit");
   submit.addEventListener("click", async (e)=> {
-    console.log(e)
+    // console.log(e)
     e.preventDefault();
     await importCSVToDatabase();
     getCollectionList();
@@ -144,7 +147,7 @@ try{
 
 });
 }catch(error){
-  console.log("gruhette");
+  // console.log("gruhette");
 }
 
 try{
@@ -154,7 +157,7 @@ upload.addEventListener("change", (e) => {
     document.getElementById("replacement-button").innerHTML = "Choose File...";
     return;
   }
-  console.log(upload.value.split("\\")[2]);
+  // console.log(upload.value.split("\\")[2]);
   let fileName = upload.value.split("\\")[2];
   if (fileName.length > 15) {
     fileName = fileName.substring(0, 15) + "...";
@@ -163,5 +166,5 @@ upload.addEventListener("change", (e) => {
 
 });
 }catch(error){
-  console.log("guacca");
+  // console.log("guacca");
 }

@@ -37,33 +37,35 @@ export async function getCollectionList()
     //grab username from login (email)
     //takes username from username document added through upload
     const creatorRef = doc(db, docsArray[i], "username");
-    console.log(docsArray[i]);
+    // console.log(docsArray[i]);
+    var myElections = [];
     const creator = await getDoc(creatorRef);
     //only add to dropdown if it is created by user
     
 
       try{
         var check = (creator.data().username == userEmail);
-        console.log("this is check" + check);
+        // console.log("this is check" + check);
         // if (userEmail == "cooperstancil@gmail.com") {check = true;}
-      console.log(creator.data().username);
-      console.log(userEmail);
+      // console.log(creator.data().username);
+      // console.log(userEmail);
       
       if(check){
-        console.log("This belongs to: " + creator.data().username);
+        // console.log("This belongs to: " + creator.data().username);
         let tempElement = document.createElement('option');
         tempElement.innerHTML = docsArray[i];
         select.appendChild(tempElement);
         myElections.push(docsArray[i]);
       }
     } catch {
-      console.log(docsArray[i] + " has no username");
+      // console.log(docsArray[i] + " has no username");
     }
     
     }
     
     //checks if you no elecitons
     if(myElections.length == 0){
+      // console.log("sigma");
       //makes a new html element to add to the dropdown
       const empty = document.createElement('option');
       //gives the html element a vlue and a text
@@ -72,6 +74,7 @@ export async function getCollectionList()
       //adds it to the dropdown
       select.appendChild(empty);
     }
+    // console.log("ended getCollectionList function")
     return myElections;
   }
 
@@ -110,7 +113,7 @@ export async function destroyVotes(){
   }
   for (let i = 0; i < options.length; i++) {
     if (options[i].value === election) {
-      console.log("rh");
+      // console.log("rh");
       select.removeChild(options[i]);
       break;
     }
@@ -119,7 +122,7 @@ export async function destroyVotes(){
   const allDocumentsInCollection = await getDocs(collection(db, election));
   allDocumentsInCollection.forEach(item => {
     deleteDoc(doc(db, election, item.id));
-    console.log("herm");
+    // console.log("herm");
   });
   const listRef = doc(db, "rank-choice-voting", "docList");
   const docSnap = await getDoc(listRef);
@@ -128,7 +131,7 @@ export async function destroyVotes(){
   let updatedArray = docSnap.data().docsArray;
   let index = updatedArray.indexOf(election);
   updatedArray.splice(index, 1);
-  console.log("check this " + docSnap.data().docsArray + "___" + updatedArray);
+  // console.log("check this " + docSnap.data().docsArray + "___" + updatedArray);
 
   await updateDoc(listRef, {
     docsArray: updatedArray
