@@ -27,9 +27,10 @@ export function login(email, password){
         sessionStorage.setItem('userEmail', userCredential.user.email);
     //redirects the user to main landing page
         location.replace("./instructions.html");
-    console.log("eh")
+    // console.log("eh")
     })
     .catch((error) => {
+      //password or email wrong
       alert("Either the email or password are invalid or you have not yet created an account, please use the sign up button if that is the case.");
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -39,20 +40,21 @@ export function login(email, password){
 
 //creates new account, runs on sign up
 export function signup(email, password){
-    console.log("don dieu");
-    console.log(email);
-    console.log(password);
+    // console.log("don dieu");
+    // console.log(email);
+    // console.log(password);
     
 //requires REAL email aswell as 6 character password
 createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 
-    console.log("don dieuu");
+    // console.log("don dieuu");
     const user = userCredential.user;
     sessionStorage.setItem('userEmail', userCredential.user.email);
     location.replace("./instructions.html");
   })
   .catch((error) => {
+    //email already has account
     alert("The account associated with " + email + " has already been created");
     const errorCode = error.code;
     const errorMessage = error.message;

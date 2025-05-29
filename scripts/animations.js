@@ -43,7 +43,7 @@ LBar.addEventListener("animationend", (e) => {
 })
 }
 catch{
- console.log("Heh.. hey!");
+//  console.log("Heh.. hey!");
 }
 
 // resets done
@@ -88,7 +88,7 @@ for (i = 0; i < coll.length; i++) {
 function makeGraphs2(candidates, data, round) {
   //creates a new chart element in layout.html        
   if (candidates.length != data.length) {
-    console.error("Candidates and data length mismatch.");
+    // console.error("Candidates and data length mismatch.");
     return;
   }
   return {
@@ -148,14 +148,14 @@ document.addEventListener("displayRounds", async (e) => {
   async function beforeStart() {
     // Check if session storage items are set
     if (!sessionStorage.getItem('holder') || !sessionStorage.getItem('shelby') || !sessionStorage.getItem('allVotes')) {
-      console.error("Required session storage items are missing.");
+      // console.error("Required session storage items are missing.");
       
     }
     else {return true;}
     
   }
 
-  console.log("Displaying rounds and graphs...");
+  // console.log("Displaying rounds and graphs...");
 
   // returns a div with the graph of the round
   // this function is called in the while loop of handleRoundsAndGraphs
@@ -198,12 +198,12 @@ document.addEventListener("displayRounds", async (e) => {
         }
       } 
       else {
-        console.error("Archived data not found in session storage.");
+        // console.error("Archived data not found in session storage.");
         return null;
       }
     }
     catch (error) {
-      console.error("Error retrieving archived data:", error);
+      // console.error("Error retrieving archived data:", error);
       return null;
     }
   }
@@ -320,7 +320,7 @@ document.addEventListener("displayRounds", async (e) => {
       // check for winning
       for (var i in votes) { 
         if (votes[i] >= threshold) {
-          console.log("winner winner chicken dinner")
+          // console.log("winner winner chicken dinner")
           runningBefore = false;
           winner = candidates[i];
           winningVotes = votes[i];
@@ -423,15 +423,15 @@ csvOptions.addEventListener("change", async (e) => {
 
   const selectedOption = e.target.value;
   if (!sessionStorage.getItem(`${selectedOption}-archived`)) {
-    console.log(`Archived data for ${selectedOption} not found. Downloading...`);
+    // console.log(`Archived data for ${selectedOption} not found. Downloading...`);
     try {
       await loadFromDatabase();
-      console.log(`Archived data for ${selectedOption} has been downloaded.`);
+      // console.log(`Archived data for ${selectedOption} has been downloaded.`);
     } catch (error) {
-      console.error("Error downloading archived data:", error);
+      // console.error("Error downloading archived data:", error);
     }
   } else {
-    console.log(`Archived data for ${selectedOption} already exists. Grabbing data...`);
+    // console.log(`Archived data for ${selectedOption} already exists. Grabbing data...`);
     var archivedData = JSON.parse(sessionStorage.getItem(`${selectedOption}-archived`));
     let allVotes = [...archivedData.allVotes];
     let voteResults = await initVote(allVotes);
@@ -440,12 +440,12 @@ csvOptions.addEventListener("change", async (e) => {
     sessionStorage.setItem('allVotes', JSON.stringify([...allVotes]));
 
 
-    console.log("Archived data:", archivedData);
+    // console.log("Archived data:", archivedData);
   }
 }); 
 }
 catch{
-  console.log("Hey.. heh");
+  // console.log("Hey.. heh");
 }
 
 // this function is called in the point based voting function
@@ -601,7 +601,7 @@ const chartDiv = document.getElementById("chartDiv");
 try{
 toggleSwitch.addEventListener("change", (e) => {
   if (e.target.checked) {
-    console.log("Switched to Point-Based Voting");
+    // console.log("Switched to Point-Based Voting");
     // Add logic for Point-Based Voting
     chartDiv.style.display = "none";
     pointGraph.style.display = "block";
@@ -616,5 +616,5 @@ toggleSwitch.addEventListener("change", (e) => {
 });
 }
 catch{
-  console.log("i blame sebastian for everything");
+  // console.log("i blame sebastian for everything");
 }

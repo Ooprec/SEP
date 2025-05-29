@@ -40,7 +40,7 @@ export async function loadFromDatabase() {
             sessionStorage.removeItem("holder");
         }
         catch {
-            console.log("Error deleting session storage items.");
+            // console.log("Error deleting session storage items.");
         }
 
         // Pull all the documents from the specified collection in Firebase
@@ -84,7 +84,7 @@ export async function loadFromDatabase() {
         // set the archive in session storage
         sessionStorage.setItem(cname + "-archived", JSON.stringify(archive));
 
-        console.log("Loaded from database: " + cname);
+        // console.log("Loaded from database: " + cname);
     }
 }
 
@@ -122,7 +122,7 @@ export async function newCount(votes, candidates, allVotes) {
 
     // if all candidates have 0 votes, then problems arise
     if (firstMin == 0 && count == candidates.length) {
-        console.error("All candidates have 0 votes. No one can be eliminated.");
+        // console.error("All candidates have 0 votes. No one can be eliminated.");
         let e = {votes: [...votes],candidates: [...candidates],allVotes: [...allVotes],count: count,}
         }
 
