@@ -26,6 +26,8 @@ var myElections = [];
 
 export async function getCollectionList()
 {
+  var myElections = [];
+
   const listRef = doc(db, "rank-choice-voting", "docList");
   const docSnap = await getDoc(listRef);
   const docsArray = docSnap.data().docsArray;
@@ -38,7 +40,6 @@ export async function getCollectionList()
     //takes username from username document added through upload
     const creatorRef = doc(db, docsArray[i], "username");
     // console.log(docsArray[i]);
-    var myElections = [];
     const creator = await getDoc(creatorRef);
     //only add to dropdown if it is created by user
     
