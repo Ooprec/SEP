@@ -85,8 +85,12 @@ export async function getCollectionList()
 
 
 export const areYouSure = async function(){
+  const election = document.getElementById("csv-options").value;
 
-  
+  if (election == 'no_elections'){
+    return
+  }
+
   //event listener running on the click
     // //can you delete?
     if(window.confirm("Are you sure you want to delete this election?")){
