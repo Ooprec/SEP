@@ -20,6 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+var myElections = [];
 
 
 
@@ -37,7 +38,6 @@ export async function getCollectionList()
     //takes username from username document added through upload
     const creatorRef = doc(db, docsArray[i], "username");
     console.log(docsArray[i]);
-    var myElections = [];
     const creator = await getDoc(creatorRef);
     //only add to dropdown if it is created by user
     
@@ -64,7 +64,6 @@ export async function getCollectionList()
     
     //checks if you no elecitons
     if(myElections.length == 0){
-      console.log("sigma");
       //makes a new html element to add to the dropdown
       const empty = document.createElement('option');
       //gives the html element a vlue and a text
@@ -73,7 +72,6 @@ export async function getCollectionList()
       //adds it to the dropdown
       select.appendChild(empty);
     }
-    console.log("ended getCollectionList function")
     return myElections;
   }
 
@@ -83,6 +81,8 @@ export async function getCollectionList()
 
 
 export const areYouSure = async function(){
+
+  
   //event listener running on the click
     // //can you delete?
     if(window.confirm("Are you sure you want to delete this election?")){
@@ -100,10 +100,14 @@ export const areYouSure = async function(){
 
 
 export async function destroyVotes(){
+  
   const election = document.getElementById("csv-options").value;
   const select = document.getElementById("csv-options");
   const options = select.getElementsByTagName('option');
   select.dispatchEvent(new Event('change'));
+  if (election == 'no_elections'){
+    return
+  }
   for (let i = 0; i < options.length; i++) {
     if (options[i].value === election) {
       console.log("rh");
@@ -130,5 +134,4 @@ export async function destroyVotes(){
     docsArray: updatedArray
   });
   
-  getCollectionList();
 }

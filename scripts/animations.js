@@ -142,6 +142,10 @@ document.addEventListener("displayRounds", async (e) => {
   if (csvOptions.value == 'no_elections'){
     return
   }
+  if (csvOptions.value == 0){
+    alert("Please upload an election");
+    return
+  }
   var totalRounds = 0;
 
   // check if the session storage is ready to go
