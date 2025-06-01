@@ -11,7 +11,8 @@
 
 
 <body>
-
+<div class = "contain">
+  <img id = "seeker" src="./styles/seeker.jpeg" alt="logo">
 <div class="babble">
 <img id = "mayoo" src="./styles/logo.png" alt="logo">
 <br>
@@ -25,15 +26,15 @@
   <br>
 
 
-  <label>Email: </label>
+
   <input type="text" placeholder="Enter Email" id="uname">
   
   
   <br>
   
-
+<br>
   <!-- text box for password -->
-  <label>Password: </label>
+
   
   <input type="password" placeholder="Enter Password" id="psw" >
 
@@ -41,8 +42,8 @@
 
   <br>
   <br>
-  <button id="login" onclick="login(document.getElementById('uname').value, document.getElementById('psw').value);">Login</button>
-  <button id="signup" onclick="signup(document.getElementById('uname').value, document.getElementById('psw').value);">Sign Up</button>
+  <button id="login" onclick="login(document.getElementById('uname').value, document.getElementById('psw').value);" class="custom-overlay-button"> Login </button>
+  <button id="signup" onclick="signup(document.getElementById('uname').value, document.getElementById('psw').value);" class="custom-overlay-button">Sign Up</button>
   <br>
   <br>
 
@@ -56,6 +57,8 @@
   </div>
 
 </div>
+</div>
+
 
 
 
@@ -64,6 +67,8 @@
 import * as loginjs from "./login/login.js";
 window.login = loginjs.login;
 window.signup = loginjs.signup;
+
+
 
 
 </script>

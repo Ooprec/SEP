@@ -1,7 +1,31 @@
+:root {
+
+
+  --maroon: #793140;--white: #FFFFFF;
+  --maroon-but-darker: #582235;
+
+  --br: .2rem;
+  --border: .24rem solid var(--maroon-but-darker);
+
+  --normal-font-size: 14pt;
+}
+
 html{
 
+    overflow: hidden;
     
-    
+}
+.contain {
+  display: flex;
+  justify-content: center; 
+  align-items: center;  
+  height: 100vh;          
+  width: 100vw;          
+  margin: 0;
+  /* background-image: url(../styles/seeker.jpeg); */
+  /* background-position: center;
+  background-size: cover; */
+
 }
 
 /* Makes the welcome line above the login section */
@@ -21,57 +45,73 @@ header{
     /* padding-top: 1%; */
     width: 75px;
     height: 75px;
-    top: 32%;
+
     /* left: 43.5%; */
     /* position: absolute; */
-    padding-top: 20%;
+
 
 
 }
+#seeker{
+  z-index: -1;
+  margin: 0;
+  padding: 0;
+  height: 120vh;
+  width: 120vw;
+  align-content: center;
+  margin: auto;
+  position:absolute;
+}
 
-
-/* div for the entire login area */
-  .babble{
-    margin: 0;
-    padding: 0;
-    height: 98vh;
-   text-align: center;
-   color: white;
-   background-color: #582235;
-   align-items: center;
+/* div for the entire login area */ 
+   .babble{
+   
+    justify-content: center;
+    width: 60vw;
+  padding: 100px;
+  
+  text-align: center;
+  color: white;
+  background-color: #582235;
+  box-sizing: border-box;
+  padding-top: 50vh;
+  padding-bottom: 50vh;
+  /* margin-top: 50px; */
 
    
 }
-/* signup button */ 
+
+/* 
+signup button 
 #signup{
     transition: 0.3s;
     background-color: white;
       
-}
+} */
 /* sign up on hover */
-#signup:hover{
+/* #signup:hover{
    transition: 0.3s;
     background-color: #ad1a3772; 
     color: black;
     cursor: pointer;
 
   
-}
+} */
 /* login button */ 
-#login{
+/* #login{
     transition: 0.3s;
     background-color: white;
       
-}
+} */
 /* login button on hover */ 
-#login:hover{
+/* #login:hover{
    transition: 0.3s;
     background-color: #ad1a3772; 
     color: white;
     cursor: pointer;
 
   
-}
+} */
 
 /* At least 6 warning */
 #watchOut{
@@ -129,4 +169,77 @@ header{
     visibility: visible;
     opacity: 1;
   }
+
+  #uname {
+    font-size: var(--normal-font-size);
+    padding: .3rem .8rem;
+    border-radius: 5px;
+    border: var(--border);
+    color: #582235;
+    background-color: white;
+}
+
+#uname:focus {
+    background-color: #582235;
+    outline-color: var(--maroon);
+    color: white;
+}
+
+  #psw {
+    font-size: var(--normal-font-size);
+    padding: .3rem .8rem;
+    border-radius: 5px;
+    border: var(--border);
+    color: #582235;
+    background-color: white;
+}
+
+#psw:focus {
+    background-color: #582235;
+    outline-color: var(--maroon);
+    color: white;
+}
   
+
+.custom-overlay-button {
+  color: var(--maroon-but-darker);
+  font-size: var(--normal-font-size);
+  font-family: sans-serif;
+  border: var(--border);
+  border-radius: 5px;
+  display: inline-block;
+  padding: .4rem .8rem;
+  cursor: pointer;
+  align-content: center;
+  margin: 0rem .5rem ;
+  text-align: center;
+  transition: transform .25s ease-in-out, background-color .1s ease-in-out, color .1s ease-in-out;
+}
+
+.custom-overlay-button:hover {
+  border: var(--border);
+  background-color: var(--maroon);
+  color: var(--white);
+  transform: scale(1.07);
+  /* padding: .6rem 1.2rem; */
+}
+
+.custom-overlay-button:active {
+  border: var(--border);
+  background-color: var(--maroon-but-darker);
+  color: var(--white);
+  transform: scale(1.03);
+  /* padding: .6rem 1.2rem; */
+}
+
+.custom-overlay-button:hover::selection {
+  background: var(--white);
+  color: var(--maroon-but-darker);
+  /* padding: .6rem 1.2rem; */
+}
+
+.custom-overlay-button::selection {
+  background: var(--maroon);
+  color: white;
+}
+

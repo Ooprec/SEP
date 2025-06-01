@@ -34,7 +34,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-
 export async function importCSVToDatabase () {
 
   console.log("importing")
@@ -60,8 +59,13 @@ export async function importCSVToDatabase () {
       var len = rows.length;
       //looping through all rows, fills rows
       for (var i = 1; i < rows.length; i++) {
+        try{
         //cells is an array of cells
         var cells = rows[i].split(",");   
+        if(typeof cells[4] != "string"){
+          alert("Error uploading file to database. Make sure your election file is formatted correctly");
+          return;
+        }
         //sets each vote casted by each person equal to a value
         //represented in fire base as (e.g. First: "Name of Candidate")
         Ubarhandler(len, i+1);
@@ -71,7 +75,10 @@ export async function importCSVToDatabase () {
             //tests to make sure the code fires
             console.log("Document written with ID: ", docRef.id); 
             // console.log("Document written with ID: ", docRef.id);
+        } catch{
+           alert("Error uploading file to database. Make sure your election file is formatted correctly");
 
+        }
       }
       //adds username doc to each election
       await setDoc(doc(db, uname, "username"), {
