@@ -43,7 +43,6 @@ LBar.addEventListener("animationend", (e) => {
 })
 }
 catch{
-//  console.log("Heh.. hey!");
 }
 
 // resets done
@@ -88,7 +87,6 @@ for (i = 0; i < coll.length; i++) {
 function makeGraphs2(candidates, data, round) {
   //creates a new chart element in layout.html        
   if (candidates.length != data.length) {
-    // console.error("Candidates and data length mismatch.");
     return;
   }
   return {
@@ -145,6 +143,7 @@ document.addEventListener("displayRounds", async (e) => {
   if (csvOptions.value == 0){
     alert("Please upload an election");
     return
+    
   }
   var totalRounds = 0;
 
@@ -152,14 +151,12 @@ document.addEventListener("displayRounds", async (e) => {
   async function beforeStart() {
     // Check if session storage items are set
     if (!sessionStorage.getItem('holder') || !sessionStorage.getItem('shelby') || !sessionStorage.getItem('allVotes')) {
-      // console.error("Required session storage items are missing.");
       
     }
     else {return true;}
     
   }
 
-  // console.log("Displaying rounds and graphs...");
 
   // returns a div with the graph of the round
   // this function is called in the while loop of handleRoundsAndGraphs
@@ -202,12 +199,10 @@ document.addEventListener("displayRounds", async (e) => {
         }
       } 
       else {
-        // console.error("Archived data not found in session storage.");
         return null;
       }
     }
     catch (error) {
-      // console.error("Error retrieving archived data:", error);
       return null;
     }
   }
@@ -324,7 +319,6 @@ document.addEventListener("displayRounds", async (e) => {
       // check for winning
       for (var i in votes) { 
         if (votes[i] >= threshold) {
-          // console.log("winner winner chicken dinner")
           runningBefore = false;
           winner = candidates[i];
           winningVotes = votes[i];
@@ -427,15 +421,11 @@ csvOptions.addEventListener("change", async (e) => {
 
   const selectedOption = e.target.value;
   if (!sessionStorage.getItem(`${selectedOption}-archived`)) {
-    // console.log(`Archived data for ${selectedOption} not found. Downloading...`);
     try {
       await loadFromDatabase();
-      // console.log(`Archived data for ${selectedOption} has been downloaded.`);
     } catch (error) {
-      // console.error("Error downloading archived data:", error);
     }
   } else {
-    // console.log(`Archived data for ${selectedOption} already exists. Grabbing data...`);
     var archivedData = JSON.parse(sessionStorage.getItem(`${selectedOption}-archived`));
     let allVotes = [...archivedData.allVotes];
     let voteResults = await initVote(allVotes);
@@ -444,19 +434,16 @@ csvOptions.addEventListener("change", async (e) => {
     sessionStorage.setItem('allVotes', JSON.stringify([...allVotes]));
 
 
-    // console.log("Archived data:", archivedData);
   }
 }); 
 }
 catch{
-  // console.log("Hey.. heh");
 }
 
 // this function is called in the point based voting function
 function makePointGraph(candidates, data) {
   //creates a new chart element in layout.html        
   if (candidates.length != data.length) {
-    console.error("Candidates and data length mismatch.");
     return;
   }
   return {
@@ -577,9 +564,10 @@ function newPoint() {
 
   // create the div for the results
   let section2 = document.createElement("p");
-  section2.classList.toggle("maroon");
+  // section2.classList.toggle("maroon");
   let sectionDiv = document.createElement("div");
-  sectionDiv.classList.toggle("light winning-text");
+  sectionDiv.classList.toggle("light");
+  sectionDiv.classList.toggle("winning-text");
   sectionDiv.appendChild(section2);
   pointDiv.appendChild(sectionDiv);
 
@@ -605,7 +593,6 @@ const chartDiv = document.getElementById("chartDiv");
 try{
 toggleSwitch.addEventListener("change", (e) => {
   if (e.target.checked) {
-    // console.log("Switched to Point-Based Voting");
     // Add logic for Point-Based Voting
     chartDiv.style.display = "none";
     pointGraph.style.display = "block";
@@ -620,5 +607,4 @@ toggleSwitch.addEventListener("change", (e) => {
 });
 }
 catch{
-  // console.log("i blame sebastian for everything");
 }
