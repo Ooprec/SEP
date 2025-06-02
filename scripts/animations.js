@@ -576,10 +576,10 @@ function newPoint() {
   let secondWinner = candidates[points.indexOf(secondWinningVotes)]; // Find the corresponding candidate
 
   // create the div for the results
-  let section2 = document.createElement("h2");
+  let section2 = document.createElement("p");
   section2.classList.toggle("maroon");
   let sectionDiv = document.createElement("div");
-  sectionDiv.classList.toggle("election-done-div");
+  sectionDiv.classList.toggle("light winning-text");
   sectionDiv.appendChild(section2);
   pointDiv.appendChild(sectionDiv);
 
