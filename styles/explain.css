@@ -1,0 +1,24 @@
+:root {
+
+
+    --maroon: #793140;--white: #FFFFFF;
+    --maroon-but-darker: #582235;
+  
+    --br: .2rem;
+    --border: .24rem solid var(--maroon-but-darker);
+  
+    --normal-font-size: 14pt;
+  }
+
+
+#Ernesto{
+color:var(--maroon-but-darker);
+font-size: 20px;
+
+}
+#Anwhy{
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+}
